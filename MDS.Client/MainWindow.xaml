@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MDS.Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="700" Width="900">
     <Grid>
-
+        <TabControl x:Name="MainTabControl" BorderThickness="0"
+                    Style="{StaticResource MaterialDesignTabControl}">
+            <TabItem Header="我的主页" x:Name="MyMainPageTab">
+                <Frame x:Name="MyMainPageFrame" Margin="5,0"/>
+            </TabItem>
+            <TabItem Header="我要申请"></TabItem>
+            <TabItem Header="我要捐赠"></TabItem>
+            <TabItem Header="物资管理"></TabItem>
+            <TabItem Header="配送任务"></TabItem>
+        </TabControl>
     </Grid>
 </Window>
