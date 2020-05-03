@@ -31,6 +31,13 @@ namespace MDS.Client
 
         private void PrimaryButton_Click(object sender, RoutedEventArgs e)
         {
+            // TODO 假数据
+            UserInfo.Id = 0;
+            UserInfo.Name = "UXX65535";
+            UserInfo.PhoneNumber = "152-1111-1111";
+            UserInfo.HomeAddress = "XX省-XX市-XX区-XX街道-XX小区-XXXXXXXXXXXXX";
+            UserInfo.UserType = UserType.ADMIN;
+
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             Close();

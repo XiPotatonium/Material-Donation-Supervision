@@ -4,14 +4,15 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MDS.Client.NavigationPages"
+      xmlns:mds="clr-namespace:MDS.Client"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MyMainPage">
+      Title="MyMainPage"
+      Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid
@@ -33,20 +34,20 @@
                 <StackPanel Grid.Column="1"
                             VerticalAlignment="Center" 
                             Margin="10,0,0,0">
-                    <TextBlock Text="UXX65535"
+                    <TextBlock x:Name="UserNameTextBlock"
                                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
                                FontWeight="Bold"/>
-                    <TextBlock Text="管理员账户"
+                    <TextBlock x:Name="UserTypeTextBlock" 
                                Style="{StaticResource MaterialDesignCaptionTextBlock}"
                                Margin="0,5"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="1">
                 <StackPanel Grid.Row="1">
-                    <TextBlock Text="152-1111-1111"
+                    <TextBlock x:Name="PhoneNumberTextBlock" 
                                Margin="0,5"
                                Style="{StaticResource MaterialDesignBody1TextBlock}"/>
-                    <TextBlock Text="XX省-XX市-XX区-XX街道-XX小区-XXXXXXXXXXXXX"
+                    <TextBlock x:Name="HomeAddressTextBlock" 
                                TextWrapping="Wrap"
                                Width="170" Height="40"
                                HorizontalAlignment="Left"
@@ -54,38 +55,141 @@
                     <Button Style="{StaticResource MaterialDesignFlatAccentButton}" 
                             HorizontalAlignment="Left"
                             Foreground="#1A3A65" FontWeight="Bold" FontSize="16">
-                            个人资料设置 >
+                        个人资料设置 >
                     </Button>
                 </StackPanel>
             </Grid>
         </Grid>
 
-        <Grid x:Name="PART_Grid"
-              Grid.Row="1"
+        <Grid Grid.Row="1"
               Margin="0,10,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <TextBlock
-                Text="你的申请"
-                FontWeight="Bold"
-                Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                Grid.Row="0"/>
-        </Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Text="你的申请"
+                    FontWeight="Bold"
+                    Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                    Grid.Row="0"/>
+                <ListBox x:Name="UserApplicationList"
+                         Margin="0,5"
+                         Grid.Row="1"
+                         HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type local:UserApplicationViewModel}">
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock VerticalAlignment="Center"
+                                               Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                               Foreground="DeepSkyBlue"
+                                               Text="{Binding State}" />
+                                <StackPanel Margin="13,0,0,0"
+                                            Grid.Column="1">
+                                    <TextBlock>
+                                            <Run Text="申请时间: "/>
+                                            <Run Text="{Binding StartTime}"/>
+                                    </TextBlock>
+                                    <TextBlock>
+                                            <Run Text="订单编号: "/>
+                                            <Run Text="{Binding GUID}"/>
+                                    </TextBlock>
+                                    <TextBlock>
+                                            <Run Text="订单状态: "/>
+                                            <Run Text="{Binding State}"/>
+                                    </TextBlock>
+                                </StackPanel>
+                                <StackPanel Margin="0,0,16,0"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock FontWeight="Bold"
+                                               HorizontalAlignment="Right"
+                                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                               Text="{Binding Name}">
+                                    </TextBlock>
+                                    <TextBlock HorizontalAlignment="Right">
+                                            <Run Text=" × "/>
+                                            <Run Text="{Binding Quantity}"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
 
-        <Grid
-            Grid.Row="2"
-            Margin="0,10,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <TextBlock
-                Text="你的捐赠"
-                FontWeight="Bold"
-                Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                Grid.Row="0"/>
+            <Separator Grid.Column="1"
+                       HorizontalAlignment="Center"
+                       Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="0,8" BorderBrush="LightGray" BorderThickness="1"/>
+
+            <Grid Grid.Column="2"
+                  Margin="5,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Text="你的捐赠"
+                    FontWeight="Bold"
+                    Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                    Grid.Row="0"/>
+                <ListBox x:Name="UserDonationList"
+                         Margin="0,5"
+                         Grid.Row="1"
+                         HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type local:UserApplicationViewModel}">
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock VerticalAlignment="Center"
+                                               Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                               Foreground="DeepSkyBlue"
+                                               Text="{Binding State}" />
+                                <StackPanel Margin="13,0,0,0"
+                                            Grid.Column="1">
+                                    <TextBlock>
+                                            <Run Text="捐赠时间: "/>
+                                            <Run Text="{Binding StartTime}"/>
+                                    </TextBlock>
+                                    <TextBlock>
+                                            <Run Text="订单编号: "/>
+                                            <Run Text="{Binding GUID}"/>
+                                    </TextBlock>
+                                    <TextBlock>
+                                            <Run Text="订单状态: "/>
+                                            <Run Text="{Binding State}"/>
+                                    </TextBlock>
+                                </StackPanel>
+                                <StackPanel Margin="0,0,16,0"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock FontWeight="Bold"
+                                               HorizontalAlignment="Right"
+                                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                               Text="{Binding Name}">
+                                    </TextBlock>
+                                    <TextBlock HorizontalAlignment="Right">
+                                            <Run Text=" × "/>
+                                            <Run Text="{Binding Quantity}"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

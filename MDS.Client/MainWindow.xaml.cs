@@ -31,5 +31,17 @@ namespace MDS.Client
             MyMainPageFrame.Content = MyMainPage;
             MyDeliveryPageFrame.Content = MyDeliveryPage;
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // TODO 要根据用户类型调整tab，目前测试状态，禁用这段代码
+            // RefreshTabDisplay();
+        }
+
+        private void RefreshTabDisplay()
+        {
+            ManagePageTab.Visibility = UserInfo.UserType == UserType.ADMIN ? Visibility.Visible : Visibility.Collapsed;
+            MyDeliveryPageTab.Visibility = UserInfo.UserType == UserType.DELIVERER ? Visibility.Visible : Visibility.Collapsed;
+        }
     }
 }
