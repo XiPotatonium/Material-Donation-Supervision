@@ -23,12 +23,13 @@ namespace MDS.Client
     public partial class MainWindow : Window
     {
         private MyMainPage MyMainPage { set; get; } = new MyMainPage();
-
+        private MyDeliveryPage MyDeliveryPage { set; get; } = new MyDeliveryPage();
         public MainWindow()
         {
             InitializeComponent();
 
             MyMainPageFrame.Content = MyMainPage;
+            MyDeliveryPageFrame.Content = MyDeliveryPage;
         }
     }
 }

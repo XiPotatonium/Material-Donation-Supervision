@@ -9,6 +9,21 @@
       Title="MyDeliveryPage">
 
     <Grid>
-        
+        <TabControl x:Name="MainTabControl" BorderThickness="0"
+                    Style="{StaticResource MaterialDesignTabControl}">
+            <TabItem Header="信息总览" x:Name="OverviewPageTab">
+                <Frame x:Name="OverviewPageFrame" Margin="5,0"/>
+            </TabItem>
+            <TabItem Header="配送中" x:Name="ProcessingPageTab">
+                <Frame x:Name="ProcessingPageFrame" Margin="5,0"/>
+            </TabItem>
+            <TabItem Header="待接单" x:Name="WaitingPageTab">
+                <Frame x:Name="WaitingPageFrame" Margin="5,0"/>
+            </TabItem>
+            <TabItem Header="已完成" x:Name="HistoryPageTab">
+                <Frame x:Name="HistoryPageFrame" Margin="5,0"/>
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </Page>

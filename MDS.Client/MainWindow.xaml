@@ -15,7 +15,9 @@
             <TabItem Header="我要申请"></TabItem>
             <TabItem Header="我要捐赠"></TabItem>
             <TabItem Header="物资管理"></TabItem>
-            <TabItem Header="配送任务"></TabItem>
+            <TabItem Header="配送任务" x:Name="MyDeliveryPageTab">
+                <Frame x:Name="MyDeliveryPageFrame" Margin="5,0"/>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
