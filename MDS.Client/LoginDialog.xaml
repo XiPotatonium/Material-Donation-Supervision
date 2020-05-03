@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:MDS.Client"
         mc:Ignorable="d"
-        Title="LoginDialog" Width="350" Height="300"
+        Title="LoginDialog" Width="350" Height="270"
         WindowStartupLocation="CenterScreen">
     <Grid Margin="5">
         <Grid.RowDefinitions>
@@ -61,7 +61,7 @@
             </Grid.RowDefinitions>
             <Button x:Name="SwitchButton" Grid.Row="0"
                     HorizontalAlignment="Right"
-                    Content="注册"
+                    Content="去注册"
                     Margin="0,0,10,0"
                     Style="{StaticResource MaterialDesignFlatButton}"
                     Click="SwitchButton_Click"/>

@@ -50,14 +50,14 @@ namespace MDS.Client
                 case LoginDialogMode.LOGIN:
                     Mode = LoginDialogMode.REGISTER;
                     PrimaryButton.Content = "注册";
-                    SwitchButton.Content = "登陆";
+                    SwitchButton.Content = "去登陆";
                     LoginRoot.Visibility = Visibility.Collapsed;
                     RegisterRoot.Visibility = Visibility.Visible;
                     break;
                 case LoginDialogMode.REGISTER:
                     Mode = LoginDialogMode.LOGIN;
                     PrimaryButton.Content = "登陆";
-                    SwitchButton.Content = "注册";
+                    SwitchButton.Content = "去注册";
                     LoginRoot.Visibility = Visibility.Visible;
                     RegisterRoot.Visibility = Visibility.Collapsed;
                     break;
