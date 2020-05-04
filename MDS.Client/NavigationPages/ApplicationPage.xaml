@@ -1,0 +1,71 @@
+﻿<Page x:Class="MDS.Client.NavigationPages.ApplicationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MDS.Client.NavigationPages"
+      xmlns:controls="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+      xmlns:model="clr-namespace:MaterialDesignExtensions.Model;assembly=MaterialDesignExtensions"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ApplicationPage"
+      Loaded="Page_Loaded">
+    <Grid Margin="10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1">
+            <controls:TabControlStepper Layout="Horizontal"
+                                        ContentAnimationsEnabled="True"
+                                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                        DoneIconTemplate="{DynamicResource MaterialDesignStepDoneIconTemplate}"
+                                        ValidationErrorIconTemplate="{DynamicResource MaterialDesignStepValidationErrorIconTemplate}">
+                <TabItem>
+                    <TabItem.Header>
+                        <model:StepTitleHeader FirstLevelTitle="填写申请" />
+                    </TabItem.Header>
+                    <Grid>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="先填写NMLGCB的申请再继续" TextWrapping="WrapWithOverflow" />
+                            <ComboBox/>
+                            <TextBox/>
+                        </StackPanel>
+                        <controls:StepButtonBar Continue="下一步" VerticalAlignment="Bottom"/>
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <model:StepTitleHeader FirstLevelTitle="等待审批" />
+                    </TabItem.Header>
+                    <Grid>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="我说好好好别着急" TextWrapping="WrapWithOverflow" />
+                        </StackPanel>
+                        <controls:StepButtonBar Continue="取消" VerticalAlignment="Bottom"/>
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <model:StepTitleHeader FirstLevelTitle="等待配送" />
+                    </TabItem.Header>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="侦测到在途的巨便打击" TextWrapping="WrapWithOverflow" />
+                    </StackPanel>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <model:StepTitleHeader FirstLevelTitle="确认送达" />
+                    </TabItem.Header>
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock Text="升级完成 哦耶！" />
+                        </StackPanel>
+                        <controls:StepButtonBar Continue="确认" VerticalAlignment="Bottom"/>
+                    </Grid>
+                </TabItem>
+            </controls:TabControlStepper>
+        </Grid>
+    </Grid>
+</Page>

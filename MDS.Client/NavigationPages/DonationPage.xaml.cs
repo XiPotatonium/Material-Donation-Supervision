@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace MDS.Client.NavigationPages
 {
     /// <summary>
-    /// Interaction logic for ApplyPage.xaml
+    /// Interaction logic for DonatePage.xaml
     /// </summary>
-    public partial class ApplyPage : Page
+    public partial class DonationPage : Page
     {
-        public ApplyPage()
+        public DonationPage()
         {
             InitializeComponent();
         }

@@ -8,17 +8,22 @@
         Title="MainWindow" Height="700" Width="900"
         Loaded="Window_Loaded">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <TabControl x:Name="MainTabControl" BorderThickness="0"
-                    Style="{StaticResource MaterialDesignTabControl}">
-            <TabItem Header="我的主页" x:Name="MyMainPageTab">
-                <Frame x:Name="MyMainPageFrame" Margin="10,0"/>
-            </TabItem>
-            <TabItem Header="我要申请"></TabItem>
-            <TabItem Header="我要捐赠"></TabItem>
-            <TabItem Header="物资管理" x:Name="ManagePageTab"></TabItem>
-            <TabItem Header="配送任务" x:Name="MyDeliveryPageTab">
-                <Frame x:Name="MyDeliveryPageFrame" Margin="5,0"/>
-            </TabItem>
+                    Style="{StaticResource MaterialDesignTabControl}"
+                    SelectionChanged="MainTabControl_SelectionChanged">
+            <TabItem Header="我的主页" x:Name="MyMainPageTab"/>
+            <TabItem Header="申请页面" x:Name="ApplicationPageTab"/>
+            <TabItem Header="捐赠页面" x:Name="DonationPageTab"/>
+            <TabItem Header="物资管理" x:Name="ManagePageTab"/>
+            <TabItem Header="配送任务" x:Name="MyDeliveryPageTab"/>
         </TabControl>
+        <Frame x:Name="PART_Frame"
+               NavigationUIVisibility="Hidden"
+               Grid.Row="1"
+               Margin="10,0"/>
     </Grid>
 </Window>

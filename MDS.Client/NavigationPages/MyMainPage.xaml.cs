@@ -19,12 +19,20 @@ namespace MDS.Client.NavigationPages
     /// </summary>
     public partial class MyMainPage : Page
     {
+        private MainWindow ParentWindow { get; } = null;
         private ObservableCollection<UserApplicationViewModel> UserApplications { set; get; }
         private ObservableCollection<UserDonationViewModel> UserDonations { set; get; }
 
-        public MyMainPage()
+        private MyMainPage()
         {
             InitializeComponent();
+        }
+
+        public MyMainPage(MainWindow parent)
+        {
+            InitializeComponent();
+
+            ParentWindow = parent;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -86,9 +94,18 @@ namespace MDS.Client.NavigationPages
             PhoneNumberTextBlock.Text = UserInfo.PhoneNumber;
             HomeAddressTextBlock.Text = UserInfo.HomeAddress;
         }
+
+        private void UserApplicationList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            UserApplicationViewModel userApplicationViewModel = (UserApplicationViewModel)UserApplicationList.SelectedItem;
+            if (userApplicationViewModel != null)
+            {
+                ParentWindow.NavigateToApplicationPageAndDisplay(userApplicationViewModel);
+            }
+        }
     }
 
-    class UserApplicationViewModel
+    public class UserApplicationViewModel
     {
         public string GUID { set; get; }
         public string Name { set; get; }
@@ -97,7 +114,7 @@ namespace MDS.Client.NavigationPages
         public DateTime StartTime { set; get; }
     }
 
-    class UserDonationViewModel
+    public class UserDonationViewModel
     {
         public string GUID { set; get; }
         public string Name { set; get; }

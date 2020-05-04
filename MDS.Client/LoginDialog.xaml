@@ -25,30 +25,54 @@
               Margin="15,0">
             <Grid x:Name="LoginRoot"
                   HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBox Grid.Row="0"
+                <materialDesign:PackIcon Kind="AccountEdit" 
+                                         Grid.Row="0" Grid.Column="0" 
+                                         HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                         Margin="0,0,10,0"/>
+                <TextBox Grid.Row="0" Grid.Column="1"
                      x:Name="LoginUserNameTextBox"
                      HorizontalAlignment="Stretch" VerticalAlignment="Center"
                      materialDesign:HintAssist.Hint="用户名" />
-                <PasswordBox Grid.Row="1"
+                <materialDesign:PackIcon Kind="FormTextboxPassword" 
+                                         Grid.Row="1" Grid.Column="0" 
+                                         HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                         Margin="0,0,10,0"/>
+                <PasswordBox Grid.Row="1" Grid.Column="1"
                          x:Name="LoginPasswordBox"
                          HorizontalAlignment="Stretch" VerticalAlignment="Center"
                          materialDesign:HintAssist.Hint="密码"/>
             </Grid>
             <Grid x:Name="RegisterRoot" Visibility="Collapsed"
                   HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBox Grid.Row="0"
+                <materialDesign:PackIcon Kind="AccountEdit" 
+                                         Grid.Row="0" Grid.Column="0" 
+                                         HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                         Margin="0,0,10,0"/>
+                <TextBox Grid.Row="0" Grid.Column="1"
                      x:Name="RegisterUserNameTextBox"
                      HorizontalAlignment="Stretch" VerticalAlignment="Center"
                      materialDesign:HintAssist.Hint="用户名" />
-                <PasswordBox Grid.Row="1"
+                <materialDesign:PackIcon Kind="FormTextboxPassword" 
+                                         Grid.Row="1" Grid.Column="0" 
+                                         HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                         Margin="0,0,10,0"/>
+                <PasswordBox Grid.Row="1" Grid.Column="1"
                          x:Name="RegisterPasswordBox"
                          HorizontalAlignment="Stretch" VerticalAlignment="Center"
                          materialDesign:HintAssist.Hint="密码"/>

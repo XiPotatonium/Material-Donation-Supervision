@@ -81,7 +81,8 @@
                 <ListBox x:Name="UserApplicationList"
                          Margin="0,5"
                          Grid.Row="1"
-                         HorizontalContentAlignment="Stretch">
+                         HorizontalContentAlignment="Stretch"
+                         MouseDoubleClick="UserApplicationList_MouseDoubleClick">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type local:UserApplicationViewModel}">
                             <Grid HorizontalAlignment="Stretch">
