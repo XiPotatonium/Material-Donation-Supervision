@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -35,8 +36,12 @@ namespace MDS.Client.NavigationPages
             ParentWindow = parent;
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            // TODO 这里会有一个网络请求，假装网络延时
+            ParentWindow.SetProgressBar(true);
+            await Task.Delay(200);
+
             // TODO 假数据
             UserApplications = new ObservableCollection<UserApplicationViewModel>();
             UserApplications.Add(new UserApplicationViewModel()
@@ -71,6 +76,8 @@ namespace MDS.Client.NavigationPages
             UserDonationList.ItemsSource = UserDonations;
 
             RefreshUserInfoDisplay();
+
+            ParentWindow.SetProgressBar(false);
         }
 
         private void RefreshUserInfoDisplay()

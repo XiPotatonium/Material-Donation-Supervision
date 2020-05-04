@@ -69,5 +69,10 @@ namespace MDS.Client
             MainTabControl.SelectedItem = ApplicationPageTab;
             PART_Frame.Content = new ApplicationPage(this, userApplicationViewModel);
         }
+
+        public void SetProgressBar(bool isInDeterminate)
+        {
+            PART_ProgressBar.IsIndeterminate = isInDeterminate;
+        }
     }
 }

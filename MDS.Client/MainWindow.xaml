@@ -11,6 +11,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TabControl x:Name="MainTabControl" BorderThickness="0"
                     Style="{StaticResource MaterialDesignTabControl}"
@@ -25,5 +26,8 @@
                NavigationUIVisibility="Hidden"
                Grid.Row="1"
                Margin="10,0"/>
+        <ProgressBar x:Name="PART_ProgressBar"
+                     IsIndeterminate="False"
+                     Grid.Row="2"/>
     </Grid>
 </Window>
