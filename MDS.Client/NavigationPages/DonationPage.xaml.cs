@@ -18,9 +18,32 @@ namespace MDS.Client.NavigationPages
     /// </summary>
     public partial class DonationPage : Page
     {
-        public DonationPage()
+        private MainWindow ParentWindow { get; } = null;
+        private DonationListViewModel UserDonationViewModel { set; get; } = null;
+
+        private DonationPage()
         {
             InitializeComponent();
+        }
+
+        public DonationPage(MainWindow parent)
+        {
+            InitializeComponent();
+
+            ParentWindow = parent;
+        }
+
+        public DonationPage(MainWindow parent, DonationListViewModel userDonationViewModel)
+        {
+            InitializeComponent();
+
+            ParentWindow = parent;
+            UserDonationViewModel = userDonationViewModel;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

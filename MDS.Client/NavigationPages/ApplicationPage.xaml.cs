@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,7 +20,8 @@ namespace MDS.Client.NavigationPages
     public partial class ApplicationPage : Page
     {
         private MainWindow ParentWindow { get; } = null;
-        private UserApplicationViewModel UserApplicationViewModel { set; get; } = null;
+        private ApplicationListViewModel ApplicationViewModel { set; get; } = null;
+        private ApplicationDetailViewModel ApplicationDetailViewModel { set; get; } = null;
 
         private ApplicationPage()
         {
@@ -33,17 +35,28 @@ namespace MDS.Client.NavigationPages
             ParentWindow = parent;
         }
 
-        public ApplicationPage(MainWindow parent, UserApplicationViewModel userApplicationViewModel)
+        public ApplicationPage(MainWindow parent, ApplicationListViewModel userApplicationViewModel)
         {
             InitializeComponent();
 
             ParentWindow = parent;
-            UserApplicationViewModel = userApplicationViewModel;
+            ApplicationViewModel = userApplicationViewModel;
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
+            ParentWindow.SetProgressBar(true);
+            if (ApplicationViewModel != null)
+            {
+                // TODO 网络请求
+                await Task.Delay(200);
+            }
+            ParentWindow.SetProgressBar(false);
         }
+    }
+
+    public class ApplicationDetailViewModel
+    {
+
     }
 }

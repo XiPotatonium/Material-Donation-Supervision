@@ -84,7 +84,7 @@
                          HorizontalContentAlignment="Stretch"
                          MouseDoubleClick="UserApplicationList_MouseDoubleClick">
                     <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type local:UserApplicationViewModel}">
+                        <DataTemplate DataType="{x:Type local:ApplicationListViewModel}">
                             <Grid HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -146,9 +146,10 @@
                 <ListBox x:Name="UserDonationList"
                          Margin="0,5"
                          Grid.Row="1"
-                         HorizontalContentAlignment="Stretch">
+                         HorizontalContentAlignment="Stretch"
+                         MouseDoubleClick="UserDonationList_MouseDoubleClick">
                     <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type local:UserApplicationViewModel}">
+                        <DataTemplate DataType="{x:Type local:ApplicationListViewModel}">
                             <Grid HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>

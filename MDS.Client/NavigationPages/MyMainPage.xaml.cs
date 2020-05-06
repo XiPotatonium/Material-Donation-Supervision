@@ -21,8 +21,8 @@ namespace MDS.Client.NavigationPages
     public partial class MyMainPage : Page
     {
         private MainWindow ParentWindow { get; } = null;
-        private ObservableCollection<UserApplicationViewModel> UserApplications { set; get; }
-        private ObservableCollection<UserDonationViewModel> UserDonations { set; get; }
+        private ObservableCollection<ApplicationListViewModel> UserApplications { set; get; }
+        private ObservableCollection<DonationListViewModel> UserDonations { set; get; }
 
         private MyMainPage()
         {
@@ -40,11 +40,19 @@ namespace MDS.Client.NavigationPages
         {
             // TODO 这里会有一个网络请求，假装网络延时
             ParentWindow.SetProgressBar(true);
-            await Task.Delay(200);
+            await UpdateApplicationList();
+            await UpdateDonationList();
+            RefreshUserInfoDisplay();
+            ParentWindow.SetProgressBar(false);
+        }
+
+        private async Task UpdateApplicationList()
+        {
+            await Task.Delay(100);
 
             // TODO 假数据
-            UserApplications = new ObservableCollection<UserApplicationViewModel>();
-            UserApplications.Add(new UserApplicationViewModel()
+            UserApplications = new ObservableCollection<ApplicationListViewModel>();
+            UserApplications.Add(new ApplicationListViewModel()
             {
                 GUID = "uhsdhasdbqwi2178412d",
                 Name = "消毒水(500ml)",
@@ -52,7 +60,7 @@ namespace MDS.Client.NavigationPages
                 State = "已送达",
                 StartTime = DateTime.Now
             });
-            UserApplications.Add(new UserApplicationViewModel()
+            UserApplications.Add(new ApplicationListViewModel()
             {
                 GUID = "uhsdhasdbqwi2178412d",
                 Name = "医用酒精(500ml)",
@@ -62,9 +70,14 @@ namespace MDS.Client.NavigationPages
             });
 
             UserApplicationList.ItemsSource = UserApplications;
+        }
 
-            UserDonations = new ObservableCollection<UserDonationViewModel>();
-            UserDonations.Add(new UserDonationViewModel()
+        private async Task UpdateDonationList()
+        {
+            await Task.Delay(100);
+
+            UserDonations = new ObservableCollection<DonationListViewModel>();
+            UserDonations.Add(new DonationListViewModel()
             {
                 GUID = "uhsdhasdbqwi2178412d",
                 Name = "医用酒精(500ml)",
@@ -74,10 +87,6 @@ namespace MDS.Client.NavigationPages
             });
 
             UserDonationList.ItemsSource = UserDonations;
-
-            RefreshUserInfoDisplay();
-
-            ParentWindow.SetProgressBar(false);
         }
 
         private void RefreshUserInfoDisplay()
@@ -104,15 +113,24 @@ namespace MDS.Client.NavigationPages
 
         private void UserApplicationList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            UserApplicationViewModel userApplicationViewModel = (UserApplicationViewModel)UserApplicationList.SelectedItem;
+            ApplicationListViewModel userApplicationViewModel = (ApplicationListViewModel)UserApplicationList.SelectedItem;
             if (userApplicationViewModel != null)
             {
                 ParentWindow.NavigateToApplicationPageAndDisplay(userApplicationViewModel);
             }
         }
+
+        private void UserDonationList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DonationListViewModel userDonationViewModel = (DonationListViewModel)UserDonationList.SelectedItem;
+            if (userDonationViewModel != null)
+            {
+                ParentWindow.NavigateToDonationPageAndDisplay(userDonationViewModel);
+            }
+        }
     }
 
-    public class UserApplicationViewModel
+    public class ApplicationListViewModel
     {
         public string GUID { set; get; }
         public string Name { set; get; }
@@ -121,7 +139,7 @@ namespace MDS.Client.NavigationPages
         public DateTime StartTime { set; get; }
     }
 
-    public class UserDonationViewModel
+    public class DonationListViewModel
     {
         public string GUID { set; get; }
         public string Name { set; get; }

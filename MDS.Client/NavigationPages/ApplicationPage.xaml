@@ -32,7 +32,9 @@
                             <ComboBox/>
                             <TextBox/>
                         </StackPanel>
-                        <controls:StepButtonBar Continue="下一步" VerticalAlignment="Bottom"/>
+                        <controls:StepButtonBar x:Name="ApplyStepButtonBar" 
+                                                Continue="下一步"
+                                                VerticalAlignment="Bottom"/>
                     </Grid>
                 </TabItem>
                 <TabItem>
