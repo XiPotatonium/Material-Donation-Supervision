@@ -6,68 +6,146 @@
       xmlns:local="clr-namespace:MDS.Client.NavigationPages"
       xmlns:controls="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
       xmlns:model="clr-namespace:MaterialDesignExtensions.Model;assembly=MaterialDesignExtensions"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ApplicationPage"
       Loaded="Page_Loaded">
     <Grid Margin="10,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="1">
-            <controls:TabControlStepper Layout="Horizontal"
-                                        ContentAnimationsEnabled="True"
-                                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                        DoneIconTemplate="{DynamicResource MaterialDesignStepDoneIconTemplate}"
-                                        ValidationErrorIconTemplate="{DynamicResource MaterialDesignStepValidationErrorIconTemplate}">
-                <TabItem>
-                    <TabItem.Header>
-                        <model:StepTitleHeader FirstLevelTitle="填写申请" />
-                    </TabItem.Header>
-                    <Grid>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="先填写NMLGCB的申请再继续" TextWrapping="WrapWithOverflow" />
-                            <ComboBox/>
-                            <TextBox/>
-                        </StackPanel>
-                        <controls:StepButtonBar x:Name="ApplyStepButtonBar" 
-                                                Continue="下一步"
-                                                VerticalAlignment="Bottom"/>
+        <controls:TabControlStepper x:Name="PART_Stepper" Layout="Horizontal"
+                                    ContentAnimationsEnabled="True"
+                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                    DoneIconTemplate="{DynamicResource MaterialDesignStepDoneIconTemplate}"
+                                    ValidationErrorIconTemplate="{DynamicResource MaterialDesignStepValidationErrorIconTemplate}">
+            <TabItem>
+                <TabItem.Header>
+                    <model:StepTitleHeader FirstLevelTitle="填写申请" />
+                </TabItem.Header>
+                <Grid>
+                    <Grid Width="600">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="7*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox x:Name="MaterialSelectComboBox"
+                                  Grid.Row="0" Margin="0,10"
+                                  materialDesign:HintAssist.Hint="选择申请类型"/>
+                        <materialDesign:Card Grid.Row="1"
+                                             Background="DarkGray" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                             Width="300" HorizontalAlignment="Center">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="60" />
+                                </Grid.RowDefinitions>
+                                <TextBlock x:Name="UserNameTextBlock" 
+                                           Grid.Row="0" Margin="16 16 16 4"
+                                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                           Text="你滴名字"/>
+                                <TextBlock x:Name="UserPhoneTextBlock" Grid.Row="1"
+                                           Margin="16 0 16 2"
+                                           VerticalAlignment="Center" HorizontalAlignment="Left"
+                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                           Text="电话号码"/>
+                                <Separator Grid.Row="2"
+                                           Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <TextBlock x:Name="UserAddressTextBlock" Grid.Row="3"
+                                           Margin="16 2 16 8"
+                                           Text="饿我去的话丢弃维达力的解耦2金额哦哦i建瓯的无穷的气味都i就·哦"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Center" HorizontalAlignment="Left"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"/>
+                                <Button HorizontalAlignment="Right" VerticalAlignment="Center"
+                                        Style="{StaticResource MaterialDesignIconButton}"
+                                        Width="40" Grid.Row="0"
+                                        ToolTip="设置收货信息">
+                                    <materialDesign:PackIcon Kind="Settings"/>
+                                </Button>
+                            </Grid>
+                        </materialDesign:Card>
                     </Grid>
-                </TabItem>
-                <TabItem>
-                    <TabItem.Header>
-                        <model:StepTitleHeader FirstLevelTitle="等待审批" />
-                    </TabItem.Header>
-                    <Grid>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="我说好好好别着急" TextWrapping="WrapWithOverflow" />
-                        </StackPanel>
-                        <controls:StepButtonBar Continue="取消" VerticalAlignment="Bottom"/>
-                    </Grid>
-                </TabItem>
-                <TabItem>
-                    <TabItem.Header>
-                        <model:StepTitleHeader FirstLevelTitle="等待配送" />
-                    </TabItem.Header>
+                    <controls:StepButtonBar x:Name="ApplyStepButtonBar" 
+                                            Continue="下一步"
+                                            VerticalAlignment="Bottom"/>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <model:StepTitleHeader FirstLevelTitle="等待审批" />
+                </TabItem.Header>
+                <Grid>
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="侦测到在途的巨便打击" TextWrapping="WrapWithOverflow" />
+                        <TextBlock Text="我说好好好别着急" TextWrapping="WrapWithOverflow" />
                     </StackPanel>
-                </TabItem>
-                <TabItem>
-                    <TabItem.Header>
-                        <model:StepTitleHeader FirstLevelTitle="确认送达" />
-                    </TabItem.Header>
-                    <Grid>
-                        <StackPanel>
-                            <TextBlock Text="升级完成 哦耶！" />
-                        </StackPanel>
-                        <controls:StepButtonBar Continue="确认" VerticalAlignment="Bottom"/>
-                    </Grid>
-                </TabItem>
-            </controls:TabControlStepper>
+                    <controls:StepButtonBar Cancel="取消" VerticalAlignment="Bottom"/>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <model:StepTitleHeader FirstLevelTitle="等待配送" />
+                </TabItem.Header>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="侦测到在途的巨便打击" TextWrapping="WrapWithOverflow" />
+                </StackPanel>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <model:StepTitleHeader FirstLevelTitle="确认送达" />
+                </TabItem.Header>
+                <Grid>
+                    <StackPanel>
+                        <TextBlock Text="升级完成 哦耶！" />
+                    </StackPanel>
+                    <controls:StepButtonBar Continue="确认" VerticalAlignment="Bottom"/>
+                </Grid>
+            </TabItem>
+        </controls:TabControlStepper>
+        <Grid>
+            <materialDesign:Card x:Name="PART_Card"
+                                 Background="#03a9f4" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                 Padding="0" Width="500"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center"
+                                 Visibility="Collapsed">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="CardApplicationName" Text="你滴申请" 
+                               Grid.Row="0" Grid.ColumnSpan="2" Margin="16 16 16 4"
+                               Style="{StaticResource MaterialDesignHeadline5TextBlock}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Margin="16 16 16 4"
+                               HorizontalAlignment="Right"
+                               Style="{StaticResource MaterialDesignSubtitle1TextBlock}">
+                        <Run Text=" × "/>
+                        <Run x:Name="CardApplicationQuantity" Text="100"/>
+                    </TextBlock>
+                    <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="16 0 16 8"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Style="{StaticResource MaterialDesignTextBlock}">
+                        <Run Text="订单编号:"/>
+                        <Run x:Name="CardApplicationId" Text="faseji1d1h9sja1"/>
+                    </TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Margin="16 0 16 8"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Style="{StaticResource MaterialDesignTextBlock}">
+                        <Run Text="申请时间:"/>
+                        <Run x:Name="CardApplicationTime" Text="2019-06-18"/>
+                    </TextBlock>
+                </Grid>
+            </materialDesign:Card>
         </Grid>
     </Grid>
 </Page>

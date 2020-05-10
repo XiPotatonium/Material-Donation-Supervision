@@ -46,12 +46,42 @@ namespace MDS.Client.NavigationPages
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ParentWindow.SetProgressBar(true);
+
+            await Task.Delay(200);
             if (ApplicationViewModel != null)
             {
-                // TODO 网络请求
-                await Task.Delay(200);
+                // TODO 网络请求ApplicationDetailViewModel
+
+                // TODO 根据ApplicationViewModel和ApplicationDetailViewModel来生成正确的Tab显示
+                PART_Stepper.SelectedIndex = 1;
             }
+            else
+            {
+                // TODO 填写新申请，请求所有可选的物资
+
+                // TODO 初始化好填写界面
+                PART_Stepper.SelectedIndex = 0;
+            }
+
+            RefreshApplicationCardView();
+
             ParentWindow.SetProgressBar(false);
+        }
+
+        private void RefreshApplicationCardView()
+        {
+            if (PART_Stepper.SelectedIndex != 0)
+            {
+                PART_Card.Visibility = Visibility.Visible;
+                CardApplicationId.Text = ApplicationViewModel.GUID;
+                CardApplicationName.Text = ApplicationViewModel.Name;
+                CardApplicationQuantity.Text = ApplicationViewModel.Quantity.ToString();
+                CardApplicationTime.Text = ApplicationViewModel.StartTime.ToString();
+            }
+            else
+            {
+                PART_Card.Visibility = Visibility.Collapsed;
+            }
         }
     }
 
