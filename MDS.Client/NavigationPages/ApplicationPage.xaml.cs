@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace MDS.Client.NavigationPages
 {
@@ -23,6 +24,7 @@ namespace MDS.Client.NavigationPages
         private MainWindow ParentWindow { get; } = null;
         private ApplicationListViewModel ApplicationViewModel { set; get; } = null;
         private ApplicationDetailViewModel ApplicationDetailViewModel { set; get; } = null;
+        private ObservableCollection<MaterialListViewModel> MaterialListViewModels { set; get; } = null;
 
         private ApplicationPage()
         {
@@ -58,8 +60,25 @@ namespace MDS.Client.NavigationPages
             }
             else
             {
-                // TODO 填写新申请，请求所有可选的物资
-
+                // 填写新申请
+                // TODO 请求所有可选的物资
+                MaterialListViewModels = new ObservableCollection<MaterialListViewModel>()
+                {
+                    new MaterialListViewModel()
+                    {
+                        Name = "物资1",
+                        Constraint = 10,
+                        Description = "物资一的介绍"
+                    },
+                    new MaterialListViewModel()
+                    {
+                        Name = "物资2",
+                        Constraint = 100,
+                        Description = "物资er的介绍"
+                    }
+                };
+                MaterialSelectListBox.ItemsSource = MaterialListViewModels;
+                RefreshAddressInfo();
                 // TODO 初始化好填写界面
                 PART_Stepper.Controller.GotoStep(0);
             }
@@ -84,6 +103,13 @@ namespace MDS.Client.NavigationPages
             {
                 PART_Card.Visibility = Visibility.Collapsed;
             }
+        }
+
+        private void RefreshAddressInfo()
+        {
+            UserNameTextBlock.Text = UserInfo.Name;
+            UserPhoneTextBlock.Text = UserInfo.PhoneNumber;
+            UserAddressTextBlock.Text = UserInfo.HomeAddress;
         }
 
         private void AddressSettingButton_Click(object sender, RoutedEventArgs e)
@@ -119,10 +145,30 @@ namespace MDS.Client.NavigationPages
         {
             // TODO 这里需要发送撤销请求的包
         }
+
+        private void MaterialSelectListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MaterialListViewModel selected = (MaterialListViewModel)MaterialSelectListBox.SelectedItem;
+            if (selected != null)
+            {
+                MaterialNameTextBlock.Text = selected.Name;
+            }
+            else
+            {
+                MaterialNameTextBlock.Text = "请选择想要申请的物资";
+            }
+        }
     }
 
     public class ApplicationDetailViewModel
     {
 
+    }
+
+    public class MaterialListViewModel
+    {
+        public string Name { set; get; }
+        public string Description { set; get; }
+        public int Constraint { set; get; }
     }
 }
