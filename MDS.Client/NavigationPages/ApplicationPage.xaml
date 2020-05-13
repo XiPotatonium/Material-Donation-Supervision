@@ -13,64 +13,87 @@
       Loaded="Page_Loaded">
     <Grid Margin="10,0">
         <controls:TabControlStepper x:Name="PART_Stepper" Layout="Horizontal"
-                                    ContentAnimationsEnabled="True"
+                                    ContentAnimationsEnabled="True" IsLinear="True"
                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                     DoneIconTemplate="{DynamicResource MaterialDesignStepDoneIconTemplate}"
-                                    ValidationErrorIconTemplate="{DynamicResource MaterialDesignStepValidationErrorIconTemplate}">
+                                    ValidationErrorIconTemplate="{DynamicResource MaterialDesignStepValidationErrorIconTemplate}"
+                                    ContinueNavigation="PART_Stepper_ContinueNavigation"
+                                    CancelNavigation="PART_Stepper_CancelNavigation">
             <TabItem>
                 <TabItem.Header>
                     <model:StepTitleHeader FirstLevelTitle="填写申请" />
                 </TabItem.Header>
                 <Grid>
-                    <Grid Width="600">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="7*"/>
-                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox x:Name="MaterialSelectComboBox"
-                                  Grid.Row="0" Margin="0,10"
-                                  materialDesign:HintAssist.Hint="选择申请类型"/>
-                        <materialDesign:Card Grid.Row="1"
-                                             Background="DarkGray" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                             Width="300" HorizontalAlignment="Center">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="60" />
-                                </Grid.RowDefinitions>
-                                <TextBlock x:Name="UserNameTextBlock" 
-                                           Grid.Row="0" Margin="16 16 16 4"
-                                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                                           Text="你滴名字"/>
-                                <TextBlock x:Name="UserPhoneTextBlock" Grid.Row="1"
-                                           Margin="16 0 16 2"
-                                           VerticalAlignment="Center" HorizontalAlignment="Left"
-                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                                           Text="电话号码"/>
-                                <Separator Grid.Row="2"
-                                           Style="{StaticResource MaterialDesignLightSeparator}" />
-                                <TextBlock x:Name="UserAddressTextBlock" Grid.Row="3"
-                                           Margin="16 2 16 8"
-                                           Text="饿我去的话丢弃维达力的解耦2金额哦哦i建瓯的无穷的气味都i就·哦"
-                                           TextWrapping="Wrap"
-                                           VerticalAlignment="Center" HorizontalAlignment="Left"
-                                           Style="{StaticResource MaterialDesignBody2TextBlock}"/>
-                                <Button HorizontalAlignment="Right" VerticalAlignment="Center"
-                                        Style="{StaticResource MaterialDesignIconButton}"
-                                        Width="40" Grid.Row="0"
-                                        ToolTip="设置收货信息">
-                                    <materialDesign:PackIcon Kind="Settings"/>
-                                </Button>
+                        <ListBox x:Name="MaterialSelectListBox"
+                                 Grid.Column="0" Margin="0,10">
+                        </ListBox>
+                        <Separator Grid.Column="1" HorizontalAlignment="Center"
+                                   Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="0,8" BorderBrush="LightGray" BorderThickness="1"/>
+                        <Grid Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card Grid.Row="0"
+                                                 Background="DarkGray" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                                 Width="300" HorizontalAlignment="Center">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="60" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock x:Name="UserNameTextBlock" 
+                                               Grid.Row="0" Margin="16 16 16 4"
+                                               Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                               Text="你滴名字"/>
+                                    <TextBlock x:Name="UserPhoneTextBlock" Grid.Row="1"
+                                               Margin="16 0 16 2"
+                                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                                               Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                               Text="电话号码"/>
+                                    <Separator Grid.Row="2"
+                                               Style="{StaticResource MaterialDesignLightSeparator}" />
+                                    <TextBlock x:Name="UserAddressTextBlock" Grid.Row="3"
+                                               Margin="16 2 16 8"
+                                               Text="饿我去的话丢弃维达力的解耦2金额哦哦i建瓯的无穷的气味都i就·哦"
+                                               TextWrapping="Wrap"
+                                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                                               Style="{StaticResource MaterialDesignBody2TextBlock}"/>
+                                    <Button x:Name="AddressSettingButton" 
+                                            HorizontalAlignment="Right" VerticalAlignment="Center"
+                                            Style="{StaticResource MaterialDesignIconButton}"
+                                            Width="40" Grid.Row="0"
+                                            Click="AddressSettingButton_Click"
+                                            ToolTip="设置收货信息">
+                                        <materialDesign:PackIcon Kind="Settings"/>
+                                    </Button>
+                                </Grid>
+                            </materialDesign:Card>
+                            <Grid Grid.Row="1" Margin="0,40,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="QuantityTextBox" Grid.Column="1"/>
                             </Grid>
-                        </materialDesign:Card>
+                        </Grid>
                     </Grid>
                     <controls:StepButtonBar x:Name="ApplyStepButtonBar" 
+                                            Grid.Row="1"
                                             Continue="下一步"
                                             VerticalAlignment="Bottom"/>
                 </Grid>
@@ -80,10 +103,15 @@
                     <model:StepTitleHeader FirstLevelTitle="等待审批" />
                 </TabItem.Header>
                 <Grid>
-                    <StackPanel Orientation="Vertical">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical"
+                                Grid.Row="0">
                         <TextBlock Text="我说好好好别着急" TextWrapping="WrapWithOverflow" />
                     </StackPanel>
-                    <controls:StepButtonBar Cancel="取消" VerticalAlignment="Bottom"/>
+                    <controls:StepButtonBar Grid.Row="1" Cancel="取消" VerticalAlignment="Bottom"/>
                 </Grid>
             </TabItem>
             <TabItem>
@@ -94,15 +122,19 @@
                     <TextBlock Text="侦测到在途的巨便打击" TextWrapping="WrapWithOverflow" />
                 </StackPanel>
             </TabItem>
-            <TabItem>
+            <TabItem x:Name="TabStep4">
                 <TabItem.Header>
                     <model:StepTitleHeader FirstLevelTitle="确认送达" />
                 </TabItem.Header>
                 <Grid>
-                    <StackPanel>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
                         <TextBlock Text="升级完成 哦耶！" />
                     </StackPanel>
-                    <controls:StepButtonBar Continue="确认" VerticalAlignment="Bottom"/>
+                    <controls:StepButtonBar Grid.Row="1" Continue="确认" VerticalAlignment="Bottom"/>
                 </Grid>
             </TabItem>
         </controls:TabControlStepper>
