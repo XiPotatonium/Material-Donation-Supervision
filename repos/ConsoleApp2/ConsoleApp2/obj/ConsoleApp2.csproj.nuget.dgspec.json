@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Users\\Administrator\\source\\repos\\ConsoleApp2\\ConsoleApp2\\ConsoleApp2.csproj": {}
+    "C:\\Users\\Administrator\\Downloads\\Material-Donation-Supervision-master\\repos\\ConsoleApp2\\ConsoleApp2\\ConsoleApp2.csproj": {}
   },
   "projects": {
-    "D:\\Users\\Administrator\\source\\repos\\ConsoleApp2\\ConsoleApp2\\ConsoleApp2.csproj": {
+    "C:\\Users\\Administrator\\Downloads\\Material-Donation-Supervision-master\\repos\\ConsoleApp2\\ConsoleApp2\\ConsoleApp2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Users\\Administrator\\source\\repos\\ConsoleApp2\\ConsoleApp2\\ConsoleApp2.csproj",
+        "projectUniqueName": "C:\\Users\\Administrator\\Downloads\\Material-Donation-Supervision-master\\repos\\ConsoleApp2\\ConsoleApp2\\ConsoleApp2.csproj",
         "projectName": "ConsoleApp2",
-        "projectPath": "D:\\Users\\Administrator\\source\\repos\\ConsoleApp2\\ConsoleApp2\\ConsoleApp2.csproj",
+        "projectPath": "C:\\Users\\Administrator\\Downloads\\Material-Donation-Supervision-master\\repos\\ConsoleApp2\\ConsoleApp2\\ConsoleApp2.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\Users\\Administrator\\source\\repos\\ConsoleApp2\\ConsoleApp2\\obj\\",
+        "outputPath": "C:\\Users\\Administrator\\Downloads\\Material-Donation-Supervision-master\\repos\\ConsoleApp2\\ConsoleApp2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
