@@ -47,15 +47,14 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Margin="0,0,16,0"
-                                            Grid.Column="1"
-                                            HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                    Grid.Column="1"
+                                                    HorizontalAlignment="Right" VerticalAlignment="Center">
                                             <TextBlock FontWeight="Bold"
-                                               HorizontalAlignment="Right"
-                                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                               Text="{Binding Name}">
+                                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                                       Text="{Binding Name}">
                                             </TextBlock>
                                             <TextBlock HorizontalAlignment="Right">
-                                            <Run Text="{Binding Constraint}"/>
+                                                <Run Text="{Binding Constraint}"/>
                                             </TextBlock>
                                         </StackPanel>
                                     </Grid>
@@ -123,10 +122,14 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Vertical"
-                                Grid.Row="0">
-                        <TextBlock Text="我说好好好别着急" TextWrapping="WrapWithOverflow"
-                                   Style="{StaticResource MaterialDesignCaptionTextBlock}"/>
+                    <StackPanel Grid.Row="0" Margin="0,40,0,0"
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Center" VerticalAlignment="Top"
+                                Opacity="0.5">
+                        <materialDesign:PackIcon Kind="TextBoxSearchOutline" Width="50" Height="50"/>
+                        <TextBlock Text="申请已提交，正在审批"
+                                   Style="{StaticResource MaterialDesignHeadline4TextBlock}" 
+                                   VerticalAlignment="Center" Margin="10,0,0,0"/>
                     </StackPanel>
                     <controls:StepButtonBar Grid.Row="1" Cancel="取消" VerticalAlignment="Bottom"/>
                 </Grid>
@@ -135,26 +138,50 @@
                 <TabItem.Header>
                     <model:StepTitleHeader FirstLevelTitle="等待配送" />
                 </TabItem.Header>
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="侦测到在途的巨便打击" TextWrapping="WrapWithOverflow" />
+                <StackPanel Margin="0,40,0,0"
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Center" VerticalAlignment="Top"
+                            Opacity="0.5">
+                    <materialDesign:PackIcon Kind="TruckDeliveryOutline" Width="50" Height="50"/>
+                    <TextBlock Text="物资配送中"
+                                Style="{StaticResource MaterialDesignHeadline4TextBlock}" 
+                                VerticalAlignment="Center" Margin="10,0,0,0"/>
                 </StackPanel>
             </TabItem>
             <TabItem x:Name="TabStep4">
                 <TabItem.Header>
-                    <model:StepTitleHeader FirstLevelTitle="确认送达" />
+                    <model:StepTitleHeader x:Name="Step4Header" FirstLevelTitle="确认送达" />
                 </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0">
-                        <TextBlock Text="升级完成 哦耶！" />
+                    <StackPanel x:Name="ArrivedPanel"
+                                Grid.Row="0" Margin="0,40,0,0"
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Center" VerticalAlignment="Top"
+                                Opacity="0.5">
+                        <materialDesign:PackIcon Kind="PackageVariantClosed" Width="50" Height="50"/>
+                        <TextBlock Text="物资已送达，待签收"
+                                Style="{StaticResource MaterialDesignHeadline4TextBlock}" 
+                                VerticalAlignment="Center" Margin="10,0,0,0"/>
                     </StackPanel>
-                    <controls:StepButtonBar Grid.Row="1" Continue="确认" VerticalAlignment="Bottom"/>
+                    <StackPanel x:Name="AllDonePanel" Visibility="Collapsed"
+                                Grid.Row="0" Margin="0,40,0,0"
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Center" VerticalAlignment="Top"
+                                Opacity="0.5">
+                        <materialDesign:PackIcon Kind="Check" Width="50" Height="50"/>
+                        <TextBlock Text="已签收"
+                                Style="{StaticResource MaterialDesignHeadline4TextBlock}" 
+                                VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    </StackPanel>
+                    <controls:StepButtonBar x:Name="ConfirmStepBar" Grid.Row="1" Continue="确认送达" VerticalAlignment="Bottom"/>
                 </Grid>
             </TabItem>
         </controls:TabControlStepper>
+        
         <Grid>
             <materialDesign:Card x:Name="PART_Card"
                                  Background="#03a9f4" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
@@ -196,5 +223,15 @@
                 </Grid>
             </materialDesign:Card>
         </Grid>
+
+        <materialDesign:Snackbar x:Name="PART_SnackBar"
+                                 IsActive="False"
+                                 VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+                                 Margin="5,0,5,5">
+            <materialDesign:SnackbarMessage x:Name="SnackBarContent" 
+                                            Content="警告消息"
+                                            ActionContent="我知道了"
+                                            ActionClick="SnackBarContent_ActionClick"/>
+        </materialDesign:Snackbar>
     </Grid>
 </Page>

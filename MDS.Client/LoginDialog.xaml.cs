@@ -57,13 +57,14 @@ namespace MDS.Client
 
         private async Task Login()
         {
-            if (string.IsNullOrEmpty(LoginUserNameTextBox.Text) || string.IsNullOrEmpty(LoginPasswordBox.Password))
-            {
-                // 本地用户名密码有效检测
-                PART_SnackBar.IsActive = true;
-                SnackBarContent.Content = "用户名或密码不能为空";
-                return;
-            }
+            // TODO: 这段代码开发的时候注释掉，上线的时候要用
+            //if (string.IsNullOrEmpty(LoginUserNameTextBox.Text) || string.IsNullOrEmpty(LoginPasswordBox.Password))
+            //{
+            //    // 本地用户名密码有效检测
+            //    PART_SnackBar.IsActive = true;
+            //    SnackBarContent.Content = "用户名或密码不能为空";
+            //    return;
+            //}
 
             PrimaryButton.IsEnabled = false;    // 防止重复按下
 
@@ -72,6 +73,8 @@ namespace MDS.Client
                 UserName = LoginUserNameTextBox.Text,
                 Password = Hash(LoginPasswordBox.Password)
             });
+
+            loginResponse = new LoginResponse() { UserId = 0 };    // TODO 假数据
 
             if (loginResponse.UserId < 0)
             {

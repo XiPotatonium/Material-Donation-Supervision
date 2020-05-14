@@ -158,6 +158,11 @@ namespace MDS.Client.NavigationPages
                 MaterialNameTextBlock.Text = "请选择想要申请的物资";
             }
         }
+
+        private void SnackBarContent_ActionClick(object sender, RoutedEventArgs e)
+        {
+            PART_SnackBar.IsActive = false;
+        }
     }
 
     public class ApplicationDetailViewModel
