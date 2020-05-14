@@ -128,6 +128,28 @@ namespace MDS.Client.NavigationPages
                 ParentWindow.NavigateToDonationPageAndDisplay(userDonationViewModel);
             }
         }
+
+        private void ModifyInfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            NewPhoneTextBox.Text = UserInfo.PhoneNumber;
+            NewAddressTextBox.Text = UserInfo.HomeAddress;
+            ModifyInfoDialog.IsOpen = true;
+        }
+
+        private async void DialogConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            ModifyInfoDialog.IsOpen = false;
+            ParentWindow.SetProgressBar(true);
+            // TODO 发送请求
+            await Task.Delay(100);
+            RefreshUserInfoDisplay();
+            ParentWindow.SetProgressBar(false);
+        }
+
+        private void DialogCancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            ModifyInfoDialog.IsOpen = false;
+        }
     }
 
     public class ApplicationListViewModel

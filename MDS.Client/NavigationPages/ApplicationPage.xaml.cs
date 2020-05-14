@@ -112,10 +112,6 @@ namespace MDS.Client.NavigationPages
             UserAddressTextBlock.Text = UserInfo.HomeAddress;
         }
 
-        private void AddressSettingButton_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
         private async void PART_Stepper_ContinueNavigation(object sender, MaterialDesignExtensions.Controls.StepperNavigationEventArgs args)
         {
             int idx = 0;
@@ -162,6 +158,28 @@ namespace MDS.Client.NavigationPages
         private void SnackBarContent_ActionClick(object sender, RoutedEventArgs e)
         {
             PART_SnackBar.IsActive = false;
+        }
+
+        private void AddressSettingButton_Click(object sender, RoutedEventArgs e)
+        {
+            NewPhoneTextBox.Text = UserInfo.PhoneNumber;
+            NewAddressTextBox.Text = UserInfo.HomeAddress;
+            ModifyInfoDialog.IsOpen = true;
+        }
+
+        private async void DialogConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            ModifyInfoDialog.IsOpen = false;
+            ParentWindow.SetProgressBar(true);
+            // TODO 发送请求
+            await Task.Delay(100);
+            RefreshAddressInfo();
+            ParentWindow.SetProgressBar(false);
+        }
+
+        private void DialogCancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            ModifyInfoDialog.IsOpen = false;
         }
     }
 
