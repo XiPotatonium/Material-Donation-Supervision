@@ -94,5 +94,15 @@
                     Content="登陆"
                     Click="PrimaryButton_Click"/>
         </Grid>
+
+        <materialDesign:Snackbar x:Name="PART_SnackBar"
+                                 IsActive="False"
+                                 VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+                                 Grid.RowSpan="3" Margin="5,0,5,5">
+            <materialDesign:SnackbarMessage x:Name="SnackBarContent" 
+                                            Content="警告消息"
+                                            ActionContent="我知道了"
+                                            ActionClick="SnackBarContent_ActionClick"/>
+        </materialDesign:Snackbar>
     </Grid>
 </Window>

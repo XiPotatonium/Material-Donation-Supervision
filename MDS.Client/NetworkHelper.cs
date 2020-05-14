@@ -18,10 +18,11 @@ namespace MDS.Client
         }
 
         // 测试用，正式使用的时候要重写
-        //public static Task<TResponse> GetAsync<TResponse>(IReturn<TResponse> req)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public static async Task<TResponse> GetAsync<TResponse>(IReturn<TResponse> req)
+        {
+            await Task.Delay(100);
+            return default;
+        }
 
         // TODO 网络接口
         // req可以传DTO里面的LoginRequest来测试，返回LoginResponse就好了
