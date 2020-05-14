@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTO;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,15 +33,22 @@ namespace MDS.Client
 
         private async void PrimaryButton_Click(object sender, RoutedEventArgs e)
         {
+            PrimaryButton.IsEnabled = false;    // 防止重复按下
+            await Task.Delay(1);                // 模拟网络延迟
+            LoginResponse loginResponse = NetworkHelper.Get(new LoginRequest()
+            {
+                UserName = LoginUserNameTextBox.Text,
+                Password = LoginPasswordBox.Password    // TODO 哈希
+            });
+
             // TODO 假数据
-            UserInfo.Id = 0;
+            UserInfo.Id = loginResponse.UserId;
             UserInfo.Name = "UXX65535";
             UserInfo.PhoneNumber = "152-1111-1111";
             UserInfo.HomeAddress = "XX省-XX市-XX区-XX街道-XX小区-XXXXXXXXXXXXX";
             UserInfo.UserType = UserType.ADMIN;
 
-            PrimaryButton.IsEnabled = false;    // 防止重复按下
-            await Task.Delay(200);              // 模拟网络延迟
+            MessageBox.Show($"DEBUG: UserID={loginResponse.UserId}");
 
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
