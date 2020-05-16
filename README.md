@@ -2,7 +2,7 @@
 软工
 
 ## 数据包信息
-一个物资的数据包的全部信息如下：  
+#### 一个物资的数据包的全部信息如下：  
    string GUID          订单号  
    string Name          物资名称  
    int Quantity         物资数量  
