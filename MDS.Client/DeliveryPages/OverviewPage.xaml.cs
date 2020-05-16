@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTO;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -21,79 +22,120 @@ namespace MDS.Client.DeliveryPages
     public partial class OverviewPage : Page
     {
         private ObservableCollection<DeliveryListViewModel> processingList { set; get; }
+        private ObservableCollection<DeliveryListViewModel> waitingList { set; get; }
+        private ListCount listCount { set; get; }
         public OverviewPage()
         {
             InitializeComponent();
+            processingList = new ObservableCollection<DeliveryListViewModel>();
+            waitingList = new ObservableCollection<DeliveryListViewModel>();
+            listCount = new ListCount();
+
+            userProcessingList.ItemsSource = processingList;
+            userWaitingList.ItemsSource = waitingList;
+            userProcessingCount.DataContext = listCount;
+            userWaitingCount.DataContext = listCount;
         }
         private async Task UpdateProcessingList()
-        {
+        {/*
+            DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryListRequest()
+            {
+                DelivererId = UserInfo.Id,
+                State = DeliveryState.Processing
+            });*/
+            // TODO 假数据
+
             await Task.Delay(100);
-            // TODO
-            processingList = new ObservableCollection<DeliveryListViewModel>();
-            processingList.Add(new DeliveryListViewModel()
+            DeliveryListResponse deliveryListResponse = new DeliveryListResponse();
+            deliveryListResponse.Items = new List<Item>();
+            deliveryListResponse.Items.Add(new Item()
             {
-                GUID = "sicnwilx13123x",
-                Name = "消毒水(500ml)",
-                Quantity = 5,
-                Departure = "a仓库",
-                Destination = "xx小区",
-                StartTime = DateTime.Now
-            });
-            processingList.Add(new DeliveryListViewModel()
-            {
-                GUID = "wiucndsin2341s",
-                Name = "医用酒精(500ml)",
+                GUID = "qh1i2hisqh1is",
+                Name = "水",
                 Quantity = 100,
-                Departure = "yy小区",
-                Destination = "b仓库",
+                Departure = "a小区",
+                Destination = "0仓库",
                 StartTime = DateTime.Now
             });
-            //
-            userProcessingList.ItemsSource = processingList;
-            ListCount c = new ListCount();
-            c.ProcessingCount = processingList.Count;
-            userProcessingCount.DataContext = c;
+            //////
+            foreach (Item item in deliveryListResponse.Items)
+            {
+                processingList.Add(new DeliveryListViewModel()
+                {
+                    GUID = item.GUID,
+                    Name = item.Name,
+                    Quantity = item.Quantity,
+                    Departure = item.Departure,
+                    Destination = item.Destination,
+                    StartTime = item.StartTime
+                });
+            }
+            listCount.ProcessingCount = processingList.Count;
         }
         private async Task UpdateWaitingList()
-        {
+        {/*
+            DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryListRequest()
+            {
+                DelivererId = UserInfo.Id,
+                State = DeliveryState.Waiting
+            });*/
+
+
+            // TODO 假数据
             await Task.Delay(100);
+            DeliveryListResponse deliveryListResponse = new DeliveryListResponse();
+            deliveryListResponse.Items = new List<Item>();
+            deliveryListResponse.Items.Add(new Item()
+            {
+                GUID = "uytg76uyt67u",
+                Name = "开水",
+                Quantity = 100,
+                Departure = "8仓库",
+                Destination = "a小区",
+                StartTime = DateTime.Now
+            });
+            //////
+            foreach (Item item in deliveryListResponse.Items)
+            {
+                waitingList.Add(new DeliveryListViewModel()
+                {
+                    GUID = item.GUID,
+                    Name = item.Name,
+                    Quantity = item.Quantity,
+                    Departure = item.Departure,
+                    Destination = item.Destination,
+                    StartTime = item.StartTime
+                });
+            }
+            listCount.WaitingCount = waitingList.Count;
         }
         private async Task UpdateList()
         {
-            // TODO 这里会有一个网络请求，假装网络延时
             await UpdateProcessingList();
             await UpdateWaitingList();
         }
-        private async void PageLoaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            // TODO 这里会有一个网络请求，假装网络延时
             await UpdateList();
-        }
-        private void UserProcessingList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void UserWaitingList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
         }
     }
     public class ListCount
     {
         public int ProcessingCount { set; get; }
+        public int WaitingCount { set; get; }
     }
     public class DeliveryListViewModel
     {
         public string GUID { set; get; }
         public string Name { set; get; }
         public int Quantity { set; get; }
-        public string StartID { set; get; }
-        public string FinishID { set; get; }
+        public int StartID { set; get; }
+        public int FinishID { set; get; }
         public string Departure { set; get; }
         public string Destination { set; get; }
-        public string State { set; get; }
+        //public string State { set; get; }
         public DateTime StartTime { set; get; }
         public DateTime FinishTime { set; get; }
+
     }
 }

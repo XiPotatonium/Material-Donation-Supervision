@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="WaitingPage"
-      Loaded="PageLoaded">
+      Loaded="Page_Loaded">
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto">
         <DataGrid x:Name="userWaitingList"
@@ -28,13 +28,12 @@
                                     Content="确认"
                                     FontSize="12"
                                     Margin="0, 0, 0, 0"
-                                    Click="ButtonAccept_Clicked"
-                                    CommandParameter="{Binding GUID}"/>
+                                    Click="ButtonMove_Clicked"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="任务号" Width="80" Binding="{Binding GUID}" MinWidth="10"/>
-                <DataGridTextColumn Header="名称" Width="120" Binding="{Binding Name}" MinWidth="10"/>
+                <DataGridTextColumn Header="订单号" Width="80" Binding="{Binding GUID}" MinWidth="10" x:Name="selectedGuid"/>
+                <DataGridTextColumn Header="物资名称" Width="120" Binding="{Binding Name}" MinWidth="10"/>
                 <DataGridTextColumn Header="数量" Width="80" Binding="{Binding Quantity}" MinWidth="10"/>
                 <DataGridTextColumn Header="发起人ID" Width="100" Binding="{Binding StartID}" MinWidth="10"/>
                 <DataGridTextColumn Header="接收人ID" Width="100" Binding="{Binding FinishID}" MinWidth="10"/>

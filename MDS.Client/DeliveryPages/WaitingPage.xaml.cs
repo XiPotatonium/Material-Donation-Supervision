@@ -1,4 +1,5 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using DTO;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,52 +26,59 @@ namespace MDS.Client.DeliveryPages
         public WaitingPage()
         {
             InitializeComponent();
+            waitingList = new ObservableCollection<DeliveryListViewModel>();
+            userWaitingList.DataContext = waitingList;
         }
-        private void ButtonAccept_Clicked(object sender, RoutedEventArgs e)
-        {
-            InputDialog dialog = new InputDialog(0);
-            dialog.ShowDialog();
-            if (dialog.DialogResult == true)
-            {
 
-            }
-        }
-        private async void PageLoaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            // TODO 这里会有一个网络请求，假装网络延时
             await UpdateWaitingList();
         }
         private async Task UpdateWaitingList()
-        {
+        {/*
+            DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryListRequest()
+            {
+                DelivererId = UserInfo.Id,
+                State = DeliveryState.Waiting
+            });
+            *////todo 假数据
             await Task.Delay(100);
-            // TODO
-            waitingList = new ObservableCollection<DeliveryListViewModel>();
-            waitingList.Add(new DeliveryListViewModel()
+            DeliveryListResponse deliveryListResponse = new DeliveryListResponse();
+            deliveryListResponse.Items = new List<Item>();
+            deliveryListResponse.Items.Add(new Item()
             {
-                GUID = "sicnwilx13123x",
-                Name = "消毒水(500ml)",
-                Quantity = 5,
-                Departure = "a仓库",
-                Destination = "xx小区",
-                StartID = "1234",
-                FinishID = "asdf",
-                StartTime = DateTime.Now,
-                FinishTime = DateTime.Now
-            });
-            waitingList.Add(new DeliveryListViewModel()
-            {
-                GUID = "wiucndsin2341s",
-                Name = "医用酒精(500ml)",
+                GUID = "qh1i2hisqh1is",
+                Name = "水",
                 Quantity = 100,
-                Departure = "yy小区",
-                Destination = "b仓库",
-                StartID = "1234",
-                FinishID = "asdf",
+                StartID = 12345,
+                FinishID = 98765,
+                Departure = "a小区",
+                Destination = "0仓库",
                 StartTime = DateTime.Now,
                 FinishTime = DateTime.Now
             });
-            //
-            userWaitingList.DataContext = waitingList;
+            /////////////////
+            foreach (Item item in deliveryListResponse.Items)
+            {
+                waitingList.Add(new DeliveryListViewModel()
+                {
+                    GUID = item.GUID,
+                    Name = item.Name,
+                    Quantity = item.Quantity,
+                    StartID = item.StartID,
+                    FinishID = item.FinishID,
+                    Departure = item.Departure,
+                    Destination = item.Destination,
+                    StartTime = item.StartTime,
+                    FinishTime = item.FinishTime
+                });
+            }
+        }
+        public void ButtonMove_Clicked(object sender, RoutedEventArgs e)
+        {
+            DeliveryListViewModel cur = (DeliveryListViewModel)userWaitingList.SelectedItem;
+            InputDialog dialog = new InputDialog(cur.GUID, 0);
+            dialog.ShowDialog();
         }
     }
 

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using DTO;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -17,10 +19,12 @@ namespace MDS.Client.DeliveryPages
     /// </summary>
     public partial class InputDialog : Window
     {
+        private string GUID;
         private int type;
         private MutualString info = new MutualString();
-        public InputDialog(int t)
+        public InputDialog(string guid, int t)
         {
+            this.GUID = guid;
             this.type = t;
             if (this.type == 0)
             {
@@ -33,63 +37,45 @@ namespace MDS.Client.DeliveryPages
             InitializeComponent();
             userOutput.DataContext = info;
         }
-        private void ButtonConfirm_Clicked(object sender, RoutedEventArgs e)
+        private async void ButtonConfirm_Clicked(object sender, RoutedEventArgs e)
         {
-            string inputs = userInput.Password;
-            bool check = false;
-
-            if (this.type == 0)
+            DeliveryMoveResponse deliveryMoveResponse = await NetworkHelper.GetAsync(new DeliveryMoveRequest()
             {
-                check = CheckInputStartID(inputs);
-            }
-            else if (this.type == 1)
-            {
-                check = CheckInputFinishID(inputs);
-            }
+                DelivererId = UserInfo.Id,
+                GUID = this.GUID,
+                SecureId = userInput.Password   // todo string这里可能有问题
+            });
 
-            if (check == true)
+            deliveryMoveResponse = new DeliveryMoveResponse() { Check = 0 };    // todo 假数据
+
+            if (deliveryMoveResponse.Check == 0)
             {
                 MessageBox.Show("操作成功");
                 this.DialogResult = true;
             }
+            else if (deliveryMoveResponse.Check == 1)
+            {
+                MessageBox.Show("验证ID错误");
+            }
+            else if (deliveryMoveResponse.Check == 2)
+            {
+                MessageBox.Show("任务状态有误");
+            }
             else
             {
-                MessageBox.Show("密码错误");
-                userInput.Password = "";
+                MessageBox.Show("验证ID错误");
             }
+            userInput.Password = "";
         }
         private void ButtonCancel_Clicked(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("操作取消");
             this.DialogResult = false;
         }
-
-        private bool CheckInputStartID(string inputs)
-        {
-            if (inputs == "123")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        private bool CheckInputFinishID(string inputs)
-        {
-            if (inputs == "456")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
     }
     public class MutualString
     {
         public string output { set; get; }
-        public string input { set; get; }
+        public int input { set; get; }
     }
 }

@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="HistoryPage"
-      Loaded="PageLoaded">
+      Loaded="Page_Loaded">
     <ScrollViewer HorizontalScrollBarVisibility="Auto">
         <DataGrid x:Name="userHistoryList"
                   Style="{StaticResource MaterialDesignDataGrid}"
@@ -20,8 +20,8 @@
                   CanUserReorderColumns="True" 
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="任务号" Width="80" Binding="{Binding GUID}"/>
-                <DataGridTextColumn Header="名称" Width="120" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="订单号" Width="80" Binding="{Binding GUID}"/>
+                <DataGridTextColumn Header="物资名称" Width="120" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="数量" Width="80" Binding="{Binding Quantity}"/>
                 <DataGridTextColumn Header="发起人ID" Width="100" Binding="{Binding StartID}"/>
                 <DataGridTextColumn Header="接收人ID" Width="100" Binding="{Binding FinishID}"/>

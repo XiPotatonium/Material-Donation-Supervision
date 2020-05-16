@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTO;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -24,44 +25,52 @@ namespace MDS.Client.DeliveryPages
         public HistoryPage()
         {
             InitializeComponent();
-
+            historyList = new ObservableCollection<DeliveryListViewModel>();
+            userHistoryList.DataContext = historyList;
         }
-        private async void PageLoaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            // TODO 这里会有一个网络请求，假装网络延时
             await UpdateHistoryList();
         }
         private async Task UpdateHistoryList()
-        {
+        {/*
+            DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryListRequest()
+            {
+                DelivererId = UserInfo.Id,
+                State = DeliveryState.Finished
+            });
+            *////todo 假数据
             await Task.Delay(100);
-            // TODO
-            historyList = new ObservableCollection<DeliveryListViewModel>();
-            historyList.Add(new DeliveryListViewModel()
+            DeliveryListResponse deliveryListResponse = new DeliveryListResponse();
+            deliveryListResponse.Items = new List<Item>();
+            deliveryListResponse.Items.Add(new Item()
             {
-                GUID = "sicnwilx13123x",
-                Name = "消毒水(500ml)",
-                Quantity = 5,
-                Departure = "a仓库",
-                Destination = "xx小区",
-                StartID = "1234",
-                FinishID = "asdf",
-                StartTime = DateTime.Now,
-                FinishTime = DateTime.Now
-            });
-            historyList.Add(new DeliveryListViewModel()
-            {
-                GUID = "wiucndsin2341s",
-                Name = "医用酒精(500ml)",
+                GUID = "qh1i2hisqh1is",
+                Name = "水",
                 Quantity = 100,
-                Departure = "yy小区",
-                Destination = "b仓库",
-                StartID = "1234",
-                FinishID = "asdf",
+                StartID = 12345,
+                FinishID = 98765,
+                Departure = "a小区",
+                Destination = "0仓库",
                 StartTime = DateTime.Now,
                 FinishTime = DateTime.Now
             });
-            //
-            userHistoryList.DataContext = historyList;
+            /////////////////
+            foreach (Item item in deliveryListResponse.Items)
+            {
+                historyList.Add(new DeliveryListViewModel()
+                {
+                    GUID = item.GUID,
+                    Name = item.Name,
+                    Quantity = item.Quantity,
+                    StartID = item.StartID,
+                    FinishID = item.FinishID,
+                    Departure = item.Departure,
+                    Destination = item.Destination,
+                    StartTime = item.StartTime,
+                    FinishTime = item.FinishTime
+                });
+            }
         }
     }
 }

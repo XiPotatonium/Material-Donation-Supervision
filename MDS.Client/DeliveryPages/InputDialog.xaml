@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MDS.Client.DeliveryPages"
         mc:Ignorable="d"
         Title="操作验证" Height="125" Width="250"
-        >
+        FocusManager.FocusedElement="{Binding ElementName=userInput}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -33,12 +33,13 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0"
-                    Style="{StaticResource WindowButtonStyle}"
+                    Style="{StaticResource MaterialDesignFlatButton}"
                     Content="确认"
+                    IsDefault="True"
                     Click="ButtonConfirm_Clicked"
                     x:Name="buttonConfirm"></Button>
             <Button Grid.Column="1"
-                    Style="{StaticResource WindowButtonStyle}"
+                    Style="{StaticResource MaterialDesignFlatButton}"
                     Content="取消"
                     Click="ButtonCancel_Clicked"
                     x:Name="buttonCancel"></Button>

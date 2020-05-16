@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="OverviewPage"
-      Loaded="PageLoaded">
+      Loaded="Page_Loaded">
 
     <Grid Margin="10,10,10,0">
         <Grid.ColumnDefinitions>
@@ -29,8 +29,7 @@
             <ListBox x:Name="userProcessingList"
                      Margin="0,5"
                      Grid.Row="1"
-                     HorizontalContentAlignment="Stretch"
-                     MouseDoubleClick="UserProcessingList_MouseDoubleClick">
+                     HorizontalContentAlignment="Stretch">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type local:DeliveryListViewModel}">
                         <Grid HorizontalAlignment="Stretch">
@@ -45,16 +44,16 @@
                             <StackPanel Margin="13,0,0,0"
                                             Grid.Column="1">
                                 <TextBlock>
-                                            <Run Text="申请时间: "/>
-                                            <Run Text="{Binding StartTime}"/>
-                                </TextBlock>
-                                <TextBlock>
                                             <Run Text="订单编号: "/>
                                             <Run Text="{Binding GUID}"/>
                                 </TextBlock>
                                 <TextBlock>
-                                            <Run Text="订单状态: "/>
-                                            <Run Text="{Binding State}"/>
+                                            <Run Text="申请时间: "/>
+                                            <Run Text="{Binding StartTime}"/>
+                                </TextBlock>
+                                <TextBlock>
+                                            <Run Text="目的地: "/>
+                                            <Run Text="{Binding Destination}"/>
                                 </TextBlock>
                             </StackPanel>
                             <StackPanel Margin="0,0,16,0"
@@ -80,15 +79,16 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="待接单"
-                       FontWeight="Bold"
+            <TextBlock FontWeight="Bold"
                        Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                       Grid.Row="0"/>
+                       Grid.Row="0">
+                <Run Text="配送中"></Run>
+                <Run Name="userWaitingCount" Text="{Binding Path=WaitingCount}"></Run>
+            </TextBlock>
             <ListBox x:Name="userWaitingList"
                      Margin="0,5"
                      Grid.Row="1"
-                     HorizontalContentAlignment="Stretch"
-                     MouseDoubleClick="UserWaitingList_MouseDoubleClick">
+                     HorizontalContentAlignment="Stretch">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type local:DeliveryListViewModel}">
                         <Grid HorizontalAlignment="Stretch">
@@ -103,16 +103,16 @@
                             <StackPanel Margin="13,0,0,0"
                                             Grid.Column="1">
                                 <TextBlock>
-                                            <Run Text="申请时间: "/>
-                                            <Run Text="{Binding StartTime}"/>
-                                </TextBlock>
-                                <TextBlock>
                                             <Run Text="订单编号: "/>
                                             <Run Text="{Binding GUID}"/>
                                 </TextBlock>
                                 <TextBlock>
-                                            <Run Text="订单状态: "/>
-                                            <Run Text="{Binding State}"/>
+                                            <Run Text="申请时间: "/>
+                                            <Run Text="{Binding StartTime}"/>
+                                </TextBlock>
+                                <TextBlock>
+                                            <Run Text="始发地: "/>
+                                            <Run Text="{Binding Departure}"/>
                                 </TextBlock>
                             </StackPanel>
                             <StackPanel Margin="0,0,16,0"
