@@ -6,173 +6,132 @@
       xmlns:local="clr-namespace:MDS.Client.DeliveryPages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="OverviewPage">
+      Title="OverviewPage"
+      Loaded="PageLoaded">
 
-    <Grid>
+    <Grid Margin="10,10,10,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="110"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" 
-                       VerticalAlignment="Top"
-                       HorizontalAlignment="Left"
-                       Width="100" Height="150"
-                       Margin="5"/>
-                <StackPanel Grid.Column="1"
-                            VerticalAlignment="Top" 
-                            Margin="5,0,0,0">
-                    <TextBlock Text="配送员ID："
-                               Style="{StaticResource MaterialDesignCaptionTextBlock}"
-                               Margin="0,5"/>
-                    <TextBlock Text="UXX65535"
-                               Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                               FontWeight="Bold"/>
-                    <TextBlock Text="已认证"
-                               Style="{StaticResource MaterialDesignCaptionTextBlock}"
-                               HorizontalAlignment="Left"
-                               Margin="10,5"/>
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="110"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="35"></RowDefinition>
-                        <RowDefinition Height="35"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0"
-                               Text="电话号码："
-                               FontSize="16"
-                               FontWeight="Bold"
-                               Margin="5"
-                               HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Row="1"
-                               Text="身份证号："
-                               FontSize="16"
-                               FontWeight="Bold"
-                               Margin="5"
-                               HorizontalAlignment="Right"/>
-                </Grid>
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="35"></RowDefinition>
-                        <RowDefinition Height="35"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0"
-                               Text="0571-11111111111"
-                               FontSize="16"
-                               Margin="5"
-                               HorizontalAlignment="Left"/>
-                    <TextBlock Grid.Row="1"
-                               Text="11111111111111111X"
-                               FontSize="16"
-                               Margin="5"
-                               HorizontalAlignment="Left"/>
-                </Grid>
-            </Grid>
+            <TextBlock FontWeight="Bold"
+                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                       Grid.Row="0">
+                <Run Text="配送中"></Run>
+                <Run Name="userProcessingCount" Text="{Binding Path=ProcessingCount}"></Run>
+            </TextBlock>
+            <ListBox x:Name="userProcessingList"
+                     Margin="0,5"
+                     Grid.Row="1"
+                     HorizontalContentAlignment="Stretch"
+                     MouseDoubleClick="UserProcessingList_MouseDoubleClick">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type local:DeliveryListViewModel}">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center"
+                                               Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                               Foreground="DeepSkyBlue"
+                                               Text="{Binding State}" />
+                            <StackPanel Margin="13,0,0,0"
+                                            Grid.Column="1">
+                                <TextBlock>
+                                            <Run Text="申请时间: "/>
+                                            <Run Text="{Binding StartTime}"/>
+                                </TextBlock>
+                                <TextBlock>
+                                            <Run Text="订单编号: "/>
+                                            <Run Text="{Binding GUID}"/>
+                                </TextBlock>
+                                <TextBlock>
+                                            <Run Text="订单状态: "/>
+                                            <Run Text="{Binding State}"/>
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel Margin="0,0,16,0"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <TextBlock FontWeight="Bold"
+                                               HorizontalAlignment="Right"
+                                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                               Text="{Binding Name}">
+                                </TextBlock>
+                                <TextBlock HorizontalAlignment="Right">
+                                            <Run Text=" × "/>
+                                            <Run Text="{Binding Quantity}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
-        <Grid Grid.Column="1" Margin="10">
+        <Grid Grid.Column="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"></RowDefinition>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0"
-                       Text="配送中："
-                       FontSize="20"
+            <TextBlock Text="待接单"
                        FontWeight="Bold"
-                       Margin="5"
-                       HorizontalAlignment="Left"/>
-            <ScrollViewer Grid.Row="1"
-                          VerticalScrollBarVisibility="Auto">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0"
-                                   Text="任务号"
-                                   FontSize="20"
-                                   Margin="5"
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock Grid.Column="1"
-                                   Text="目的地"
-                                   FontSize="20"
-                                   Margin="5"
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock Grid.Column="2"
-                                   Text="始发地"
-                                   FontSize="20"
-                                   Margin="5"
-                                   HorizontalAlignment="Center"/>
-                    </Grid>
-                    <StackPanel x:Name="overviewProcessingList">
-
-                    </StackPanel>
-                </Grid>
-            </ScrollViewer>
-            <TextBlock Grid.Row="2"
-                       Text="待接单："
-                       FontSize="20"
-                       FontWeight="Bold"
-                       Margin="5"
-                       HorizontalAlignment="Left"/>
-            <ScrollViewer Grid.Row="3"
-                          VerticalScrollBarVisibility="Auto">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0"
-                                   Text="任务号"
-                                   FontSize="20"
-                                   Margin="5"
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock Grid.Column="1"
-                                   Text="目的地"
-                                   FontSize="20"
-                                   Margin="5"
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock Grid.Column="2"
-                                   Text="始发地"
-                                   FontSize="20"
-                                   Margin="5"
-                                   HorizontalAlignment="Center"/>
-                    </Grid>
-                    <StackPanel x:Name="overviewWaitingList">
-
-                    </StackPanel>
-                </Grid>
-            </ScrollViewer>
-        </Grid>
+                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                       Grid.Row="0"/>
+            <ListBox x:Name="userWaitingList"
+                     Margin="0,5"
+                     Grid.Row="1"
+                     HorizontalContentAlignment="Stretch"
+                     MouseDoubleClick="UserWaitingList_MouseDoubleClick">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type local:DeliveryListViewModel}">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center"
+                                               Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                               Foreground="DeepSkyBlue"
+                                               Text="{Binding State}" />
+                            <StackPanel Margin="13,0,0,0"
+                                            Grid.Column="1">
+                                <TextBlock>
+                                            <Run Text="申请时间: "/>
+                                            <Run Text="{Binding StartTime}"/>
+                                </TextBlock>
+                                <TextBlock>
+                                            <Run Text="订单编号: "/>
+                                            <Run Text="{Binding GUID}"/>
+                                </TextBlock>
+                                <TextBlock>
+                                            <Run Text="订单状态: "/>
+                                            <Run Text="{Binding State}"/>
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel Margin="0,0,16,0"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <TextBlock FontWeight="Bold"
+                                               HorizontalAlignment="Right"
+                                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                               Text="{Binding Name}">
+                                </TextBlock>
+                                <TextBlock HorizontalAlignment="Right">
+                                            <Run Text=" × "/>
+                                            <Run Text="{Binding Quantity}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>  
     </Grid>
 </Page>

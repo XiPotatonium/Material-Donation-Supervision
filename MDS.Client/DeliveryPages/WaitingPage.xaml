@@ -6,9 +6,43 @@
       xmlns:local="clr-namespace:MDS.Client.DeliveryPages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="WaitingPage">
+      Title="WaitingPage"
+      Loaded="PageLoaded">
 
-    <Grid>
-        
-    </Grid>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <DataGrid x:Name="userWaitingList"
+                  Style="{StaticResource MaterialDesignDataGrid}"
+                  ItemsSource="{Binding}"
+                  IsReadOnly="True"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserResizeColumns="True"
+                  CanUserSortColumns="True"
+                  CanUserReorderColumns="True" 
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="接单" Width="80" MinWidth="10">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                    Content="确认"
+                                    FontSize="12"
+                                    Margin="0, 0, 0, 0"
+                                    Click="ButtonAccept_Clicked"
+                                    CommandParameter="{Binding GUID}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="任务号" Width="80" Binding="{Binding GUID}" MinWidth="10"/>
+                <DataGridTextColumn Header="名称" Width="120" Binding="{Binding Name}" MinWidth="10"/>
+                <DataGridTextColumn Header="数量" Width="80" Binding="{Binding Quantity}" MinWidth="10"/>
+                <DataGridTextColumn Header="发起人ID" Width="100" Binding="{Binding StartID}" MinWidth="10"/>
+                <DataGridTextColumn Header="接收人ID" Width="100" Binding="{Binding FinishID}" MinWidth="10"/>
+                <DataGridTextColumn Header="始发地" Width="100" Binding="{Binding Departure}" MinWidth="10"/>
+                <DataGridTextColumn Header="目的地" Width="100" Binding="{Binding Destination}" MinWidth="10"/>
+                <DataGridTextColumn Header="接单时间" Width="120" Binding="{Binding StartTime}" MinWidth="10"/>
+                <DataGridTextColumn Header="完成时间" Width="120" Binding="{Binding FinishTime}" MinWidth="10"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </ScrollViewer>
 </Page>

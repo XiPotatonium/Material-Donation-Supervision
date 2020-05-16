@@ -20,6 +20,7 @@ namespace MDS.Client.NavigationPages
     /// </summary>
     public partial class MyDeliveryPage : Page
     {
+        private MainWindow parentWindow { get; } = null;
         private OverviewPage myOverviewPage { set; get; } = new OverviewPage();
         private ProcessingPage myProcessingPage { set; get; } = new ProcessingPage();
         private WaitingPage myWaitingPage { set; get; } = new WaitingPage();
@@ -27,6 +28,15 @@ namespace MDS.Client.NavigationPages
         public MyDeliveryPage()
         {
             InitializeComponent();
+            OverviewPageFrame.Content = myOverviewPage;
+            ProcessingPageFrame.Content = myProcessingPage;
+            WaitingPageFrame.Content = myWaitingPage;
+            HistoryPageFrame.Content = myHistoryPage;
+        }
+        public MyDeliveryPage(MainWindow parent)
+        {
+            InitializeComponent();
+            parentWindow = parent;
             OverviewPageFrame.Content = myOverviewPage;
             ProcessingPageFrame.Content = myProcessingPage;
             WaitingPageFrame.Content = myWaitingPage;
