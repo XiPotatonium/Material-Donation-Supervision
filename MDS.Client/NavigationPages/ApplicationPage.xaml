@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MDS.Client.NavigationPages"
+      xmlns:mdscontrols="clr-namespace:MDS.Client.Controls"
       xmlns:controls="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
       xmlns:model="clr-namespace:MaterialDesignExtensions.Model;assembly=MaterialDesignExtensions"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -11,141 +12,252 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ApplicationPage"
       Loaded="Page_Loaded">
-    <Grid Margin="10,0">
-        <controls:TabControlStepper x:Name="PART_Stepper" Layout="Horizontal"
-                                    ContentAnimationsEnabled="True"
+
+    <materialDesign:DialogHost x:Name="ModifyInfoDialog" 
+                               Grid.RowSpan="2"
+                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <materialDesign:DialogHost.DialogContent>
+            <StackPanel Margin="16" Width="300">
+                <TextBlock Text="设置新电话号码和地址"
+                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"/>
+                <TextBox Margin="0,16,0,0" HorizontalAlignment="Stretch" x:Name="NewPhoneTextBox" 
+                         materialDesign:HintAssist.Hint="电话号码"/>
+                <TextBox Margin="0,16,0,0" HorizontalAlignment="Stretch" x:Name="NewAddressTextBox"
+                         TextWrapping="Wrap"
+                         materialDesign:HintAssist.Hint="地址"/>
+                <StackPanel Margin="0,16,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="DialogConfirmButton" Style="{StaticResource MaterialDesignFlatButton}"
+                                IsDefault="True"
+                                Margin="0 8 8 0" Content="确认"
+                                Click="DialogConfirmButton_Click"/>
+                    <Button x:Name="DialogCancelButton" Style="{StaticResource MaterialDesignFlatButton}"
+                                IsCancel="True"
+                                Margin="0 8 8 0" Content="取消"
+                                Click="DialogCancelButton_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <Grid Margin="10,0">
+            <controls:TabControlStepper x:Name="PART_Stepper" Layout="Horizontal"
+                                    ContentAnimationsEnabled="True" IsLinear="False"
                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                     DoneIconTemplate="{DynamicResource MaterialDesignStepDoneIconTemplate}"
-                                    ValidationErrorIconTemplate="{DynamicResource MaterialDesignStepValidationErrorIconTemplate}">
-            <TabItem>
-                <TabItem.Header>
-                    <model:StepTitleHeader FirstLevelTitle="填写申请" />
-                </TabItem.Header>
-                <Grid>
-                    <Grid Width="600">
+                                    ValidationErrorIconTemplate="{DynamicResource MaterialDesignStepValidationErrorIconTemplate}"
+                                    ContinueNavigation="PART_Stepper_ContinueNavigation"
+                                    CancelNavigation="PART_Stepper_CancelNavigation">
+                <TabItem>
+                    <TabItem.Header>
+                        <model:StepTitleHeader FirstLevelTitle="填写申请" />
+                    </TabItem.Header>
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="7*"/>
-                            <ColumnDefinition Width="3*"/>
-                        </Grid.ColumnDefinitions>
-                        <ComboBox x:Name="MaterialSelectComboBox"
-                                  Grid.Row="0" Margin="0,10"
-                                  materialDesign:HintAssist.Hint="选择申请类型"/>
-                        <materialDesign:Card Grid.Row="1"
-                                             Background="DarkGray" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                             Width="300" HorizontalAlignment="Center">
-                            <Grid>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="6*"/>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="4*"/>
+                            </Grid.ColumnDefinitions>
+                            <ListBox x:Name="MaterialSelectListBox"
+                                 Grid.Column="0" Margin="0,0,15,0"
+                                 SelectionMode="Single"
+                                 SelectionChanged="MaterialSelectListBox_SelectionChanged">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type local:MaterialListViewModel}">
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Margin="0,0,16,0"
+                                                    Grid.Column="1"
+                                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                <TextBlock FontWeight="Bold"
+                                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                                       Text="{Binding Name}">
+                                                </TextBlock>
+                                                <TextBlock HorizontalAlignment="Right">
+                                                <Run Text="{Binding Constraint}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <Separator Grid.Column="1" HorizontalAlignment="Center"
+                                   Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="0,8" BorderBrush="LightGray" BorderThickness="1"/>
+                            <Grid Grid.Column="2"
+                              Margin="15,0,0,0">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock x:Name="UserNameTextBlock" 
-                                           Grid.Row="0" Margin="16 16 16 4"
-                                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                                           Text="你滴名字"/>
-                                <TextBlock x:Name="UserPhoneTextBlock" Grid.Row="1"
-                                           Margin="16 0 16 2"
-                                           VerticalAlignment="Center" HorizontalAlignment="Left"
-                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                                           Text="电话号码"/>
-                                <Separator Grid.Row="2"
-                                           Style="{StaticResource MaterialDesignLightSeparator}" />
-                                <TextBlock x:Name="UserAddressTextBlock" Grid.Row="3"
-                                           Margin="16 2 16 8"
-                                           Text="饿我去的话丢弃维达力的解耦2金额哦哦i建瓯的无穷的气味都i就·哦"
-                                           TextWrapping="Wrap"
-                                           VerticalAlignment="Center" HorizontalAlignment="Left"
-                                           Style="{StaticResource MaterialDesignBody2TextBlock}"/>
-                                <Button HorizontalAlignment="Right" VerticalAlignment="Center"
-                                        Style="{StaticResource MaterialDesignIconButton}"
-                                        Width="40" Grid.Row="0"
-                                        ToolTip="设置收货信息">
+                                <TextBlock x:Name="UserNameTextBlock"
+                                       Grid.Row="0"
+                                       Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                       Text="你滴名字"/>
+                                <Button x:Name="AddressSettingButton" 
+                                    HorizontalAlignment="Right" VerticalAlignment="Top"
+                                    Style="{StaticResource MaterialDesignIconButton}"
+                                    Grid.RowSpan="6" Margin="0,0,10,0"
+                                    Click="AddressSettingButton_Click"
+                                    ToolTip="设置收货信息">
                                     <materialDesign:PackIcon Kind="Settings"/>
                                 </Button>
+                                <TextBlock x:Name="UserPhoneTextBlock" 
+                                       Grid.Row="1" Margin="0,10,0,0"
+                                       HorizontalAlignment="Left"
+                                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                       Text="电话号码"/>
+                                <TextBlock x:Name="UserAddressTextBlock" Grid.Row="2"
+                                        Margin="0,10,0,4"
+                                        Text="饿我去的话丢弃维达力的解耦2金额哦哦i建瓯的无穷的气味都i就·哦"
+                                        TextWrapping="Wrap"
+                                        VerticalAlignment="Center" HorizontalAlignment="Left"
+                                        Style="{StaticResource MaterialDesignBody2TextBlock}"/>
+                                <Separator Grid.Row="3"
+                                        Style="{StaticResource MaterialDesignDarkSeparator}" />
+                                <TextBlock x:Name="MaterialNameTextBlock"
+                                       Grid.Row="4" Margin="0,10,0,0"
+                                       Text="请选择想要申请的物资"
+                                       Style="{StaticResource MaterialDesignHeadline5TextBlock}"/>
+                                <mdscontrols:NumberInputBox x:Name="QuantityInputBox" Grid.Row="5" 
+                                                        Margin="0,10,30,0"
+                                                        QuantityConstraintHint="别搞辣，最多20个"/>
                             </Grid>
-                        </materialDesign:Card>
-                    </Grid>
-                    <controls:StepButtonBar x:Name="ApplyStepButtonBar" 
-                                            Continue="下一步"
+                        </Grid>
+                        <controls:StepButtonBar x:Name="ApplyStepButtonBar" 
+                                            Grid.Row="1"
+                                            Continue="发送申请"
                                             VerticalAlignment="Bottom"/>
-                </Grid>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <model:StepTitleHeader FirstLevelTitle="等待审批" />
-                </TabItem.Header>
-                <Grid>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="我说好好好别着急" TextWrapping="WrapWithOverflow" />
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <model:StepTitleHeader FirstLevelTitle="等待审批" />
+                    </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Margin="0,40,0,0"
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Center" VerticalAlignment="Top"
+                                Opacity="0.5">
+                            <materialDesign:PackIcon Kind="TextBoxSearchOutline" Width="50" Height="50"/>
+                            <TextBlock Text="申请已提交，正在审批"
+                                   Style="{StaticResource MaterialDesignHeadline4TextBlock}" 
+                                   VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <controls:StepButtonBar Grid.Row="1" Cancel="取消申请" VerticalAlignment="Bottom"/>
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <model:StepTitleHeader FirstLevelTitle="等待配送" />
+                    </TabItem.Header>
+                    <StackPanel Margin="0,40,0,0"
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Center" VerticalAlignment="Top"
+                            Opacity="0.5">
+                        <materialDesign:PackIcon Kind="TruckDeliveryOutline" Width="50" Height="50"/>
+                        <TextBlock Text="物资配送中"
+                                Style="{StaticResource MaterialDesignHeadline4TextBlock}" 
+                                VerticalAlignment="Center" Margin="10,0,0,0"/>
                     </StackPanel>
-                    <controls:StepButtonBar Cancel="取消" VerticalAlignment="Bottom"/>
-                </Grid>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <model:StepTitleHeader FirstLevelTitle="等待配送" />
-                </TabItem.Header>
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="侦测到在途的巨便打击" TextWrapping="WrapWithOverflow" />
-                </StackPanel>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <model:StepTitleHeader FirstLevelTitle="确认送达" />
-                </TabItem.Header>
-                <Grid>
-                    <StackPanel>
-                        <TextBlock Text="升级完成 哦耶！" />
-                    </StackPanel>
-                    <controls:StepButtonBar Continue="确认" VerticalAlignment="Bottom"/>
-                </Grid>
-            </TabItem>
-        </controls:TabControlStepper>
-        <Grid>
-            <materialDesign:Card x:Name="PART_Card"
+                </TabItem>
+                <TabItem x:Name="TabStep4">
+                    <TabItem.Header>
+                        <model:StepTitleHeader x:Name="Step4Header" FirstLevelTitle="确认送达" />
+                    </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel x:Name="ArrivedPanel"
+                                Grid.Row="0" Margin="0,40,0,0"
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Center" VerticalAlignment="Top"
+                                Opacity="0.5">
+                            <materialDesign:PackIcon Kind="PackageVariantClosed" Width="50" Height="50"/>
+                            <TextBlock Text="物资已送达，待签收"
+                                Style="{StaticResource MaterialDesignHeadline4TextBlock}" 
+                                VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel x:Name="AllDonePanel" Visibility="Collapsed"
+                                Grid.Row="0" Margin="0,40,0,0"
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Center" VerticalAlignment="Top"
+                                Opacity="0.5">
+                            <materialDesign:PackIcon Kind="Check" Width="50" Height="50"/>
+                            <TextBlock Text="已签收"
+                                Style="{StaticResource MaterialDesignHeadline4TextBlock}" 
+                                VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <controls:StepButtonBar x:Name="ConfirmStepBar" Grid.Row="1" Continue="确认送达" VerticalAlignment="Bottom"/>
+                    </Grid>
+                </TabItem>
+            </controls:TabControlStepper>
+
+            <Grid>
+                <materialDesign:Card x:Name="PART_Card"
                                  Background="#03a9f4" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                  Padding="0" Width="500"
                                  HorizontalAlignment="Center" VerticalAlignment="Center"
                                  Visibility="Collapsed">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="CardApplicationName" Text="你滴申请" 
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="CardApplicationName" Text="你滴申请" 
                                Grid.Row="0" Grid.ColumnSpan="2" Margin="16 16 16 4"
                                Style="{StaticResource MaterialDesignHeadline5TextBlock}"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Margin="16 16 16 4"
+                        <TextBlock Grid.Row="0" Grid.Column="1" Margin="16 16 16 4"
                                HorizontalAlignment="Right"
                                Style="{StaticResource MaterialDesignSubtitle1TextBlock}">
                         <Run Text=" × "/>
                         <Run x:Name="CardApplicationQuantity" Text="100"/>
-                    </TextBlock>
-                    <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="16 0 16 8"
+                        </TextBlock>
+                        <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" Margin="16 0 16 8"
                                VerticalAlignment="Center" HorizontalAlignment="Left"
                                Style="{StaticResource MaterialDesignTextBlock}">
                         <Run Text="订单编号:"/>
                         <Run x:Name="CardApplicationId" Text="faseji1d1h9sja1"/>
-                    </TextBlock>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Margin="16 0 16 8"
+                        </TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Margin="16 0 16 8"
                                VerticalAlignment="Center" HorizontalAlignment="Left"
                                Style="{StaticResource MaterialDesignTextBlock}">
                         <Run Text="申请时间:"/>
                         <Run x:Name="CardApplicationTime" Text="2019-06-18"/>
-                    </TextBlock>
-                </Grid>
-            </materialDesign:Card>
+                        </TextBlock>
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>
+
+            <materialDesign:Snackbar x:Name="PART_SnackBar"
+                                 IsActive="False"
+                                 VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+                                 Margin="5,0,5,5">
+                <materialDesign:SnackbarMessage x:Name="SnackBarContent" 
+                                            Content="警告消息"
+                                            ActionContent="我知道了"
+                                            ActionClick="SnackBarContent_ActionClick"/>
+            </materialDesign:Snackbar>
         </Grid>
-    </Grid>
+    </materialDesign:DialogHost>
 </Page>

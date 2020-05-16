@@ -1,6 +1,9 @@
-﻿using System;
+﻿using DTO;
+using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -17,6 +20,14 @@ namespace MDS.Client
     /// </summary>
     public partial class LoginDialog : Window
     {
+        private static string Hash(string pwd)
+        {
+            var bytes = Encoding.UTF8.GetBytes(pwd + "3z2w@9!aas");
+            var bytesHashed = SHA256.Create().ComputeHash(bytes);
+            string hashed = Convert.ToBase64String(bytesHashed);
+            return hashed;
+        }
+
         enum LoginDialogMode
         {
             LOGIN, REGISTER
@@ -29,18 +40,67 @@ namespace MDS.Client
             InitializeComponent();
         }
 
-        private void PrimaryButton_Click(object sender, RoutedEventArgs e)
+        private async void PrimaryButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO 假数据
-            UserInfo.Id = 0;
-            UserInfo.Name = "UXX65535";
-            UserInfo.PhoneNumber = "152-1111-1111";
-            UserInfo.HomeAddress = "XX省-XX市-XX区-XX街道-XX小区-XXXXXXXXXXXXX";
-            UserInfo.UserType = UserType.ADMIN;
+            switch (Mode)
+            {
+                case LoginDialogMode.LOGIN:
+                    await Login();
+                    break;
+                case LoginDialogMode.REGISTER:
+                    await Register();
+                    break;
+                default:
+                    break;
+            }
+        }
 
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            Close();
+        private async Task Login()
+        {
+            // TODO: 这段代码开发的时候注释掉，上线的时候要用
+            //if (string.IsNullOrEmpty(LoginUserNameTextBox.Text) || string.IsNullOrEmpty(LoginPasswordBox.Password))
+            //{
+            //    // 本地用户名密码有效检测
+            //    PART_SnackBar.IsActive = true;
+            //    SnackBarContent.Content = "用户名或密码不能为空";
+            //    return;
+            //}
+
+            PrimaryButton.IsEnabled = false;    // 防止重复按下
+
+            LoginResponse loginResponse = await NetworkHelper.GetAsync(new LoginRequest()
+            {
+                UserName = LoginUserNameTextBox.Text,
+                Password = Hash(LoginPasswordBox.Password)
+            });
+
+            loginResponse = new LoginResponse() { UserId = 0 };    // TODO 假数据
+
+            if (loginResponse.UserId < 0)
+            {
+                // 服务器判断账号密码错误
+                PrimaryButton.IsEnabled = true;
+                PART_SnackBar.IsActive = true;
+                SnackBarContent.Content = "用户名或密码错误";
+            }
+            else
+            {
+                UserInfo.Id = loginResponse.UserId;
+                // TODO 假数据（用户信息的假数据不要在这里刷新）
+                UserInfo.Name = "UXX65535";
+                UserInfo.PhoneNumber = "152-1111-1111";
+                UserInfo.HomeAddress = "XX省-XX市-XX区-XX街道-XX小区-XXXXXXXXXXXXX";
+                UserInfo.UserType = UserType.ADMIN;
+
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                Close();
+            }
+        }
+
+        private async Task Register()
+        {
+            throw new NotImplementedException();
         }
 
         private void SwitchButton_Click(object sender, RoutedEventArgs e)
@@ -64,6 +124,11 @@ namespace MDS.Client
                 default:
                     break;
             }
+        }
+
+        private void SnackBarContent_ActionClick(object sender, RoutedEventArgs e)
+        {
+            PART_SnackBar.IsActive = false;
         }
     }
 }

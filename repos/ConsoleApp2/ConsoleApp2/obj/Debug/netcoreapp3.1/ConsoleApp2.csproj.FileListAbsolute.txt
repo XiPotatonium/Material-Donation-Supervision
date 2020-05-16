@@ -11,3 +11,16 @@ D:\Users\Administrator\source\repos\ConsoleApp2\ConsoleApp2\obj\Debug\netcoreapp
 D:\Users\Administrator\source\repos\ConsoleApp2\ConsoleApp2\obj\Debug\netcoreapp3.1\ConsoleApp2.dll
 D:\Users\Administrator\source\repos\ConsoleApp2\ConsoleApp2\obj\Debug\netcoreapp3.1\ConsoleApp2.pdb
 D:\Users\Administrator\source\repos\ConsoleApp2\ConsoleApp2\obj\Debug\netcoreapp3.1\ConsoleApp2.genruntimeconfig.cache
+C:\Users\Administrator\Downloads\Material-Donation-Supervision-master\repos\ConsoleApp2\ConsoleApp2\bin\Debug\netcoreapp3.1\ConsoleApp2.exe
+C:\Users\Administrator\Downloads\Material-Donation-Supervision-master\repos\ConsoleApp2\ConsoleApp2\bin\Debug\netcoreapp3.1\ConsoleApp2.deps.json
+C:\Users\Administrator\Downloads\Material-Donation-Supervision-master\repos\ConsoleApp2\ConsoleApp2\bin\Debug\netcoreapp3.1\ConsoleApp2.runtimeconfig.json
+C:\Users\Administrator\Downloads\Material-Donation-Supervision-master\repos\ConsoleApp2\ConsoleApp2\bin\Debug\netcoreapp3.1\ConsoleApp2.runtimeconfig.dev.json
+C:\Users\Administrator\Downloads\Material-Donation-Supervision-master\repos\ConsoleApp2\ConsoleApp2\bin\Debug\netcoreapp3.1\ConsoleApp2.dll
+C:\Users\Administrator\Downloads\Material-Donation-Supervision-master\repos\ConsoleApp2\ConsoleApp2\bin\Debug\netcoreapp3.1\ConsoleApp2.pdb
+C:\Users\Administrator\Downloads\Material-Donation-Supervision-master\repos\ConsoleApp2\ConsoleApp2\obj\Debug\netcoreapp3.1\ConsoleApp2.csprojAssemblyReference.cache
+C:\Users\Administrator\Downloads\Material-Donation-Supervision-master\repos\ConsoleApp2\ConsoleApp2\obj\Debug\netcoreapp3.1\ConsoleApp2.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Downloads\Material-Donation-Supervision-master\repos\ConsoleApp2\ConsoleApp2\obj\Debug\netcoreapp3.1\ConsoleApp2.AssemblyInfoInputs.cache
+C:\Users\Administrator\Downloads\Material-Donation-Supervision-master\repos\ConsoleApp2\ConsoleApp2\obj\Debug\netcoreapp3.1\ConsoleApp2.AssemblyInfo.cs
+C:\Users\Administrator\Downloads\Material-Donation-Supervision-master\repos\ConsoleApp2\ConsoleApp2\obj\Debug\netcoreapp3.1\ConsoleApp2.dll
+C:\Users\Administrator\Downloads\Material-Donation-Supervision-master\repos\ConsoleApp2\ConsoleApp2\obj\Debug\netcoreapp3.1\ConsoleApp2.pdb
+C:\Users\Administrator\Downloads\Material-Donation-Supervision-master\repos\ConsoleApp2\ConsoleApp2\obj\Debug\netcoreapp3.1\ConsoleApp2.genruntimeconfig.cache
