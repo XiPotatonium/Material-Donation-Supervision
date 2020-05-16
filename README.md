@@ -7,22 +7,22 @@
 * UI设计语言为谷歌的MaterialDesign，使用[MaterialDesignInXamlToolkit](https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit)和[MaterialDesignExtensions](https://github.com/spiegelp/MaterialDesignExtensions)来实现
     * 注意MaterialDesignExtensions的TabStepper疑似存在一些问题，在Tab中使用某些MD控件会导致渲染的时候有很多莫名其妙的格线，应该是它的BUG，请小心使用
 ### 数据包信息
-#### 一个物资的数据包的全部信息如下：  
-   string GUID          订单号  
-   string Name          物资名称  
-   int Quantity         物资数量  
-   int StartID          发货人ID  
-   int FinishID         收货人ID  
-      （对于捐赠，发货人为用户、收货人为管理员；对于分发，发货人为管理员、收货人为受捐赠者）  
-   string Departure     出发地  
-   string Destination   目的地  
-   枚举类型 State        当前状态  
-   DateTime StartTime   订单开始时间  
-   DateTime FinishTime  订单完成时间  
+#### 一个物资的数据包的全部信息如下：    
+    string GUID          订单号  
+    string Name          物资名称  
+    int Quantity         物资数量  
+    int StartID          发货人ID  
+    int FinishID         收货人ID  
+       （对于捐赠，发货人为用户、收货人为管理员；对于分发，发货人为管理员、收货人为受捐赠者）  
+    string Departure     出发地  
+    string Destination   目的地  
+    枚举类型 State        当前状态  
+    DateTime StartTime   订单开始时间  
+    DateTime FinishTime  订单完成时间  
     
 ### DTO
 客户端通过DTO与服务器进行数据沟通，客户端会填写DTO中的request并发送给服务器，服务器根据收到的的request返回response。不同的操作request和response的结构不同，详见DTO
-#### 配送员DTO：  
+#### 配送员DTO：（定义在DTO下DeliveryData.cs中）  
       状态State有三种，定义如下：  
          public enum DeliveryState  
          {  
