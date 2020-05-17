@@ -1,4 +1,5 @@
 ﻿using DTO;
+using MDS.Client.Extension;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -66,20 +67,17 @@ namespace MDS.Client
             //    return;
             //}
 
-            PrimaryButton.IsEnabled = false;    // 防止重复按下
+            LoginResponse loginResponse = await NetworkHelper.GetAsync(new LoginRequest()
+            {
+                UserName = LoginUserNameTextBox.Text,
+                Password = Hash(LoginPasswordBox.Password)
+            }).DisableElements(PrimaryButton, SwitchButton);
 
-            // TODO: 等服务器可以运行的时候启动这段代码
-            //LoginResponse loginResponse = await NetworkHelper.GetAsync(new LoginRequest()
-            //{
-            //    UserName = LoginUserNameTextBox.Text,
-            //    Password = Hash(LoginPasswordBox.Password)
-            //});
-            LoginResponse loginResponse = new LoginResponse() { UserId = 0 };    // TODO 假数据
+            loginResponse = new LoginResponse() { UserId = 0 };    // TODO 假数据
 
             if (loginResponse.UserId < 0)
             {
                 // 服务器判断账号密码错误
-                PrimaryButton.IsEnabled = true;
                 PART_SnackBar.IsActive = true;
                 SnackBarContent.Content = "用户名或密码错误";
             }

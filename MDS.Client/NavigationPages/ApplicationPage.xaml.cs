@@ -48,8 +48,6 @@ namespace MDS.Client.NavigationPages
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            ParentWindow.SetProgressBar(true);
-
             await Task.Delay(200);
             if (ApplicationViewModel != null)
             {
@@ -84,8 +82,6 @@ namespace MDS.Client.NavigationPages
             }
 
             RefreshApplicationCardView();
-
-            ParentWindow.SetProgressBar(false);
         }
 
         private void RefreshApplicationCardView()
@@ -170,11 +166,9 @@ namespace MDS.Client.NavigationPages
         private async void DialogConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             ModifyInfoDialog.IsOpen = false;
-            ParentWindow.SetProgressBar(true);
             // TODO 发送请求
             await Task.Delay(100);
             RefreshAddressInfo();
-            ParentWindow.SetProgressBar(false);
         }
 
         private void DialogCancelButton_Click(object sender, RoutedEventArgs e)

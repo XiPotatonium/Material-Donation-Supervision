@@ -20,12 +20,12 @@ namespace MDS.Client
         // 线程化
         public static async Task<TResponse> GetAsync<TResponse>(IReturn<TResponse> req)
         {
-            return await Task.Run(() => { return Get(req); });
+            // return await Task.Run(() => { return Get(req); });
+            await Task.Delay(100);
+            return default;
         }
 
-        // TODO 网络接口
-        // req可以传DTO里面的LoginRequest来测试，返回LoginResponse就好了
-        public static TResponse Get<TResponse>(IReturn<TResponse> req)
+        private static TResponse Get<TResponse>(IReturn<TResponse> req)
         {
             string requestData = objecttostring(req);
             Console.WriteLine(requestData.Length);

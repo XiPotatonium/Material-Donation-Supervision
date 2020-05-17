@@ -40,11 +40,9 @@ namespace MDS.Client.NavigationPages
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             // TODO 这里会有一个网络请求，假装网络延时
-            ParentWindow.SetProgressBar(true);
             await UpdateApplicationList();
             await UpdateDonationList();
             RefreshUserInfoDisplay();
-            ParentWindow.SetProgressBar(false);
         }
 
         private async Task UpdateApplicationList()
@@ -140,11 +138,9 @@ namespace MDS.Client.NavigationPages
         private async void DialogConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             ModifyInfoDialog.IsOpen = false;
-            ParentWindow.SetProgressBar(true);
             // TODO 发送请求
             await Task.Delay(100);
             RefreshUserInfoDisplay();
-            ParentWindow.SetProgressBar(false);
         }
 
         private void DialogCancelButton_Click(object sender, RoutedEventArgs e)

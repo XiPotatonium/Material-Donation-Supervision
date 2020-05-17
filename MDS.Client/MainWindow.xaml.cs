@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DTO;
+using MDS.Client.Extension;
 using MDS.Client.NavigationPages;
 
 namespace MDS.Client
@@ -27,11 +28,17 @@ namespace MDS.Client
             InitializeComponent();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             PART_Frame.Content = new MyMainPage(this);
             // TODO 用户信息假数据
-            UserInfoResponse response = new UserInfoResponse()
+
+            UserInfoResponse response = await NetworkHelper.GetAsync(new UserInfoRequest()
+            {
+                UserId = UserInfo.Id
+            }).Progress(PART_ProgressBar);
+
+            response = new UserInfoResponse()
             {
                 Name = "UXX65535",
                 PhoneNumber = "152-1111-1111",
@@ -86,20 +93,6 @@ namespace MDS.Client
         {
             MainTabControl.SelectedItem = DonationPageTab;
             PART_Frame.Content = new DonationPage(this, userDonationViewModel);
-        }
-
-        /// <summary>
-        /// ProgressBar控制，开启后ProgressBar动画开启，结束后ProgressBar涨到慢
-        /// </summary>
-        /// <param name="isInDeterminate">true为开启动画，false为结束动画</param>
-        public void SetProgressBar(bool isInDeterminate)
-        {
-            PART_ProgressBar.IsIndeterminate = isInDeterminate;
-            if (!isInDeterminate)
-            {
-                // TODO 可以做的更柔和一点
-                PART_ProgressBar.Value = 100;
-            }
         }
     }
 }
