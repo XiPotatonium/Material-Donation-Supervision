@@ -1,6 +1,6 @@
 # Material-Donation-Supervision
 软工
-   
+
 ## 客户端
 
 * WPF(.net Core3.1)
@@ -19,7 +19,7 @@
     枚举类型 State        当前状态  
     DateTime StartTime   订单开始时间  
     DateTime FinishTime  订单完成时间  
-    
+
 ### DTO
 客户端通过DTO与服务器进行数据沟通，客户端会填写DTO中的request并发送给服务器，服务器根据收到的的request返回response。不同的操作request和response的结构不同，详见DTO
 #### 配送员DTO：（定义在DTO下DeliveryData.cs中）  
@@ -48,7 +48,8 @@
 
 ## 网络模块
 
-1. 不确定效率怎么样，特别是服务器方面
-2. 错误如何体现，例如网络断了
-3. 客户端目前还需要封装一层，使用线程调用网络模块，否则占用UI线程可能会造成卡顿
-
+1. 不确定服务器方面效率怎么样
+2. 异常处理问题，404，连不上服务器时客户端需要TryCatch来防止程序崩溃（可能可以统一处理？我没研究过）
+3. 边际问题，网络请求过程中可能需要Disable部分UI控件，防止意料之外的用户操作，这个可能可以用一个Extension解决
+4. 加载动画。网络请求时可以有加载动画的，这个功能也可以用一个Extension解决。
+5. 请使用GetAsync而不是Get，异步方法可以防止网络比较慢时UI线程卡死
