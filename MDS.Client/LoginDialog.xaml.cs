@@ -68,13 +68,13 @@ namespace MDS.Client
 
             PrimaryButton.IsEnabled = false;    // 防止重复按下
 
-            LoginResponse loginResponse = await NetworkHelper.GetAsync(new LoginRequest()
-            {
-                UserName = LoginUserNameTextBox.Text,
-                Password = Hash(LoginPasswordBox.Password)
-            });
-
-            loginResponse = new LoginResponse() { UserId = 0 };    // TODO 假数据
+            // TODO: 等服务器可以运行的时候启动这段代码
+            //LoginResponse loginResponse = await NetworkHelper.GetAsync(new LoginRequest()
+            //{
+            //    UserName = LoginUserNameTextBox.Text,
+            //    Password = Hash(LoginPasswordBox.Password)
+            //});
+            LoginResponse loginResponse = new LoginResponse() { UserId = 0 };    // TODO 假数据
 
             if (loginResponse.UserId < 0)
             {
@@ -86,11 +86,6 @@ namespace MDS.Client
             else
             {
                 UserInfo.Id = loginResponse.UserId;
-                // TODO 假数据（用户信息的假数据不要在这里刷新）
-                UserInfo.Name = "UXX65535";
-                UserInfo.PhoneNumber = "152-1111-1111";
-                UserInfo.HomeAddress = "XX省-XX市-XX区-XX街道-XX小区-XXXXXXXXXXXXX";
-                UserInfo.UserType = UserType.ADMIN;
 
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();

@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using DTO;
 using MDS.Client.NavigationPages;
 
 namespace MDS.Client
@@ -29,9 +29,21 @@ namespace MDS.Client
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            PART_Frame.Content = new MyMainPage(this);
+            // TODO 用户信息假数据
+            UserInfoResponse response = new UserInfoResponse()
+            {
+                Name = "UXX65535",
+                PhoneNumber = "152-1111-1111",
+                HomeAddress = "XX省-XX市-XX区-XX街道-XX小区-XXXXXXXXXXXXX",
+                UserType = UserType.ADMIN
+            };
+            UserInfo.Name = response.Name;
+            UserInfo.PhoneNumber = response.PhoneNumber;
+            UserInfo.HomeAddress = response.HomeAddress;
+            UserInfo.UserType = response.UserType;
             // TODO 要根据用户类型调整tab，目前测试状态，禁用这段代码
             // RefreshTabDisplay();
-            PART_Frame.Content = new MyMainPage(this);
         }
 
         private void RefreshTabDisplay()

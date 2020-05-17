@@ -17,11 +17,10 @@ namespace MDS.Client
         static NetworkHelper() {
         }
 
-        // 测试用，正式使用的时候要重写
+        // 线程化
         public static async Task<TResponse> GetAsync<TResponse>(IReturn<TResponse> req)
         {
-            await Task.Delay(100);
-            return default;
+            return await Task.Run(() => { return Get(req); });
         }
 
         // TODO 网络接口
