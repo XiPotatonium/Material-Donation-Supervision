@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MDS.Server
 {
-    class Service
+    class UserInfoService
     {
         public static LoginResponse HandleLoginRequest(LoginRequest request)
         {
@@ -23,6 +23,12 @@ namespace MDS.Server
             {
 
             };
+        }
+
+        public static VoidResponse HandleModifyRequest(UserInfoModifyRequest request)
+        {
+            //TODO: 数据库操作
+            return new VoidResponse();
         }
     }
 }

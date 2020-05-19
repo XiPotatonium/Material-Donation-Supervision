@@ -67,11 +67,11 @@ namespace DemoServer
 
                 if (recv is LoginRequest)
                 {
-                    responseBody = objecttostring(Service.HandleLoginRequest((LoginRequest)recv));
+                    responseBody = objecttostring(UserInfoService.HandleLoginRequest((LoginRequest)recv));
                 }
                 else if (recv is UserInfoRequest)
                 {
-                    responseBody = objecttostring(Service.HandleUserInfoRequest((UserInfoRequest)recv));
+                    responseBody = objecttostring(UserInfoService.HandleUserInfoRequest((UserInfoRequest)recv));
                 }
                 else
                 {
