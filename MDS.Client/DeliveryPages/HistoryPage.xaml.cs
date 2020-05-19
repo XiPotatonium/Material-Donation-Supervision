@@ -34,7 +34,8 @@ namespace MDS.Client.DeliveryPages
         }
         private async Task UpdateHistoryList()
         {/*
-            DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryListRequest()
+            DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryList
+            ()
             {
                 DelivererId = UserInfo.Id,
                 State = DeliveryState.Finished

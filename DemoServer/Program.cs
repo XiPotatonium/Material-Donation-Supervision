@@ -4,6 +4,9 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using MDS.Server;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DemoServer
 {
@@ -48,6 +51,52 @@ namespace DemoServer
             return buffer;
         }
 
+        public static void HandleRequest(HttpListenerContext context)
+        {
+            try
+            {
+                HttpListenerRequest request = context.Request;
+                string postData = new StreamReader(request.InputStream, Encoding.UTF8).ReadToEnd();
+                byte[] rbytes = HexStringToByteArray(postData);
+                object recv = DeserializeObject(rbytes);
+                Console.WriteLine("收到请求：" + recv);
+
+                HttpListenerResponse response = context.Response;//响应
+                string resp = "响应";
+                string responseBody = objecttostring(resp);
+
+                if (recv is LoginRequest)
+                {
+                    responseBody = objecttostring(Service.HandleLoginRequest((LoginRequest)recv));
+                }
+                else if (recv is UserInfoRequest)
+                {
+                    responseBody = objecttostring(Service.HandleUserInfoRequest((UserInfoRequest)recv));
+                }
+                else
+                {
+                    System.Diagnostics.Debug.Assert(false);
+                }
+
+                response.ContentLength64 = responseBody.Length;
+                response.ContentType = "text/html";
+                //输出响应内容
+                Stream output = response.OutputStream;
+                using (StreamWriter sw = new StreamWriter(output))
+                {
+                    sw.Write(responseBody);
+                    sw.Flush();
+                    sw.Close();
+                }
+                Console.WriteLine("响应结束");
+            }
+            catch(Exception err)
+            {
+                Console.WriteLine(err.Message);
+            }
+           
+        }
+
         static void Main(string[] args)
         {
             try
@@ -62,38 +111,7 @@ namespace DemoServer
                         try
                         {
                             HttpListenerContext context = listener.GetContext();//阻塞
-                            HttpListenerRequest request = context.Request;
-
-                            string postData = new StreamReader(request.InputStream, Encoding.UTF8).ReadToEnd();
-                            byte[] rbytes = HexStringToByteArray(postData);
-
-                            object recv = DeserializeObject(rbytes);
-                            Console.WriteLine("收到请求：" + recv);
-
-                            HttpListenerResponse response = context.Response;//响应
-                            string resp = "响应";
-                            string responseBody = objecttostring(resp);
-
-                            if (recv is LoginRequest)
-                            {
-                                responseBody = objecttostring(HandleLoginRequest((LoginRequest)recv));
-                            }
-                            else
-                            {
-                                System.Diagnostics.Debug.Assert(false);
-                            }
-
-                            response.ContentLength64 = responseBody.Length;
-                            response.ContentType = "text/html";
-                            //输出响应内容
-                            Stream output = response.OutputStream;
-                            using (StreamWriter sw = new StreamWriter(output))
-                            {
-                                sw.Write(responseBody);
-                                sw.Flush();
-                                sw.Close();
-                            }
-                            Console.WriteLine("响应结束");
+                            Task.Factory.StartNew(() => HandleRequest(context));                           
                         }
                         catch (Exception err)
                         {
@@ -107,13 +125,6 @@ namespace DemoServer
                 Console.WriteLine("程序异常，请重新打开程序：" + err.Message);
             }
         }
-
-        private static LoginResponse HandleLoginRequest(LoginRequest request)
-        {
-            return new LoginResponse()
-            {
-                UserId = (request.Password + request.UserName).Length
-            };
-        }
+      
     }
 }
