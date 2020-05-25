@@ -72,21 +72,16 @@
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Column="1">
-                    <StackPanel Grid.Row="1">
-                        <TextBlock x:Name="PhoneNumberTextBlock" 
-                               Margin="0,5"
-                               Style="{StaticResource MaterialDesignBody1TextBlock}"/>
-                        <TextBlock x:Name="HomeAddressTextBlock" 
+                    <TextBlock x:Name="HomeAddressTextBlock" 
                                TextWrapping="Wrap"
-                               Width="170" Height="40"
-                               HorizontalAlignment="Left"
+                               Width="170" Height="50"
+                               HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0"
                                Style="{StaticResource MaterialDesignTextBlock}"/>
-                        <Button x:Name="ModifyInfoButton" Style="{StaticResource MaterialDesignFlatAccentButton}" 
-                            HorizontalAlignment="Left"
+                    <Button x:Name="ModifyInfoButton" Style="{StaticResource MaterialDesignFlatAccentButton}" 
+                            HorizontalAlignment="Left" VerticalAlignment="Bottom"
                             Foreground="#1A3A65" FontWeight="Bold" FontSize="16"
                             Content="个人资料设置 >"
                             Click="ModifyInfoButton_Click"/>
-                    </StackPanel>
                 </Grid>
             </Grid>
 

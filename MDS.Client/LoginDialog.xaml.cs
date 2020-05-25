@@ -23,7 +23,7 @@ namespace MDS.Client
     {
         private static string Hash(string pwd)
         {
-            var bytes = Encoding.UTF8.GetBytes(pwd + "3z2w@9!aas");
+            var bytes = Encoding.UTF8.GetBytes(pwd + "3z2w@9!aas");     // Salt
             var bytesHashed = SHA256.Create().ComputeHash(bytes);
             string hashed = Convert.ToBase64String(bytesHashed);
             return hashed;
@@ -67,15 +67,15 @@ namespace MDS.Client
             //    return;
             //}
 
-            LoginResponse loginResponse = await NetworkHelper.GetAsync(new LoginRequest()
+            LoginResponse response = await NetworkHelper.GetAsync(new LoginRequest()
             {
-                UserName = LoginUserNameTextBox.Text,
+                PhoneNumber = LoginUserPhoneNumberTextBox.Text,
                 Password = Hash(LoginPasswordBox.Password)
-            }).DisableElements(PrimaryButton, SwitchButton);
+            }).DisableElements(PrimaryButton, SwitchButton, LoginUserPhoneNumberTextBox, LoginPasswordBox);
 
-            loginResponse = new LoginResponse() { UserId = 0 };    // TODO 假数据
+            response = new LoginResponse() { UserId = 0 };    // TODO 假数据
 
-            if (loginResponse.UserId < 0)
+            if (response.UserId < 0)
             {
                 // 服务器判断账号密码错误
                 PART_SnackBar.IsActive = true;
@@ -83,7 +83,8 @@ namespace MDS.Client
             }
             else
             {
-                UserInfo.Id = loginResponse.UserId;
+                UserInfo.Id = response.UserId;
+                UserInfo.PhoneNumber = LoginUserPhoneNumberTextBox.Text;
 
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
@@ -93,7 +94,39 @@ namespace MDS.Client
 
         private async Task Register()
         {
-            throw new NotImplementedException();
+            if (RegisterPasswordBox.Text.Length <= 6)
+            {
+                // 本地密码有效检测
+                // TODO 具体规则待定，这里暂时设计成长度必须大于6
+                // 最终确定后要在登陆面板把规则显示给用户
+                PART_SnackBar.IsActive = true;
+                SnackBarContent.Content = "密码长度过短";
+                return;
+            }
+
+            RegisterResponse response = await NetworkHelper.GetAsync(new RegisterRequest()
+            {
+                PhoneNumber = RegisterUserPhoneNumberTextBox.Text,
+                Password = RegisterPasswordBox.Text
+            }).DisableElements(PrimaryButton, SwitchButton, RegisterUserPhoneNumberTextBox, RegisterPasswordBox);
+
+            response = new RegisterResponse() { UserId = 0 };    // TODO 假数据
+
+            if (response.UserId < 0)
+            {
+                // 服务器判断账号密码错误
+                PART_SnackBar.IsActive = true;
+                SnackBarContent.Content = "不能注册，用户名已存在";
+            }
+            else
+            {
+                UserInfo.Id = response.UserId;
+                UserInfo.PhoneNumber = RegisterUserPhoneNumberTextBox.Text;
+
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                Close();
+            }
         }
 
         private void SwitchButton_Click(object sender, RoutedEventArgs e)

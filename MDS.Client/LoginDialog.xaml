@@ -38,9 +38,9 @@
                                          HorizontalAlignment="Center" VerticalAlignment="Center" 
                                          Margin="0,0,10,0"/>
                 <TextBox Grid.Row="0" Grid.Column="1"
-                     x:Name="LoginUserNameTextBox"
+                     x:Name="LoginUserPhoneNumberTextBox"
                      HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                     materialDesign:HintAssist.Hint="用户名" />
+                     materialDesign:HintAssist.Hint="电话号码" />
                 <materialDesign:PackIcon Kind="FormTextboxPassword" 
                                          Grid.Row="1" Grid.Column="0" 
                                          HorizontalAlignment="Center" VerticalAlignment="Center" 
@@ -65,14 +65,14 @@
                                          HorizontalAlignment="Center" VerticalAlignment="Center" 
                                          Margin="0,0,10,0"/>
                 <TextBox Grid.Row="0" Grid.Column="1"
-                     x:Name="RegisterUserNameTextBox"
+                     x:Name="RegisterUserPhoneNumberTextBox"
                      HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                     materialDesign:HintAssist.Hint="用户名" />
+                     materialDesign:HintAssist.Hint="电话号码" />
                 <materialDesign:PackIcon Kind="FormTextboxPassword" 
                                          Grid.Row="1" Grid.Column="0" 
                                          HorizontalAlignment="Center" VerticalAlignment="Center" 
                                          Margin="0,0,10,0"/>
-                <PasswordBox Grid.Row="1" Grid.Column="1"
+                <TextBox Grid.Row="1" Grid.Column="1"
                          x:Name="RegisterPasswordBox"
                          HorizontalAlignment="Stretch" VerticalAlignment="Center"
                          materialDesign:HintAssist.Hint="密码"/>

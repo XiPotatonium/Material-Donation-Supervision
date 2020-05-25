@@ -39,7 +39,6 @@ namespace MDS.Client.NavigationPages
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            // TODO 这里会有一个网络请求，假装网络延时
             await UpdateApplicationList();
             await UpdateDonationList();
             RefreshUserInfoDisplay();
@@ -47,7 +46,10 @@ namespace MDS.Client.NavigationPages
 
         private async Task UpdateApplicationList()
         {
-            await Task.Delay(100);
+            GetApplicationListResponse response = await NetworkHelper.GetAsync(new GetApplicationListRequest()
+            {
+                UserId = UserInfo.Id
+            });
 
             // TODO 假数据
             UserApplications = new ObservableCollection<ApplicationListViewModel>();
@@ -90,7 +92,7 @@ namespace MDS.Client.NavigationPages
 
         private void RefreshUserInfoDisplay()
         {
-            UserNameTextBlock.Text = UserInfo.Name;
+            UserNameTextBlock.Text = UserInfo.PhoneNumber;
             switch (UserInfo.UserType)
             {
                 case UserType.NORMAL:
@@ -106,7 +108,6 @@ namespace MDS.Client.NavigationPages
                     UserTypeTextBlock.Text = "NT用户";
                     break;
             }
-            PhoneNumberTextBlock.Text = UserInfo.PhoneNumber;
             HomeAddressTextBlock.Text = UserInfo.HomeAddress;
         }
 
@@ -156,6 +157,8 @@ namespace MDS.Client.NavigationPages
         public int Quantity { set; get; }
         public string State { set; get; }
         public DateTime StartTime { set; get; }
+
+        public GetApplicationListResponse.Item OriginalItem { set; get; }
     }
 
     public class DonationListViewModel
@@ -165,5 +168,7 @@ namespace MDS.Client.NavigationPages
         public int Quantity { set; get; }
         public string State { set; get; }
         public DateTime StartTime { set; get; }
+
+        public GetDonationListResponse.Item OriginalItem { set; get; }
     }
 }

@@ -88,7 +88,7 @@ namespace MDS.Client.NavigationPages
         {
             if (PART_Stepper.Controller.PreviousStep != null)
             {
-                // 不是第一步
+                // 不是第一步，需要显示订单的详细内容
                 PART_Card.Visibility = Visibility.Visible;
                 CardApplicationId.Text = ApplicationViewModel.GUID;
                 CardApplicationName.Text = ApplicationViewModel.Name;
@@ -103,8 +103,7 @@ namespace MDS.Client.NavigationPages
 
         private void RefreshAddressInfo()
         {
-            UserNameTextBlock.Text = UserInfo.Name;
-            UserPhoneTextBlock.Text = UserInfo.PhoneNumber;
+            UserNameTextBlock.Text = UserInfo.PhoneNumber;
             UserAddressTextBlock.Text = UserInfo.HomeAddress;
         }
 

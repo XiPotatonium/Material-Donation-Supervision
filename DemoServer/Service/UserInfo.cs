@@ -12,7 +12,7 @@ namespace MDS.Server
             //TODO: 数据库查询
             return new LoginResponse()
             {
-                UserId = (request.Password + request.UserName).Length
+                UserId = (request.Password + request.PhoneNumber).Length
             };
         }
         

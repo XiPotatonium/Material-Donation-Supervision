@@ -40,12 +40,10 @@ namespace MDS.Client
 
             response = new UserInfoResponse()
             {
-                Name = "UXX65535",
                 PhoneNumber = "152-1111-1111",
                 HomeAddress = "XX省-XX市-XX区-XX街道-XX小区-XXXXXXXXXXXXX",
                 UserType = UserType.ADMIN
             };
-            UserInfo.Name = response.Name;
             UserInfo.PhoneNumber = response.PhoneNumber;
             UserInfo.HomeAddress = response.HomeAddress;
             UserInfo.UserType = response.UserType;
@@ -53,6 +51,9 @@ namespace MDS.Client
             // RefreshTabDisplay();
         }
 
+        /// <summary>
+        /// 根据用户类型调整tab的显示状态
+        /// </summary>
         private void RefreshTabDisplay()
         {
             ManagePageTab.Visibility = UserInfo.UserType == UserType.ADMIN ? Visibility.Visible : Visibility.Collapsed;

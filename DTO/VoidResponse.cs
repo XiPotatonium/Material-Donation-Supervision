@@ -4,6 +4,7 @@ using System.Text;
 
 namespace DTO
 {
+    [Serializable]
     public class VoidResponse
     {
     }
