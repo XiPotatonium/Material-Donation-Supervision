@@ -5,7 +5,9 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MDS.Client.NavigationPages"
       xmlns:controls="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
-      xmlns:model="clr-namespace:MaterialDesignExtensions.Model;assembly=MaterialDesignExtensions" xmlns:mdscontrols="clr-namespace:MDS.Client.Controls" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:model="clr-namespace:MaterialDesignExtensions.Model;assembly=MaterialDesignExtensions" 
+      xmlns:mdscontrols="clr-namespace:MDS.Client.Controls" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DonatePage"
@@ -18,13 +20,14 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="1">
-            <controls:TabControlStepper Layout="Horizontal"
+            <controls:TabControlStepper x:Name="PART_Stepper" 
+                                        Layout="Horizontal"
                                         ContentAnimationsEnabled="True"
                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                         DoneIconTemplate="{DynamicResource MaterialDesignStepDoneIconTemplate}"
                                         ValidationErrorIconTemplate="{DynamicResource MaterialDesignStepValidationErrorIconTemplate}"
-                                        ContinueNavigation="TabControlStepper_ContinueNavigation"
-                                        CancelNavigation="TabControlStepper_CancelNavigation">
+                                        ContinueNavigation="PART_Stepper_ContinueNavigation"
+                                        CancelNavigation="PART_Stepper_CancelNavigation">
                 <TabItem>
                     <TabItem.Header>
                         <model:StepTitleHeader FirstLevelTitle="填写申请" />
@@ -45,7 +48,7 @@
                                  SelectionMode="Single"
                                  SelectionChanged="MaterialSelectListBox_SelectionChanged">
                                 <ListBox.ItemTemplate>
-                                    <DataTemplate DataType="{x:Type local:ApplicationMaterialListViewModel}">
+                                    <DataTemplate DataType="{x:Type local:DonationMaterialListViewModel}">
                                         <Grid HorizontalAlignment="Stretch">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
@@ -57,9 +60,6 @@
                                                 <TextBlock FontWeight="Bold"
                                                        Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                                                        Text="{Binding Name}">
-                                                </TextBlock>
-                                                <TextBlock HorizontalAlignment="Right">
-                                                <Run Text="{Binding Constraint}"/>
                                                 </TextBlock>
                                             </StackPanel>
                                         </Grid>
@@ -167,14 +167,14 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="CardApplicationName" Text="你滴捐赠" 
+                    <TextBlock x:Name="CardDonationName" Text="你滴捐赠" 
                                Grid.Row="0" Grid.ColumnSpan="2" Margin="16 16 16 4"
                                Style="{StaticResource MaterialDesignHeadline5TextBlock}"/>
                     <TextBlock Grid.Row="0" Grid.Column="1" Margin="16 16 16 4"
                                HorizontalAlignment="Right"
                                Style="{StaticResource MaterialDesignSubtitle1TextBlock}">
                         <Run Text=" × "/>
-                        <Run x:Name="CardApplicationQuantity" Text="100"/>
+                        <Run x:Name="CardDonationQuantity" Text="100"/>
                     </TextBlock>
                     <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
                     <TextBlock Grid.Row="2" Grid.Column="0" Margin="16 0 16 8"
@@ -187,7 +187,7 @@
                                VerticalAlignment="Center" HorizontalAlignment="Left"
                                Style="{StaticResource MaterialDesignTextBlock}">
                         <Run Text="起始时间:"/>
-                        <Run x:Name="CardApplicationTime" Text="2019-06-18"/>
+                        <Run x:Name="CardDonationTime" Text="2019-06-18"/>
                     </TextBlock>
                     <TextBlock x:Name="CardAddress" 
                                Grid.ColumnSpan="2" Grid.Row="3"

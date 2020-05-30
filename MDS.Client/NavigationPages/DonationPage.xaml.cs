@@ -1,6 +1,8 @@
 ﻿using DTO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,7 +22,9 @@ namespace MDS.Client.NavigationPages
     public partial class DonationPage : Page
     {
         private MainWindow ParentWindow { get; } = null;
-        private DonationListViewModel UserDonationViewModel { set; get; } = null;
+        private DonationListViewModel DonationViewModel { set; get; } = null;
+        private DonationDetailViewModel DonationDetailViewModel { set; get; } = null;
+        private ObservableCollection<DonationMaterialListViewModel> MaterialListViewModels { set; get; } = null;
 
         private DonationPage()
         {
@@ -39,40 +43,31 @@ namespace MDS.Client.NavigationPages
             InitializeComponent();
 
             ParentWindow = parent;
-            UserDonationViewModel = userDonationViewModel;
+            DonationViewModel = userDonationViewModel;
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (UserDonationViewModel != null)
+            if (DonationViewModel != null)
             {
                 // 查看已存在的捐赠
                 // 1. 网络请求
-                ApplicationDetailViewModel = new ApplicationDetailViewModel(await NetworkHelper.GetAsync(new GetApplicationDetailRequest()
+                DonationDetailViewModel = new DonationDetailViewModel(await NetworkHelper.GetAsync(new GetDonationDetailRequest()
                 {
                     UserId = UserInfo.Id,
-                    ApplicationId = ApplicationViewModel.OriginalItem.ID
+                    DonationId = DonationViewModel.OriginalItem.ID
                 }));
 
-                // 2. 根据ApplicationViewModel和ApplicationDetailViewModel来生成正确的Tab显示
-                switch (ApplicationViewModel.OriginalItem.State)
+                // 2. 根据DonationViewModel来生成正确的Tab显示
+                switch (DonationViewModel.OriginalItem.State)
                 {
-                    case ApplicationState.Applying:
+                    case DonationState.Applying:
                         PART_Stepper.Controller.GotoStep(1);
                         break;
-                    case ApplicationState.Delivering:
+                    case DonationState.WaitingDelivery:
                         PART_Stepper.Controller.GotoStep(2);
                         break;
-                    case ApplicationState.Received:
-                        ArrivedPanel.Visibility = Visibility.Visible;
-                        AllDonePanel.Visibility = Visibility.Collapsed;
-                        ConfirmStepBar.Visibility = Visibility.Visible;
-                        PART_Stepper.Controller.GotoStep(3);
-                        break;
-                    case ApplicationState.Done:
-                        ArrivedPanel.Visibility = Visibility.Collapsed;
-                        AllDonePanel.Visibility = Visibility.Visible;
-                        ConfirmStepBar.Visibility = Visibility.Collapsed;
+                    case DonationState.Done:
                         PART_Stepper.Controller.GotoStep(3);
                         break;
                     default:
@@ -84,23 +79,23 @@ namespace MDS.Client.NavigationPages
             {
                 // 填写新申请
                 // 1. 请求所有可选的物资
-                AvailableApplicationMaterialResponse response = await NetworkHelper.GetAsync(new AvailableApplicationMaterialRequest() { });
+                AvailableDonationMaterialResponse response = await NetworkHelper.GetAsync(new AvailableDonationMaterialRequest() { });
                 // TODO 删除假数据
-                response = new AvailableApplicationMaterialResponse() { Items = new List<AvailableApplicationMaterialResponse.Item>() };
-                response.Items.Add(new AvailableApplicationMaterialResponse.Item()
+                response = new AvailableDonationMaterialResponse() { Items = new List<AvailableDonationMaterialResponse.Item>() };
+                response.Items.Add(new AvailableDonationMaterialResponse.Item()
                 {
+                    Id = 1,
                     Name = "物资1",
-                    Constraint = 10,
-                    Description = "物资一的介绍"
+                    Description = "物资一的介绍"      // TODO UI设计
                 });
-                response.Items.Add(new AvailableApplicationMaterialResponse.Item()
+                response.Items.Add(new AvailableDonationMaterialResponse.Item()
                 {
+                    Id = 2,
                     Name = "物资2",
-                    Constraint = 100,
                     Description = "物资er的介绍"
                 });
 
-                MaterialListViewModels = new ObservableCollection<ApplicationMaterialListViewModel>(response.Items.Select(i => new ApplicationMaterialListViewModel(i)));
+                MaterialListViewModels = new ObservableCollection<DonationMaterialListViewModel>(response.Items.Select(i => new DonationMaterialListViewModel(i)));
                 MaterialSelectListBox.ItemsSource = MaterialListViewModels;
 
                 // 2. 初始化好填写界面
@@ -117,11 +112,11 @@ namespace MDS.Client.NavigationPages
             {
                 // 不是第一步，需要显示订单的详细内容
                 PART_Card.Visibility = Visibility.Visible;
-                CardApplicationGUID.Text = ApplicationViewModel.GUID;
-                CardApplicationName.Text = ApplicationViewModel.Name;
-                CardApplicationQuantity.Text = ApplicationViewModel.Quantity.ToString();
-                CardApplicationTime.Text = ApplicationViewModel.StartTime.ToString();
-                CardAddress.Text = ApplicationDetailViewModel.Address;
+                CardDonationGUID.Text = DonationViewModel.GUID;
+                CardDonationName.Text = DonationViewModel.Name;
+                CardDonationQuantity.Text = DonationViewModel.Quantity.ToString();
+                CardDonationTime.Text = DonationViewModel.StartTime.ToString();
+                CardAddress.Text = DonationDetailViewModel.Address;
             }
             else
             {
@@ -136,14 +131,55 @@ namespace MDS.Client.NavigationPages
             UserAddressTextBlock.Text = UserInfo.HomeAddress;
         }
 
-        private void TabControlStepper_ContinueNavigation(object sender, MaterialDesignExtensions.Controls.StepperNavigationEventArgs args)
+        private async void PART_Stepper_ContinueNavigation(object sender, MaterialDesignExtensions.Controls.StepperNavigationEventArgs args)
         {
+            // 发送申请
+            DonationMaterialListViewModel selected = (DonationMaterialListViewModel)MaterialSelectListBox.SelectedItem;
+            if (selected == null)
+            {
+                ParentWindow.SetSnackBarContentAndPopup("请选择要捐赠的物资");
+                args.Cancel = true;
+                return;
+            }
+            else if (QuantityInputBox.Value == null || QuantityInputBox.Value <= 0)
+            {
+                ParentWindow.SetSnackBarContentAndPopup("不合法的数目");
+                args.Cancel = true;
+                return;
+            }
 
+            NewDonationResponse response = await NetworkHelper.GetAsync(new NewDonationRequest()
+            {
+                MaterialId = selected.OriginItem.Id,
+                Quantity = (int)QuantityInputBox.Value,
+                Address = UserInfo.HomeAddress
+            });
+
+            DonationViewModel = new DonationListViewModel(response.Item);
+            DonationDetailViewModel = new DonationDetailViewModel(await NetworkHelper.GetAsync(new GetDonationDetailRequest()
+            {
+                UserId = UserInfo.Id,
+                DonationId = DonationViewModel.OriginalItem.ID
+            }));
+            RefreshApplicationCardView();
         }
 
-        private async void TabControlStepper_CancelNavigation(object sender, MaterialDesignExtensions.Controls.StepperNavigationEventArgs args)
+        private async void PART_Stepper_CancelNavigation(object sender, MaterialDesignExtensions.Controls.StepperNavigationEventArgs args)
         {
-            await NetworkHelper.GetAsync(new CancelDonationRequest() { DonationId = UserDonationViewModel.OriginalItem.ID });
+            await NetworkHelper.GetAsync(new CancelDonationRequest() { DonationId = DonationViewModel.OriginalItem.ID });
+        }
+
+        private void MaterialSelectListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DonationMaterialListViewModel selected = (DonationMaterialListViewModel)MaterialSelectListBox.SelectedItem;
+            if (selected != null)
+            {
+                MaterialNameTextBlock.Text = selected.Name;
+            }
+            else
+            {
+                MaterialNameTextBlock.Text = "请选择想要捐赠的物资";
+            }
         }
     }
 
@@ -151,7 +187,7 @@ namespace MDS.Client.NavigationPages
     public class DonationDetailViewModel
     {
         public string Address { set; get; }
-        public GetApplicationDetailResponse OriginalItem { get; }
+        public GetDonationDetailResponse OriginalItem { get; }
 
         public DonationDetailViewModel(GetDonationDetailResponse response)
         {

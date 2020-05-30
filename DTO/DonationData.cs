@@ -42,7 +42,7 @@ namespace DTO
     /// 用户获取某个具体捐赠的详细信息
     /// </summary>
     [Serializable]
-    public class GetDonationDetailRequest : IReturn<GetApplicationDetailResponse>
+    public class GetDonationDetailRequest : IReturn<GetDonationDetailResponse>
     {
         public int UserId { set; get; }
         public int DonationId { set; get; }
@@ -73,6 +73,7 @@ namespace DTO
     {
         public class Item
         {
+            public int Id { set; get; }             // 物资名称对应一个Id
             public string Name { set; get; }
             public string Description { set; get; }
         }
@@ -84,7 +85,7 @@ namespace DTO
     /// 用户请求新捐赠
     /// </summary>
     [Serializable]
-    public class NewDonationRequest : IReturn<NewApplicationResponse>
+    public class NewDonationRequest : IReturn<NewDonationResponse>
     {
         public int MaterialId { set; get; }
         public int Quantity { set; get; }

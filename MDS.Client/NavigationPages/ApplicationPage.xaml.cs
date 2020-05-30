@@ -94,12 +94,14 @@ namespace MDS.Client.NavigationPages
                 response = new AvailableApplicationMaterialResponse() { Items = new List<AvailableApplicationMaterialResponse.Item>() };
                 response.Items.Add(new AvailableApplicationMaterialResponse.Item()
                 {
+                    Id = 1,
                     Name = "物资1",
                     Constraint = 10,
-                    Description = "物资一的介绍"
+                    Description = "物资一的介绍"      // TODO UI设计
                 });
                 response.Items.Add(new AvailableApplicationMaterialResponse.Item()
                 {
+                    Id = 2,
                     Name = "物资2",
                     Constraint = 100,
                     Description = "物资er的介绍"
