@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MDS.Client.NavigationPages"
       xmlns:controls="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
-      xmlns:model="clr-namespace:MaterialDesignExtensions.Model;assembly=MaterialDesignExtensions"
+      xmlns:model="clr-namespace:MaterialDesignExtensions.Model;assembly=MaterialDesignExtensions" xmlns:mdscontrols="clr-namespace:MDS.Client.Controls" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DonatePage"
@@ -22,17 +22,88 @@
                                         ContentAnimationsEnabled="True"
                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                         DoneIconTemplate="{DynamicResource MaterialDesignStepDoneIconTemplate}"
-                                        ValidationErrorIconTemplate="{DynamicResource MaterialDesignStepValidationErrorIconTemplate}">
+                                        ValidationErrorIconTemplate="{DynamicResource MaterialDesignStepValidationErrorIconTemplate}"
+                                        ContinueNavigation="TabControlStepper_ContinueNavigation"
+                                        CancelNavigation="TabControlStepper_CancelNavigation">
                 <TabItem>
                     <TabItem.Header>
                         <model:StepTitleHeader FirstLevelTitle="填写申请" />
                     </TabItem.Header>
                     <Grid>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="先填写NMLGCB的申请再继续" TextWrapping="WrapWithOverflow" />
-                            <ComboBox/>
-                            <TextBox/>
-                        </StackPanel>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="6*"/>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="4*"/>
+                            </Grid.ColumnDefinitions>
+                            <ListBox x:Name="MaterialSelectListBox"
+                                 Grid.Column="0" Margin="0,0,15,0"
+                                 SelectionMode="Single"
+                                 SelectionChanged="MaterialSelectListBox_SelectionChanged">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type local:ApplicationMaterialListViewModel}">
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Margin="0,0,16,0"
+                                                    Grid.Column="1"
+                                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                <TextBlock FontWeight="Bold"
+                                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                                       Text="{Binding Name}">
+                                                </TextBlock>
+                                                <TextBlock HorizontalAlignment="Right">
+                                                <Run Text="{Binding Constraint}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <Separator Grid.Column="1" HorizontalAlignment="Center"
+                                   Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="0,8" BorderBrush="LightGray" BorderThickness="1"/>
+                            <Grid Grid.Column="2"
+                              Margin="15,0,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock x:Name="UserNameTextBlock"
+                                       Grid.Row="0"
+                                       Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                       Text="你滴名字"/>
+                                <TextBlock x:Name="UserPhoneTextBlock" 
+                                       Grid.Row="1" Margin="0,10,0,0"
+                                       HorizontalAlignment="Left"
+                                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                       Text="电话号码"/>
+                                <TextBlock x:Name="UserAddressTextBlock" Grid.Row="2"
+                                        Margin="0,10,0,4"
+                                        Text="饿我去的话丢弃维达力的解耦2金额哦哦i建瓯的无穷的气味都i就·哦"
+                                        TextWrapping="Wrap"
+                                        VerticalAlignment="Center" HorizontalAlignment="Left"
+                                        Style="{StaticResource MaterialDesignBody2TextBlock}"/>
+                                <Separator Grid.Row="3"
+                                        Style="{StaticResource MaterialDesignDarkSeparator}" />
+                                <TextBlock x:Name="MaterialNameTextBlock"
+                                       Grid.Row="4" Margin="0,10,0,0"
+                                       Text="请选择想要捐赠的物资"
+                                       Style="{StaticResource MaterialDesignHeadline5TextBlock}"/>
+                                <mdscontrols:NumberInputBox x:Name="QuantityInputBox" Grid.Row="5" 
+                                                            Margin="0,10,30,0"
+                                                            QuantityConstraintHint=""/>
+                            </Grid>
+                        </Grid>
                         <controls:StepButtonBar Continue="下一步" VerticalAlignment="Bottom"/>
                     </Grid>
                 </TabItem>
@@ -41,18 +112,30 @@
                         <model:StepTitleHeader FirstLevelTitle="等待审批" />
                     </TabItem.Header>
                     <Grid>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="我说好好好别着急" TextWrapping="WrapWithOverflow" />
+                        <StackPanel Grid.Row="0" Margin="0,40,0,0"
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Center" VerticalAlignment="Top"
+                                Opacity="0.5">
+                            <materialDesign:PackIcon Kind="TextBoxSearchOutline" Width="50" Height="50"/>
+                            <TextBlock Text="捐赠已提交，正在审批"
+                                   Style="{StaticResource MaterialDesignHeadline4TextBlock}" 
+                                   VerticalAlignment="Center" Margin="10,0,0,0"/>
                         </StackPanel>
-                        <controls:StepButtonBar Continue="取消" VerticalAlignment="Bottom"/>
+                        <controls:StepButtonBar Cancel="取消捐赠" VerticalAlignment="Bottom"/>
                     </Grid>
                 </TabItem>
                 <TabItem>
                     <TabItem.Header>
                         <model:StepTitleHeader FirstLevelTitle="等待配送" />
                     </TabItem.Header>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="侦测到在途的巨便打击" TextWrapping="WrapWithOverflow" />
+                    <StackPanel Margin="0,40,0,0"
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Center" VerticalAlignment="Top"
+                            Opacity="0.5">
+                        <materialDesign:PackIcon Kind="TruckDeliveryOutline" Width="50" Height="50"/>
+                        <TextBlock Text="配送员正在赶来"
+                                Style="{StaticResource MaterialDesignHeadline4TextBlock}" 
+                                VerticalAlignment="Center" Margin="10,0,0,0"/>
                     </StackPanel>
                 </TabItem>
                 <TabItem>
@@ -66,6 +149,53 @@
                     </Grid>
                 </TabItem>
             </controls:TabControlStepper>
+        </Grid>
+        <Grid>
+            <materialDesign:Card x:Name="PART_Card"
+                                 Background="#03a9f4" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                 Padding="0" Width="500"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center"
+                                 Visibility="Collapsed">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="CardApplicationName" Text="你滴捐赠" 
+                               Grid.Row="0" Grid.ColumnSpan="2" Margin="16 16 16 4"
+                               Style="{StaticResource MaterialDesignHeadline5TextBlock}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Margin="16 16 16 4"
+                               HorizontalAlignment="Right"
+                               Style="{StaticResource MaterialDesignSubtitle1TextBlock}">
+                        <Run Text=" × "/>
+                        <Run x:Name="CardApplicationQuantity" Text="100"/>
+                    </TextBlock>
+                    <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="16 0 16 8"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Style="{StaticResource MaterialDesignTextBlock}">
+                        <Run Text="订单编号:"/>
+                        <Run x:Name="CardDonationGUID" Text="faseji1d1h9sja1"/>
+                    </TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Margin="16 0 16 8"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Style="{StaticResource MaterialDesignTextBlock}">
+                        <Run Text="起始时间:"/>
+                        <Run x:Name="CardApplicationTime" Text="2019-06-18"/>
+                    </TextBlock>
+                    <TextBlock x:Name="CardAddress" 
+                               Grid.ColumnSpan="2" Grid.Row="3"
+                               HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0"
+                               Style="{StaticResource MaterialDesignTextBlock}"
+                               TextWrapping="Wrap"/>
+                </Grid>
+            </materialDesign:Card>
         </Grid>
     </Grid>
 </Page>

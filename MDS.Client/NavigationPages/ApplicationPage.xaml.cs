@@ -25,7 +25,7 @@ namespace MDS.Client.NavigationPages
         private MainWindow ParentWindow { get; } = null;
         private ApplicationListViewModel ApplicationViewModel { set; get; } = null;
         private ApplicationDetailViewModel ApplicationDetailViewModel { set; get; } = null;
-        private ObservableCollection<MaterialListViewModel> MaterialListViewModels { set; get; } = null;
+        private ObservableCollection<ApplicationMaterialListViewModel> MaterialListViewModels { set; get; } = null;
 
         private ApplicationPage()
         {
@@ -49,7 +49,6 @@ namespace MDS.Client.NavigationPages
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await Task.Delay(200);
             if (ApplicationViewModel != null)
             {
                 // 查看已存在的申请
@@ -106,7 +105,7 @@ namespace MDS.Client.NavigationPages
                     Description = "物资er的介绍"
                 });
 
-                MaterialListViewModels = new ObservableCollection<MaterialListViewModel>(response.Items.Select(i => new MaterialListViewModel(i)));
+                MaterialListViewModels = new ObservableCollection<ApplicationMaterialListViewModel>(response.Items.Select(i => new ApplicationMaterialListViewModel(i)));
                 MaterialSelectListBox.ItemsSource = MaterialListViewModels;
 
                 // 2. 初始化好填写界面
@@ -123,7 +122,7 @@ namespace MDS.Client.NavigationPages
             {
                 // 不是第一步，需要显示订单的详细内容
                 PART_Card.Visibility = Visibility.Visible;
-                CardApplicationId.Text = ApplicationViewModel.GUID;
+                CardApplicationGUID.Text = ApplicationViewModel.GUID;
                 CardApplicationName.Text = ApplicationViewModel.Name;
                 CardApplicationQuantity.Text = ApplicationViewModel.Quantity.ToString();
                 CardApplicationTime.Text = ApplicationViewModel.StartTime.ToString();
@@ -155,7 +154,7 @@ namespace MDS.Client.NavigationPages
             if (idx == 0)
             {
                 // 发送申请
-                MaterialListViewModel selected = (MaterialListViewModel)MaterialSelectListBox.SelectedItem;
+                ApplicationMaterialListViewModel selected = (ApplicationMaterialListViewModel)MaterialSelectListBox.SelectedItem;
                 if (selected == null)
                 {
                     ParentWindow.SetSnackBarContentAndPopup("请选择要申请的物资");
@@ -207,7 +206,7 @@ namespace MDS.Client.NavigationPages
 
         private void MaterialSelectListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MaterialListViewModel selected = (MaterialListViewModel)MaterialSelectListBox.SelectedItem;
+            ApplicationMaterialListViewModel selected = (ApplicationMaterialListViewModel)MaterialSelectListBox.SelectedItem;
             if (selected != null)
             {
                 MaterialNameTextBlock.Text = selected.Name;
@@ -220,6 +219,9 @@ namespace MDS.Client.NavigationPages
         }
     }
 
+    /// <summary>
+    /// 申请的详细信息，暂时只有申请时刻填写的地址
+    /// </summary>
     public class ApplicationDetailViewModel
     {
         public string Address { set; get; }
@@ -236,7 +238,7 @@ namespace MDS.Client.NavigationPages
     /// <summary>
     /// 可申请物资列表
     /// </summary>
-    public class MaterialListViewModel
+    public class ApplicationMaterialListViewModel
     {
         public string Name { set; get; }
         public string Description { set; get; }
@@ -244,7 +246,7 @@ namespace MDS.Client.NavigationPages
 
         public AvailableApplicationMaterialResponse.Item OriginItem { get; }
 
-        public MaterialListViewModel(AvailableApplicationMaterialResponse.Item item)
+        public ApplicationMaterialListViewModel(AvailableApplicationMaterialResponse.Item item)
         {
             OriginItem = item;
 

@@ -51,6 +51,7 @@ namespace DTO
     [Serializable]
     public class GetDonationDetailResponse
     {
+        public string Address { set; get; }
         // TODO
         // 最好用户能在这里看到捐赠的详细使用情况
     }
@@ -72,7 +73,8 @@ namespace DTO
     {
         public class Item
         {
-
+            public string Name { set; get; }
+            public string Description { set; get; }
         }
 
         public List<Item> Items { set; get; }
@@ -84,13 +86,15 @@ namespace DTO
     [Serializable]
     public class NewDonationRequest : IReturn<NewApplicationResponse>
     {
-
+        public int MaterialId { set; get; }
+        public int Quantity { set; get; }
+        public string Address { set; get; } // 发请求时刻用户的地址，后续用户地址可能会和这个不同
     }
 
     [Serializable]
     public class NewDonationResponse
     {
-
+        public GetDonationListResponse.Item Item { set; get; }
     }
 
     /// <summary>
@@ -99,6 +103,6 @@ namespace DTO
     [Serializable]
     public class CancelDonationRequest : IReturn<VoidResponse>
     {
-
+        public int DonationId { set; get; }
     }
 }
