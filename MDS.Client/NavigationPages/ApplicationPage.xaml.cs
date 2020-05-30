@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Linq;
 using System.Collections.ObjectModel;
+using DTO;
 
 namespace MDS.Client.NavigationPages
 {
@@ -51,33 +52,58 @@ namespace MDS.Client.NavigationPages
             await Task.Delay(200);
             if (ApplicationViewModel != null)
             {
-                // TODO 网络请求ApplicationDetailViewModel
+                // 查看已存在的申请
+                // 1. 网络请求ApplicationDetailViewModel
+                ApplicationDetailViewModel = new ApplicationDetailViewModel(await NetworkHelper.GetAsync(new GetApplicationDetailRequest()
+                {
+                    UserId = UserInfo.Id,
+                    ApplicationId = ApplicationViewModel.OriginalItem.ID
+                }));
 
-                // TODO 根据ApplicationViewModel和ApplicationDetailViewModel来生成正确的Tab显示
-                PART_Stepper.Controller.GotoStep(1);
+                // 2. TODO 根据ApplicationViewModel和ApplicationDetailViewModel来生成正确的Tab显示
+                switch (ApplicationViewModel.OriginalItem.State)
+                {
+                    case ApplicationState.Applying:
+                        PART_Stepper.Controller.GotoStep(1);
+                        break;
+                    case ApplicationState.Delivering:
+                        PART_Stepper.Controller.GotoStep(2);
+                        break;
+                    case ApplicationState.Received:
+                        PART_Stepper.Controller.GotoStep(3);
+                        break;
+                    case ApplicationState.Done:
+                        PART_Stepper.Controller.GotoStep(3);
+                        break;
+                    default:
+                        PART_Stepper.Controller.GotoStep(1);
+                        break;
+                }
             }
             else
             {
                 // 填写新申请
-                // TODO 请求所有可选的物资
-                MaterialListViewModels = new ObservableCollection<MaterialListViewModel>()
+                // 1. 请求所有可选的物资
+                AvailableApplicationMaterialResponse response = await NetworkHelper.GetAsync(new AvailableApplicationMaterialRequest() { });
+                // TODO 删除假数据
+                response.Items.Add(new AvailableApplicationMaterialResponse.Item()
                 {
-                    new MaterialListViewModel()
-                    {
-                        Name = "物资1",
-                        Constraint = 10,
-                        Description = "物资一的介绍"
-                    },
-                    new MaterialListViewModel()
-                    {
-                        Name = "物资2",
-                        Constraint = 100,
-                        Description = "物资er的介绍"
-                    }
-                };
+                    Name = "物资1",
+                    Constraint = 10,
+                    Description = "物资一的介绍"
+                });
+                response.Items.Add(new AvailableApplicationMaterialResponse.Item()
+                {
+                    Name = "物资2",
+                    Constraint = 100,
+                    Description = "物资er的介绍"
+                });
+
+                MaterialListViewModels = new ObservableCollection<MaterialListViewModel>(response.Items.Select(i => new MaterialListViewModel(i)));
                 MaterialSelectListBox.ItemsSource = MaterialListViewModels;
+
+                // 2. 初始化好填写界面
                 RefreshAddressInfo();
-                // TODO 初始化好填写界面
                 PART_Stepper.Controller.GotoStep(0);
             }
 
@@ -97,6 +123,7 @@ namespace MDS.Client.NavigationPages
             }
             else
             {
+                // 第一步，不需要显示当前订单卡片
                 PART_Card.Visibility = Visibility.Collapsed;
             }
         }
@@ -114,7 +141,7 @@ namespace MDS.Client.NavigationPages
             {
                 if (args.CurrentStep == PART_Stepper.Controller.Steps[idx])
                 {
-                    break;
+                    break;      // 确定现在在哪个Step
                 }
             }
             if (idx == 0)
@@ -129,12 +156,14 @@ namespace MDS.Client.NavigationPages
             else if (idx == 3)
             {
                 // 确认
+                await NetworkHelper.GetAsync(new ConfirmApplicationDoneRequest() { ApplicationId = ApplicationViewModel.OriginalItem.ID });
             }
         }
 
-        private void PART_Stepper_CancelNavigation(object sender, MaterialDesignExtensions.Controls.StepperNavigationEventArgs args)
+        private async void PART_Stepper_CancelNavigation(object sender, MaterialDesignExtensions.Controls.StepperNavigationEventArgs args)
         {
-            // TODO 这里需要发送撤销请求的包
+            // 发送撤销请求的包
+            await NetworkHelper.GetAsync(new CancelApplicationRequest() { ApplicationId = ApplicationViewModel.OriginalItem.ID });
         }
 
         private void MaterialSelectListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -149,42 +178,36 @@ namespace MDS.Client.NavigationPages
                 MaterialNameTextBlock.Text = "请选择想要申请的物资";
             }
         }
-
-        private void SnackBarContent_ActionClick(object sender, RoutedEventArgs e)
-        {
-            PART_SnackBar.IsActive = false;
-        }
-
-        private void AddressSettingButton_Click(object sender, RoutedEventArgs e)
-        {
-            NewPhoneTextBox.Text = UserInfo.PhoneNumber;
-            NewAddressTextBox.Text = UserInfo.HomeAddress;
-            ModifyInfoDialog.IsOpen = true;
-        }
-
-        private async void DialogConfirmButton_Click(object sender, RoutedEventArgs e)
-        {
-            ModifyInfoDialog.IsOpen = false;
-            // TODO 发送请求
-            await Task.Delay(100);
-            RefreshAddressInfo();
-        }
-
-        private void DialogCancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            ModifyInfoDialog.IsOpen = false;
-        }
     }
 
     public class ApplicationDetailViewModel
     {
+        public GetApplicationDetailResponse OriginalItem { get; }
 
+        public ApplicationDetailViewModel(GetApplicationDetailResponse response)
+        {
+            OriginalItem = response;
+        }
     }
 
+    /// <summary>
+    /// 可申请物资列表
+    /// </summary>
     public class MaterialListViewModel
     {
         public string Name { set; get; }
         public string Description { set; get; }
         public int Constraint { set; get; }
+
+        public AvailableApplicationMaterialResponse.Item OriginItem { get; }
+
+        public MaterialListViewModel(AvailableApplicationMaterialResponse.Item item)
+        {
+            OriginItem = item;
+
+            Name = item.Name;
+            Description = item.Description;
+            Constraint = item.Constraint;
+        }
     }
 }

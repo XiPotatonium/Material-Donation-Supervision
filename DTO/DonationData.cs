@@ -4,11 +4,19 @@ using System.Text;
 
 namespace DTO
 {
+    public enum DonationState
+    {
+        Aborted,
+        Applying, 
+        WaitingDelivery, 
+        Done
+    }
+
     /// <summary>
     /// 用户获取自己的所有捐赠
     /// </summary>
     [Serializable]
-    public class GetDonationListRequest : IReturn<GetApplicationListResponse>
+    public class GetDonationListRequest : IReturn<GetDonationListResponse>
     {
         public int UserId { set; get; }
     }
@@ -18,7 +26,12 @@ namespace DTO
     {
         public class Item
         {
-
+            public int ID { set; get; }     // 字段参考Application
+            public string GUID { set; get; }
+            public string Name { set; get; }
+            public int Quantity { set; get; }
+            public DonationState State { set; get; }
+            public DateTime StartTime { set; get; }
         }
 
         public List<Item> Items { set; get; }
@@ -32,7 +45,7 @@ namespace DTO
     public class GetDonationDetailRequest : IReturn<GetApplicationDetailResponse>
     {
         public int UserId { set; get; }
-        // TODO
+        public int DonationId { set; get; }
     }
 
     [Serializable]

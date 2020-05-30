@@ -4,6 +4,16 @@ using System.Text;
 
 namespace DTO
 {
+    public enum ApplicationState
+    {
+        Aborted,        // 撤销的申请
+        Applying, 
+        Delivering, 
+        Received, 
+        Done
+    }
+
+
     /// <summary>
     /// 用户获取自己的所有请求
     /// </summary>
@@ -18,7 +28,12 @@ namespace DTO
     {
         public class Item
         {
-
+            public int ID { set; get; }             // 申请的ID，可以直接对应数据库表中的id，后续关于这个item的查询都会发送这个id
+            public string GUID { set; get; }        // 申请编号，生成的guid
+            public string Name { set; get; }        // 申请的东西的名字
+            public int Quantity { set; get; }       // 数量，整数
+            public ApplicationState State { set; get; } // 申请状态
+            public DateTime StartTime { set; get; } // 开始时间
         }
 
         public List<Item> Items { set; get; }
@@ -31,14 +46,14 @@ namespace DTO
     [Serializable]
     public class GetApplicationDetailRequest : IReturn<GetApplicationDetailResponse>
     {
-        public int UserId { set; get; }
-        // TODO
+        public int UserId { set; get; }     // 可能不需要UserId
+        public int ApplicationId { set; get; }
     }
 
     [Serializable]
     public class GetApplicationDetailResponse
     {
-        // TODO
+        // 似乎暂时没有详细数据，但是保留这个结构体（客户端可能保留发送请求的代码）
     }
 
 
@@ -58,7 +73,10 @@ namespace DTO
     {
         public class Item
         {
-
+            public int Id { set; get; }             // 物资名称对应一个Id，申请的时候会使用这个Id
+            public string Name { set; get; }        // 物资名称
+            public string Description { set; get; } // 物资描述
+            public int Constraint { set; get; }     // 物资限制
         }
 
         public List<Item> Items { set; get; }
@@ -80,20 +98,20 @@ namespace DTO
     }
 
     /// <summary>
-    /// 用户请求撤销申请
+    /// 用户请求撤销申请, ApplicationState变成Aborted
     /// </summary>
     [Serializable]
     public class CancelApplicationRequest : IReturn<VoidResponse>
     {
-
+        public int ApplicationId { set; get; }
     }
 
     /// <summary>
-    /// 确认收到
+    /// 确认收到, ApplicationState变成Done
     /// </summary>
     [Serializable]
     public class ConfirmApplicationDoneRequest : IReturn<VoidResponse>
     {
-
+        public int ApplicationId { set; get; }
     }
 }

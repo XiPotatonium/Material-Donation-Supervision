@@ -84,6 +84,12 @@ namespace MDS.Client
             }
         }
 
+        public void NavigateToMainPage()
+        {
+            MainTabControl.SelectedItem = MyMainPageTab;
+            PART_Frame.Content = new MyMainPage(this);
+        }
+
         public void NavigateToApplicationPageAndDisplay(ApplicationListViewModel userApplicationViewModel)
         {
             MainTabControl.SelectedItem = ApplicationPageTab;
@@ -94,6 +100,16 @@ namespace MDS.Client
         {
             MainTabControl.SelectedItem = DonationPageTab;
             PART_Frame.Content = new DonationPage(this, userDonationViewModel);
+        }
+
+        public void SetSnackBarContent(string message)
+        {
+            SnackBarContent.Content = message;
+        }
+
+        private void SnackBarContent_ActionClick(object sender, RoutedEventArgs e)
+        {
+            PART_SnackBar.IsActive = false;
         }
     }
 }
