@@ -102,9 +102,10 @@ namespace MDS.Client
             PART_Frame.Content = new DonationPage(this, userDonationViewModel);
         }
 
-        public void SetSnackBarContent(string message)
+        public void SetSnackBarContentAndPopup(string message)
         {
             SnackBarContent.Content = message;
+            PART_SnackBar.IsActive = true;
         }
 
         private void SnackBarContent_ActionClick(object sender, RoutedEventArgs e)

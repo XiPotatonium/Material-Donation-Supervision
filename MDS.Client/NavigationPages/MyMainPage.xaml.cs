@@ -53,6 +53,7 @@ namespace MDS.Client.NavigationPages
             });
 
             // TODO 删掉假数据
+            response = new GetApplicationListResponse() { Items = new List<GetApplicationListResponse.Item>() };
             response.Items.Add(new GetApplicationListResponse.Item()
             {
                 ID = 0,
@@ -85,6 +86,7 @@ namespace MDS.Client.NavigationPages
             });
 
             // TODO 删除假数据
+            response = new GetDonationListResponse() { Items = new List<GetDonationListResponse.Item>() };
             response.Items.Add(new GetDonationListResponse.Item()
             {
                 GUID = "uhsdhasdbqwi2178412d",

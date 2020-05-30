@@ -53,7 +53,7 @@ namespace DTO
     [Serializable]
     public class GetApplicationDetailResponse
     {
-        // 似乎暂时没有详细数据，但是保留这个结构体（客户端可能保留发送请求的代码）
+        public string Address { set; get; }     // 发请求时刻的地址
     }
 
 
@@ -88,13 +88,15 @@ namespace DTO
     [Serializable]
     public class NewApplicationRequest : IReturn<NewApplicationResponse>
     {
-
+        public int MaterialId { set; get; }
+        public int Quantity { set; get; }
+        public string Address { set; get; } // 发请求时刻用户的地址，后续用户地址可能会和这个不同
     }
 
     [Serializable]
     public class NewApplicationResponse
     {
-
+        public GetApplicationListResponse.Item Item { set; get; }   // 顺带返回新建立的申请的Item
     }
 
     /// <summary>

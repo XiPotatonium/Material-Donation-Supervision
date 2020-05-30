@@ -53,7 +53,7 @@ namespace MDS.Client.Controls
         public static readonly DependencyProperty QuantityConstraintHintProperty = DependencyProperty.Register(
             nameof(QuantityConstraintHint), typeof(string), typeof(NumberInputBox), new FrameworkPropertyMetadata("这里最好填上数量限制"));
 
-        public int Value { set; get; } = 0;
+        public int? Value { set; get; } = 0;
 
         public NumberInputBox()
         {
@@ -64,10 +64,11 @@ namespace MDS.Client.Controls
         {
             if (int.TryParse(QuantityTextBox.Text, out int value))
             {
-                if (value >= 0)
-                {
-                    Value = value;
-                }
+                Value = value;
+            }
+            else
+            {
+                Value = null;
             }
         }
 

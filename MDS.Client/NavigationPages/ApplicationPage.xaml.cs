@@ -60,7 +60,7 @@ namespace MDS.Client.NavigationPages
                     ApplicationId = ApplicationViewModel.OriginalItem.ID
                 }));
 
-                // 2. TODO 根据ApplicationViewModel和ApplicationDetailViewModel来生成正确的Tab显示
+                // 2. 根据ApplicationViewModel和ApplicationDetailViewModel来生成正确的Tab显示
                 switch (ApplicationViewModel.OriginalItem.State)
                 {
                     case ApplicationState.Applying:
@@ -70,9 +70,15 @@ namespace MDS.Client.NavigationPages
                         PART_Stepper.Controller.GotoStep(2);
                         break;
                     case ApplicationState.Received:
+                        ArrivedPanel.Visibility = Visibility.Visible;
+                        AllDonePanel.Visibility = Visibility.Collapsed;
+                        ConfirmStepBar.Visibility = Visibility.Visible;
                         PART_Stepper.Controller.GotoStep(3);
                         break;
                     case ApplicationState.Done:
+                        ArrivedPanel.Visibility = Visibility.Collapsed;
+                        AllDonePanel.Visibility = Visibility.Visible;
+                        ConfirmStepBar.Visibility = Visibility.Collapsed;
                         PART_Stepper.Controller.GotoStep(3);
                         break;
                     default:
@@ -86,6 +92,7 @@ namespace MDS.Client.NavigationPages
                 // 1. 请求所有可选的物资
                 AvailableApplicationMaterialResponse response = await NetworkHelper.GetAsync(new AvailableApplicationMaterialRequest() { });
                 // TODO 删除假数据
+                response = new AvailableApplicationMaterialResponse() { Items = new List<AvailableApplicationMaterialResponse.Item>() };
                 response.Items.Add(new AvailableApplicationMaterialResponse.Item()
                 {
                     Name = "物资1",
@@ -120,6 +127,7 @@ namespace MDS.Client.NavigationPages
                 CardApplicationName.Text = ApplicationViewModel.Name;
                 CardApplicationQuantity.Text = ApplicationViewModel.Quantity.ToString();
                 CardApplicationTime.Text = ApplicationViewModel.StartTime.ToString();
+                CardAddress.Text = ApplicationDetailViewModel.Address;
             }
             else
             {
@@ -146,11 +154,40 @@ namespace MDS.Client.NavigationPages
             }
             if (idx == 0)
             {
-                // 从申请到等待审核
-                // TODO 这里有一个请求要发
-                await Task.Delay(100);
-                ApplicationViewModel = new ApplicationListViewModel();
-                ApplicationDetailViewModel = new ApplicationDetailViewModel();
+                // 发送申请
+                MaterialListViewModel selected = (MaterialListViewModel)MaterialSelectListBox.SelectedItem;
+                if (selected == null)
+                {
+                    ParentWindow.SetSnackBarContentAndPopup("请选择要申请的物资");
+                    args.Cancel = true;
+                    return;
+                }
+                else if (QuantityInputBox.Value == null || QuantityInputBox.Value <= 0)
+                {
+                    ParentWindow.SetSnackBarContentAndPopup("不合法的数目");
+                    args.Cancel = true;
+                    return;
+                }
+                else if (QuantityInputBox.Value > selected.Constraint)
+                {
+                    ParentWindow.SetSnackBarContentAndPopup("超出数量限制");
+                    args.Cancel = true;
+                    return;
+                }
+
+                NewApplicationResponse response = await NetworkHelper.GetAsync(new NewApplicationRequest()
+                {
+                    MaterialId = selected.OriginItem.Id,
+                    Quantity = (int)QuantityInputBox.Value,
+                    Address = UserInfo.HomeAddress
+                });
+
+                ApplicationViewModel = new ApplicationListViewModel(response.Item);
+                ApplicationDetailViewModel = new ApplicationDetailViewModel(await NetworkHelper.GetAsync(new GetApplicationDetailRequest()
+                {
+                    UserId = UserInfo.Id,
+                    ApplicationId = ApplicationViewModel.OriginalItem.ID
+                }));
                 RefreshApplicationCardView();
             }
             else if (idx == 3)
@@ -164,6 +201,8 @@ namespace MDS.Client.NavigationPages
         {
             // 发送撤销请求的包
             await NetworkHelper.GetAsync(new CancelApplicationRequest() { ApplicationId = ApplicationViewModel.OriginalItem.ID });
+            ParentWindow.SetSnackBarContentAndPopup("申请已取消");
+            ParentWindow.NavigateToMainPage();
         }
 
         private void MaterialSelectListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -172,6 +211,7 @@ namespace MDS.Client.NavigationPages
             if (selected != null)
             {
                 MaterialNameTextBlock.Text = selected.Name;
+                QuantityInputBox.QuantityConstraintHint = $"限量{selected.Constraint}";
             }
             else
             {
@@ -182,11 +222,14 @@ namespace MDS.Client.NavigationPages
 
     public class ApplicationDetailViewModel
     {
+        public string Address { set; get; }
         public GetApplicationDetailResponse OriginalItem { get; }
 
         public ApplicationDetailViewModel(GetApplicationDetailResponse response)
         {
             OriginalItem = response;
+
+            Address = response.Address;
         }
     }
 
