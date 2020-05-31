@@ -6,6 +6,7 @@
 * WPF(.net Core3.1)
 * UI设计语言为谷歌的MaterialDesign，使用[MaterialDesignInXamlToolkit](https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit)和[MaterialDesignExtensions](https://github.com/spiegelp/MaterialDesignExtensions)来实现
     * 注意MaterialDesignExtensions的TabStepper疑似存在一些问题，在Tab中使用某些MD控件会导致渲染的时候有很多莫名其妙的格线，应该是它的BUG，请小心使用
+* 客户端的报错尽量不要使用```MessageBox.Show```，UI很难看，MainWindow有一个SnackBar，用那个。
 ### 数据包信息
 #### 一个物资的数据包的全部信息如下：    
     string GUID          订单号  
@@ -50,6 +51,6 @@
 
 1. 不确定服务器方面效率怎么样
 2. 异常处理问题，404，连不上服务器时客户端需要TryCatch来防止程序崩溃（可能可以统一处理？我没研究过）
-3. 边际问题，网络请求过程中可能需要Disable部分UI控件，防止意料之外的用户操作，这个可能可以用一个Extension解决
-4. 加载动画。网络请求时可以有加载动画的，这个功能也可以用一个Extension解决。
-5. 请使用GetAsync而不是Get，异步方法可以防止网络比较慢时UI线程卡死
+3. 边际问题，网络请求过程中可能需要Disable部分UI控件，防止意料之外的用户操作。目前已支持```Task.DisableElements(...)```操作，在Task执行过程中Disable控件，结束后自动Enable这些控件，具体使用方法参考```MDS.Client.LoginDialog.Login()```
+4. 加载动画。网络请求时可以有加载动画的。目前已支持```Task.Progress(bar)```，参数是一个```ProgressBar```（定义在```MainWindow```中），具体使用方法参考```MDS.Client.MainWindow.Window_Loaded()```。NavidationPages里面每个Page都可以通过```ParentWindow```访问```MainWindow```的成员。
+5. 请使用GetAsync而不是Get，异步方法可以防止网络比较慢时UI线程卡死。异步方法需要```await```，带```await```的方法需要是```async```，具体参考微软的文档。
