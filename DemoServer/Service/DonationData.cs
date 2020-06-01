@@ -5,19 +5,49 @@ using System.Text;
 
 namespace MDS.Server
 {
-    public class DomationDataService
+    public class DonationDataService
     {
-        public static GetApplicationDetailResponse HandleGetApplicationDetailRequest(GetApplicationDetailRequest request)
+        public static GetDonationListResponse HandleGetDonationListRequest(GetDonationListRequest request)
         {
             //TODO: 数据库
-            return new GetApplicationDetailResponse();
+            return new GetDonationListResponse()
+            {
+
+            };
         }
 
-        public static GetApplicationListResponse HandleGetApplicationListRequest(GetApplicationListRequest request)
+        public static GetDonationDetailResponse HandleGetDonationDetailRequest(GetDonationDetailRequest request)
         {
             //TODO: 数据库
-            return new GetApplicationListResponse();
+            return new GetDonationDetailResponse()
+            {
+
+            };
+        }
+
+        public static AvailableDonationMaterialResponse HandleAvailableDonationMaterialRequest(AvailableDonationMaterialRequest request)
+        {
+            //TODO: 数据库
+            return new AvailableDonationMaterialResponse()
+            {
+
+            };
+        }
+
+        public static NewDonationResponse HandleNewDonationRequest(NewDonationRequest request)
+        {
+            //TODO: 数据库
+            return new NewDonationResponse()
+            {
+
+            };
+        }
+
+        public static VoidResponse HandleCancelDonationRequest(CancelDonationRequest request)
+        {
+            //TODO: 数据库
+            return new VoidResponse();
         }
     }
-   
+
 }

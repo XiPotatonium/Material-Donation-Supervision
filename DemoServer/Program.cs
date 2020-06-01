@@ -7,6 +7,7 @@ using System.Text;
 using MDS.Server;
 using System.Threading;
 using System.Threading.Tasks;
+using MDS.Server.Service;
 
 namespace DemoServer
 {
@@ -64,14 +65,50 @@ namespace DemoServer
                 HttpListenerResponse response = context.Response;//响应
                 string resp = "响应";
                 string responseBody = objecttostring(resp);
-
-                if (recv is LoginRequest)
+                // UsrInfoService
+                if (recv is LoginRequest loginRequest)
                 {
-                    responseBody = objecttostring(UserInfoService.HandleLoginRequest((LoginRequest)recv));
+                    responseBody = objecttostring(UserInfoService.HandleLoginRequest(loginRequest));
                 }
-                else if (recv is UserInfoRequest)
+                else if (recv is UserInfoRequest userInfoRequest)
                 {
-                    responseBody = objecttostring(UserInfoService.HandleUserInfoRequest((UserInfoRequest)recv));
+                    responseBody = objecttostring(UserInfoService.HandleUserInfoRequest(userInfoRequest));
+                }
+                else if (recv is RegisterRequest registerRequest)
+                {
+                    responseBody = objecttostring(UserInfoService.HandleRegisterRequest(registerRequest));
+                }
+                else if (recv is UserInfoModifyRequest userInfoModifyRequest)
+                {
+                    responseBody = objecttostring(UserInfoService.HandleModifyRequest(userInfoModifyRequest));
+                }
+                // DonationDataService
+                // TODO
+                // DeliveryDataService
+                else if (recv is DeliveryListNumRequest deliveryListNumRequest)
+                {
+                    responseBody = objecttostring(DeliveryDataService.HandleDeliveryListNumRequest(deliveryListNumRequest));
+                }
+                else if (recv is DeliveryListRequest deliveryListRequest)
+                {
+                    responseBody = objecttostring(DeliveryDataService.HandleDeliveryListRequest(deliveryListRequest));
+                }
+                else if (recv is DeliveryMoveRequest deliveryMoveRequest)
+                {
+                    responseBody = objecttostring(DeliveryDataService.HandleDeliveryMoveRequest(deliveryMoveRequest));
+                }
+                // ApplicationDataService部分
+                else if (recv is AvailableApplicationMaterialRequest availableApplicationMaterialRequest)
+                {
+                    responseBody = objecttostring(ApplicationDataService.HandleAvailableApplicationMaterialRequest(availableApplicationMaterialRequest));
+                }
+                else if (recv is GetApplicationDetailRequest getApplicationDetailRequest)
+                {
+                    responseBody = objecttostring(ApplicationDataService.HandleGetApplicationDetailRequest(getApplicationDetailRequest));
+                }
+                else if (recv is GetApplicationListRequest getApplicationListRequest)
+                {
+                    responseBody = objecttostring(ApplicationDataService.HandleGetApplicationListRequest(getApplicationListRequest));
                 }
                 else
                 {

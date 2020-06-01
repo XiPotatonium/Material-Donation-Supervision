@@ -11,8 +11,8 @@ namespace MDS.Server
         {
             //TODO: 数据库查询
             return new LoginResponse()
-            {
-                UserId = (request.Password + request.PhoneNumber).Length
+            {         
+                
             };
         }
         
@@ -27,8 +27,17 @@ namespace MDS.Server
 
         public static VoidResponse HandleModifyRequest(UserInfoModifyRequest request)
         {
-            //TODO: 数据库操作
+            //TODO: 数据库操作 这个不需要填返回信息
             return new VoidResponse();
+        }
+
+        public static RegisterResponse HandleRegisterRequest(RegisterRequest request)
+        {
+            //TODO:数据库
+            return new RegisterResponse()
+            {
+
+            };
         }
     }
 }
