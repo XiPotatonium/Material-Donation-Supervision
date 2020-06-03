@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Linq;
 using System.Collections.ObjectModel;
 using DTO;
+using MDS.Client.Extension;
 
 namespace MDS.Client.NavigationPages
 {
@@ -57,7 +58,7 @@ namespace MDS.Client.NavigationPages
                 {
                     UserId = UserInfo.Id,
                     ApplicationId = ApplicationViewModel.OriginalItem.ID
-                }));
+                }).Progress(ParentWindow.PART_ProgressBar));
 
                 // 2. 根据ApplicationViewModel和ApplicationDetailViewModel来生成正确的Tab显示
                 switch (ApplicationViewModel.OriginalItem.State)
@@ -89,7 +90,8 @@ namespace MDS.Client.NavigationPages
             {
                 // 填写新申请
                 // 1. 请求所有可选的物资
-                AvailableApplicationMaterialResponse response = await NetworkHelper.GetAsync(new AvailableApplicationMaterialRequest() { });
+                AvailableApplicationMaterialResponse response = await NetworkHelper.GetAsync(
+                    new AvailableApplicationMaterialRequest() { }).Progress(ParentWindow.PART_ProgressBar);
                 // TODO 删除假数据
                 response = new AvailableApplicationMaterialResponse() { Items = new List<AvailableApplicationMaterialResponse.Item>() };
                 response.Items.Add(new AvailableApplicationMaterialResponse.Item()
@@ -181,14 +183,14 @@ namespace MDS.Client.NavigationPages
                     MaterialId = selected.OriginItem.Id,
                     Quantity = (int)QuantityInputBox.Value,
                     Address = UserInfo.HomeAddress
-                });
+                }).Progress(ParentWindow.PART_ProgressBar);
 
                 ApplicationViewModel = new ApplicationListViewModel(response.Item);
                 ApplicationDetailViewModel = new ApplicationDetailViewModel(await NetworkHelper.GetAsync(new GetApplicationDetailRequest()
                 {
                     UserId = UserInfo.Id,
                     ApplicationId = ApplicationViewModel.OriginalItem.ID
-                }));
+                }).Progress(ParentWindow.PART_ProgressBar));
                 RefreshApplicationCardView();
             }
             else if (idx == 3)
@@ -201,7 +203,8 @@ namespace MDS.Client.NavigationPages
         private async void PART_Stepper_CancelNavigation(object sender, MaterialDesignExtensions.Controls.StepperNavigationEventArgs args)
         {
             // 发送撤销请求的包
-            await NetworkHelper.GetAsync(new CancelApplicationRequest() { ApplicationId = ApplicationViewModel.OriginalItem.ID });
+            await NetworkHelper.GetAsync(new CancelApplicationRequest() { ApplicationId = ApplicationViewModel.OriginalItem.ID })
+                .Progress(ParentWindow.PART_ProgressBar);
             ParentWindow.SetSnackBarContentAndPopup("申请已取消");
             ParentWindow.NavigateToMainPage();
         }

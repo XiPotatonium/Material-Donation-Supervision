@@ -8,10 +8,11 @@
         mc:Ignorable="d"
         Title="LoginDialog" Width="350" Height="270"
         WindowStartupLocation="CenterScreen">
-    <Grid Margin="5">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0"
@@ -104,5 +105,9 @@
                                             ActionContent="我知道了"
                                             ActionClick="SnackBarContent_ActionClick"/>
         </materialDesign:Snackbar>
+
+        <ProgressBar x:Name="PART_ProgressBar"
+                     IsIndeterminate="False"
+                     Grid.Row="3"/>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
 ﻿using DTO;
+using MDS.Client.Extension;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -56,7 +57,7 @@ namespace MDS.Client.NavigationPages
                 {
                     UserId = UserInfo.Id,
                     DonationId = DonationViewModel.OriginalItem.ID
-                }));
+                })).Progress(ParentWindow.PART_ProgressBar);
 
                 // 2. 根据DonationViewModel来生成正确的Tab显示
                 switch (DonationViewModel.OriginalItem.State)
@@ -79,7 +80,8 @@ namespace MDS.Client.NavigationPages
             {
                 // 填写新申请
                 // 1. 请求所有可选的物资
-                AvailableDonationMaterialResponse response = await NetworkHelper.GetAsync(new AvailableDonationMaterialRequest() { });
+                AvailableDonationMaterialResponse response = await NetworkHelper.GetAsync(new AvailableDonationMaterialRequest() { })
+                    .Progress(ParentWindow.PART_ProgressBar);
                 // TODO 删除假数据
                 response = new AvailableDonationMaterialResponse() { Items = new List<AvailableDonationMaterialResponse.Item>() };
                 response.Items.Add(new AvailableDonationMaterialResponse.Item()
@@ -153,20 +155,21 @@ namespace MDS.Client.NavigationPages
                 MaterialId = selected.OriginItem.Id,
                 Quantity = (int)QuantityInputBox.Value,
                 Address = UserInfo.HomeAddress
-            });
+            }).Progress(ParentWindow.PART_ProgressBar);
 
             DonationViewModel = new DonationListViewModel(response.Item);
             DonationDetailViewModel = new DonationDetailViewModel(await NetworkHelper.GetAsync(new GetDonationDetailRequest()
             {
                 UserId = UserInfo.Id,
                 DonationId = DonationViewModel.OriginalItem.ID
-            }));
+            })).Progress(ParentWindow.PART_ProgressBar);
             RefreshApplicationCardView();
         }
 
         private async void PART_Stepper_CancelNavigation(object sender, MaterialDesignExtensions.Controls.StepperNavigationEventArgs args)
         {
-            await NetworkHelper.GetAsync(new CancelDonationRequest() { DonationId = DonationViewModel.OriginalItem.ID });
+            await NetworkHelper.GetAsync(new CancelDonationRequest() { DonationId = DonationViewModel.OriginalItem.ID })
+                .Progress(ParentWindow.PART_ProgressBar);
         }
 
         private void MaterialSelectListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -194,6 +197,11 @@ namespace MDS.Client.NavigationPages
             OriginalItem = response;
 
             Address = response.Address;
+        }
+
+        internal DonationDetailViewModel Progress(ProgressBar pART_ProgressBar)
+        {
+            throw new NotImplementedException();
         }
     }
 

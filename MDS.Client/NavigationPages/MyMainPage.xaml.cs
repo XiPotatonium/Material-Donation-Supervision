@@ -1,4 +1,5 @@
 ﻿using DTO;
+using MDS.Client.Extension;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -50,7 +51,7 @@ namespace MDS.Client.NavigationPages
             GetApplicationListResponse response = await NetworkHelper.GetAsync(new GetApplicationListRequest()
             {
                 UserId = UserInfo.Id
-            });
+            }).Progress(ParentWindow.PART_ProgressBar);
 
             // TODO 删掉假数据
             response = new GetApplicationListResponse() { Items = new List<GetApplicationListResponse.Item>() };
@@ -83,7 +84,7 @@ namespace MDS.Client.NavigationPages
             GetDonationListResponse response = await NetworkHelper.GetAsync(new GetDonationListRequest()
             {
                 UserId = UserInfo.Id
-            });
+            }).Progress(ParentWindow.PART_ProgressBar);
 
             // TODO 删除假数据
             response = new GetDonationListResponse() { Items = new List<GetDonationListResponse.Item>() };
@@ -158,7 +159,7 @@ namespace MDS.Client.NavigationPages
             {
                 PhoneNumber = NewPhoneTextBox.Text,
                 HomeAddress = NewAddressTextBox.Text
-            });
+            }).Progress(ParentWindow.PART_ProgressBar);
 
             RefreshUserInfoDisplay();
         }

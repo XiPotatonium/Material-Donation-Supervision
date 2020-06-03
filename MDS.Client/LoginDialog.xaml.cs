@@ -71,7 +71,8 @@ namespace MDS.Client
             {
                 PhoneNumber = LoginUserPhoneNumberTextBox.Text,
                 Password = Hash(LoginPasswordBox.Password)
-            }).DisableElements(PrimaryButton, SwitchButton, LoginUserPhoneNumberTextBox, LoginPasswordBox);
+            }).DisableElements(PrimaryButton, SwitchButton, LoginUserPhoneNumberTextBox, LoginPasswordBox)
+            .Progress(PART_ProgressBar);
 
             response = new LoginResponse() { UserId = 0 };    // TODO 假数据
 
@@ -108,7 +109,8 @@ namespace MDS.Client
             {
                 PhoneNumber = RegisterUserPhoneNumberTextBox.Text,
                 Password = RegisterPasswordBox.Text
-            }).DisableElements(PrimaryButton, SwitchButton, RegisterUserPhoneNumberTextBox, RegisterPasswordBox);
+            }).DisableElements(PrimaryButton, SwitchButton, RegisterUserPhoneNumberTextBox, RegisterPasswordBox)
+            .Progress(PART_ProgressBar);
 
             response = new RegisterResponse() { UserId = 0 };    // TODO 假数据
 
