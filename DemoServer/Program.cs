@@ -83,7 +83,26 @@ namespace DemoServer
                     responseBody = objecttostring(UserInfoService.HandleModifyRequest(userInfoModifyRequest));
                 }
                 // DonationDataService
-                // TODO
+                else if (recv is GetDonationListRequest getDonationListRequest)
+                {
+                    responseBody = objecttostring(DonationDataService.HandleGetDonationListRequest(getDonationListRequest));
+                }
+                else if (recv is GetDonationDetailRequest getDonationDetailRequest)
+                {
+                    responseBody = objecttostring(DonationDataService.HandleGetDonationDetailRequest(getDonationDetailRequest));
+                }
+                else if (recv is AvailableDonationMaterialRequest availableDonationMaterialRequest)
+                {
+                    responseBody = objecttostring(DonationDataService.HandleAvailableDonationMaterialRequest(availableDonationMaterialRequest));
+                }
+                else if (recv is NewDonationRequest newDonationRequest)
+                {
+                    responseBody = objecttostring(DonationDataService.HandleNewDonationRequest(newDonationRequest));
+                }
+                else if (recv is CancelDonationRequest cancelDonationRequest)
+                {
+                    responseBody = objecttostring(DonationDataService.HandleCancelDonationRequest(cancelDonationRequest));
+                }
                 // DeliveryDataService
                 else if (recv is DeliveryListNumRequest deliveryListNumRequest)
                 {
@@ -109,6 +128,18 @@ namespace DemoServer
                 else if (recv is GetApplicationListRequest getApplicationListRequest)
                 {
                     responseBody = objecttostring(ApplicationDataService.HandleGetApplicationListRequest(getApplicationListRequest));
+                }
+                else if (recv is NewApplicationRequest newApplicationRequest)
+                {
+                    responseBody = objecttostring(ApplicationDataService.HandleNewApplicationRequest(newApplicationRequest));
+                }
+                else if (recv is CancelApplicationRequest cancelApplicationRequest)
+                {
+                    responseBody = objecttostring(ApplicationDataService.HandleCancelApplicationRequest(cancelApplicationRequest));
+                }
+                else if (recv is ConfirmApplicationDoneRequest confirmApplicationDoneRequest)
+                {
+                    responseBody = objecttostring(ApplicationDataService.HandleConfirmApplicationDoneRequest(confirmApplicationDoneRequest));
                 }
                 else
                 {
