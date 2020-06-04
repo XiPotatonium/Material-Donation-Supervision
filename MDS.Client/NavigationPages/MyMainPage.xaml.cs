@@ -48,10 +48,8 @@ namespace MDS.Client.NavigationPages
 
         private async Task UpdateApplicationList()
         {
-            GetApplicationListResponse response = await NetworkHelper.GetAsync(new GetApplicationListRequest()
-            {
-                UserId = UserInfo.Id
-            }).Progress(ParentWindow.PART_ProgressBar);
+            GetApplicationListResponse response = await NetworkHelper.GetAsync(new GetApplicationListRequest(){ })
+                .Progress(ParentWindow.PART_ProgressBar);
 
             // TODO 删掉假数据
             response = new GetApplicationListResponse() { Items = new List<GetApplicationListResponse.Item>() };
@@ -81,10 +79,8 @@ namespace MDS.Client.NavigationPages
 
         private async Task UpdateDonationList()
         {
-            GetDonationListResponse response = await NetworkHelper.GetAsync(new GetDonationListRequest()
-            {
-                UserId = UserInfo.Id
-            }).Progress(ParentWindow.PART_ProgressBar);
+            GetDonationListResponse response = await NetworkHelper.GetAsync(new GetDonationListRequest() { })
+                .Progress(ParentWindow.PART_ProgressBar);
 
             // TODO 删除假数据
             response = new GetDonationListResponse() { Items = new List<GetDonationListResponse.Item>() };

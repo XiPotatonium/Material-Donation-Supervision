@@ -34,6 +34,7 @@ namespace MDS.Client
             request.Method = "POST";
             request.ContentType = "text/html";
             request.ContentLength = requestData.Length;// 2 *requestData.Length+4; //有没有比+8更好的办法？
+            request.Headers["UserId"] = UserInfo.Id.ToString();         // 这里加了UserId
 
             // 发送请求数据
             Stream requestStream = request.GetRequestStream();

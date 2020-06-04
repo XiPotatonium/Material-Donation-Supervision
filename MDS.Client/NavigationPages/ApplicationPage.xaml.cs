@@ -56,7 +56,6 @@ namespace MDS.Client.NavigationPages
                 // 1. 网络请求ApplicationDetailViewModel
                 ApplicationDetailViewModel = new ApplicationDetailViewModel(await NetworkHelper.GetAsync(new GetApplicationDetailRequest()
                 {
-                    UserId = UserInfo.Id,
                     ApplicationId = ApplicationViewModel.OriginalItem.ID
                 }).Progress(ParentWindow.PART_ProgressBar));
 
@@ -188,7 +187,6 @@ namespace MDS.Client.NavigationPages
                 ApplicationViewModel = new ApplicationListViewModel(response.Item);
                 ApplicationDetailViewModel = new ApplicationDetailViewModel(await NetworkHelper.GetAsync(new GetApplicationDetailRequest()
                 {
-                    UserId = UserInfo.Id,
                     ApplicationId = ApplicationViewModel.OriginalItem.ID
                 }).Progress(ParentWindow.PART_ProgressBar));
                 RefreshApplicationCardView();

@@ -18,7 +18,6 @@ namespace DTO
     [Serializable]
     public class GetDonationListRequest : IReturn<GetDonationListResponse>
     {
-        public int UserId { set; get; }
     }
 
     [Serializable]

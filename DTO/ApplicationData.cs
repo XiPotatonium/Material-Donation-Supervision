@@ -20,7 +20,6 @@ namespace DTO
     [Serializable]
     public class GetApplicationListRequest : IReturn<GetApplicationListResponse>
     {
-        public int UserId { set; get; }
     }
 
     [Serializable]
@@ -46,7 +45,6 @@ namespace DTO
     [Serializable]
     public class GetApplicationDetailRequest : IReturn<GetApplicationDetailResponse>
     {
-        public int UserId { set; get; }     // 可能不需要UserId
         public int ApplicationId { set; get; }
     }
 
