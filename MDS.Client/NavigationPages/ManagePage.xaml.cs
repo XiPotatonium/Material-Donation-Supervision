@@ -1,4 +1,5 @@
-﻿using System;
+using MDS.Client.DeliveryPages;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -11,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using MDS.Client.AdminPages;
+
 namespace MDS.Client.NavigationPages
 {
     /// <summary>
@@ -18,9 +21,17 @@ namespace MDS.Client.NavigationPages
     /// </summary>
     public partial class ManagePage : Page
     {
+        private MainWindow parentWindow { get; } = null;
+        private ManageAllPage myManageAllPage { set; get; } = new ManageAllPage();
+        private AutherRequestPage myAutherRequestPage { set; get; } = new AutherRequestPage();
+        private MaterialAuditPage myMaterialAuditPage { set; get; } = new MaterialAuditPage();
         public ManagePage()
         {
             InitializeComponent();
+            ManageAllPageFrame.Content = myManageAllPage;
+            AutherRequestPageFrame.Content = myAutherRequestPage;
+            MaterialAuditPageFrame.Content = myMaterialAuditPage;
         }
     }
 }
+
