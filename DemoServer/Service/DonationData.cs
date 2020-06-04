@@ -7,7 +7,7 @@ namespace MDS.Server
 {
     public class DonationDataService
     {
-        public int userId { get; set; }
+        public int UserId { get; set; }
 
         public GetDonationListResponse HandleGetDonationListRequest(GetDonationListRequest request)
         {

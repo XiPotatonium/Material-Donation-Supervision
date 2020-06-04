@@ -67,10 +67,10 @@ namespace DemoServer
                 string resp = "响应";
                 string responseBody = objecttostring(resp);
                 // UsrInfoService
-                UserInfoService UserInfoService = new UserInfoService() { userId = id };
-                DeliveryDataService DeliveryDataService = new DeliveryDataService() { userId = id };
-                ApplicationDataService ApplicationDataService = new ApplicationDataService() { userId = id };
-                DonationDataService DonationDataService = new DonationDataService() { userId = id };
+                UserInfoService UserInfoService = new UserInfoService() { UserId = id };
+                DeliveryDataService DeliveryDataService = new DeliveryDataService() { UserId = id };
+                ApplicationDataService ApplicationDataService = new ApplicationDataService() { UserId = id };
+                DonationDataService DonationDataService = new DonationDataService() { UserId = id };
                 if (recv is LoginRequest loginRequest)
                 {
                     responseBody = objecttostring(UserInfoService.HandleLoginRequest(loginRequest));

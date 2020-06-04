@@ -7,7 +7,7 @@ namespace MDS.Server.Service
 {  
     class ApplicationDataService
     {
-        public int userId { get; set; }
+        public int UserId { get; set; }
 
         public GetApplicationListResponse HandleGetApplicationListRequest(GetApplicationListRequest request)
         {

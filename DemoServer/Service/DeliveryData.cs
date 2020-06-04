@@ -7,7 +7,7 @@ namespace MDS.Server
 {
     public class DeliveryDataService
     {
-        public int userId { get; set; }
+        public int UserId { get; set; }
 
         public DeliveryListNumResponse HandleDeliveryListNumRequest(DeliveryListNumRequest request)
         {

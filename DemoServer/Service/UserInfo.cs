@@ -7,7 +7,7 @@ namespace MDS.Server
 {
     class UserInfoService
     {
-        public int userId { get; set; }
+        public int UserId { get; set; }
 
         public LoginResponse HandleLoginRequest(LoginRequest request)
         {
