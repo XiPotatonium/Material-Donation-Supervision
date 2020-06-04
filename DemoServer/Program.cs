@@ -61,11 +61,16 @@ namespace DemoServer
                 byte[] rbytes = HexStringToByteArray(postData);
                 object recv = DeserializeObject(rbytes);
                 Console.WriteLine("收到请求：" + recv);
-
+                int id = int.Parse(request.Headers["UserId"]);
                 HttpListenerResponse response = context.Response;//响应
+                
                 string resp = "响应";
                 string responseBody = objecttostring(resp);
                 // UsrInfoService
+                UserInfoService UserInfoService = new UserInfoService() { userId = id };
+                DeliveryDataService DeliveryDataService = new DeliveryDataService() { userId = id };
+                ApplicationDataService ApplicationDataService = new ApplicationDataService() { userId = id };
+                DonationDataService DonationDataService = new DonationDataService() { userId = id };
                 if (recv is LoginRequest loginRequest)
                 {
                     responseBody = objecttostring(UserInfoService.HandleLoginRequest(loginRequest));

@@ -7,7 +7,9 @@ namespace MDS.Server
 {
     public class DonationDataService
     {
-        public static GetDonationListResponse HandleGetDonationListRequest(GetDonationListRequest request)
+        public int userId { get; set; }
+
+        public GetDonationListResponse HandleGetDonationListRequest(GetDonationListRequest request)
         {
             //TODO: 数据库
             return new GetDonationListResponse()
@@ -16,7 +18,7 @@ namespace MDS.Server
             };
         }
 
-        public static GetDonationDetailResponse HandleGetDonationDetailRequest(GetDonationDetailRequest request)
+        public GetDonationDetailResponse HandleGetDonationDetailRequest(GetDonationDetailRequest request)
         {
             //TODO: 数据库
             return new GetDonationDetailResponse()
@@ -25,7 +27,7 @@ namespace MDS.Server
             };
         }
 
-        public static AvailableDonationMaterialResponse HandleAvailableDonationMaterialRequest(AvailableDonationMaterialRequest request)
+        public AvailableDonationMaterialResponse HandleAvailableDonationMaterialRequest(AvailableDonationMaterialRequest request)
         {
             //TODO: 数据库
             return new AvailableDonationMaterialResponse()
@@ -34,7 +36,7 @@ namespace MDS.Server
             };
         }
 
-        public static NewDonationResponse HandleNewDonationRequest(NewDonationRequest request)
+        public NewDonationResponse HandleNewDonationRequest(NewDonationRequest request)
         {
             //TODO: 数据库
             return new NewDonationResponse()
@@ -43,7 +45,7 @@ namespace MDS.Server
             };
         }
 
-        public static VoidResponse HandleCancelDonationRequest(CancelDonationRequest request)
+        public VoidResponse HandleCancelDonationRequest(CancelDonationRequest request)
         {
             //TODO: 数据库
             return new VoidResponse();

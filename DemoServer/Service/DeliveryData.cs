@@ -5,25 +5,27 @@ using System.Text;
 
 namespace MDS.Server
 {
-    class DeliveryDataService
+    public class DeliveryDataService
     {
-        public static DeliveryListNumResponse HandleDeliveryListNumRequest(DeliveryListNumRequest request)
+        public int userId { get; set; }
+
+        public DeliveryListNumResponse HandleDeliveryListNumRequest(DeliveryListNumRequest request)
         {
             //TODO:数据库
             return new DeliveryListNumResponse();
         }
 
-        public static DeliveryListResponse HandleDeliveryListRequest(DeliveryListRequest request)
+        public DeliveryListResponse HandleDeliveryListRequest(DeliveryListRequest request)
         {
             //TODO:数据库
             return new DeliveryListResponse();
         }
 
-        public static DeliveryMoveResponse HandleDeliveryMoveRequest(DeliveryMoveRequest request)
+        public DeliveryMoveResponse HandleDeliveryMoveRequest(DeliveryMoveRequest request)
         {
             //TODO:数据库
             return new DeliveryMoveResponse();
         }
-              
+
     }
 }
