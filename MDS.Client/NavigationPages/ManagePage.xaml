@@ -1,4 +1,4 @@
-﻿<Page x:Class="MDS.Client.NavigationPages.ManagePage"
+<Page x:Class="MDS.Client.NavigationPages.ManagePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,6 +9,17 @@
       Title="ManagePage">
 
     <Grid>
-        
+        <TabControl x:Name="MainTabControl" BorderThickness="0"
+                    Style="{StaticResource MaterialDesignAppBarTabControl}">
+            <TabItem Header="管理记录" x:Name="ManageAllPageTab">
+                <Frame x:Name="ManageAllPageFrame" Margin="0,0"/>
+            </TabItem>
+            <TabItem Header="物资审核" x:Name="MaterialAuditPageTab">
+                <Frame x:Name="MaterialAuditPageFrame" Margin="0,0"/>
+            </TabItem>
+            <TabItem Header="身份认证" x:Name="AutherRequestPageTab">
+                <Frame x:Name="AutherRequestPageFrame" Margin="0,0"/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Page>
