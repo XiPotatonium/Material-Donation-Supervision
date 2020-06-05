@@ -28,7 +28,7 @@ namespace MDS.Server.Service
 		{
 
 			//TODO: 数据库操作
-			string constr = "Server=.;DataBase=物资调配;" +
+			string constr = "Server=.;DataBase=Material;" +
 				"Integrated Security=True";
 			// 建立SqlConnection对象
 			SqlConnection con = new SqlConnection(constr);
@@ -81,7 +81,7 @@ namespace MDS.Server.Service
 		public GetApplicationDetailResponse HandleGetApplicationDetailRequest(GetApplicationDetailRequest request)
 		{
 			//TODO：数据库操作
-			string constr = "Server=.;DataBase=物资调配;" +
+			string constr = "Server=.;DataBase=Material;" +
 							"Integrated Security=True";
 			// 建立SqlConnection对象
 			SqlConnection con = new SqlConnection(constr);
@@ -112,7 +112,7 @@ namespace MDS.Server.Service
 		public static AvailableApplicationMaterialResponse HandleAvailableApplicationMaterialRequest(AvailableApplicationMaterialRequest request)
 		{
 			//TODO：数据库操作
-			string constr = "Server=.;DataBase=物资调配;" +
+			string constr = "Server=.;DataBase=Material;" +
 				"Integrated Security=True";
 			// 建立SqlConnection对象
 			SqlConnection con = new SqlConnection(constr);
@@ -161,7 +161,7 @@ namespace MDS.Server.Service
 		{
 			
 			//TODO: 数据库查询
-			string constr = "Server=.;DataBase=物资调配;" +
+			string constr = "Server=.;DataBase=Material;" +
 				"Integrated Security=True";
 			// 建立SqlConnection对象
 			SqlConnection con = new SqlConnection(constr);
@@ -219,7 +219,7 @@ namespace MDS.Server.Service
 		{
 			//TODO:数据库操作
 			//TODO: 数据库查询
-			string constr = "Server=.;DataBase=物资调配;" +
+			string constr = "Server=.;DataBase=Material;" +
 				"Integrated Security=True";
 			// 建立SqlConnection对象
 			SqlConnection con = new SqlConnection(constr);
@@ -237,7 +237,7 @@ namespace MDS.Server.Service
 		public static VoidResponse HandleConfirmApplicationDoneRequest(ConfirmApplicationDoneRequest request)
 		{
 			//TODO:数据库操作
-			string constr = "Server=.;DataBase=物资调配;" +
+			string constr = "Server=.;DataBase=Material;" +
 				"Integrated Security=True";
 			// 建立SqlConnection对象
 			SqlConnection con = new SqlConnection(constr);

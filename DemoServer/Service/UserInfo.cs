@@ -40,7 +40,7 @@ namespace MDS.Server
 	
         /*public UserInfoResponse HandleUserInfoRequest(UserInfoRequest request)
         {
-			string constr = "Server=.;DataBase=物资调配;" +
+			string constr = "Server=.;DataBase=Material;" +
 				"Integrated Security=True";
 			// 建立SqlConnection对象
 			SqlConnection con = new SqlConnection(constr);
@@ -74,7 +74,7 @@ namespace MDS.Server
 
         publicVoidResponse HandleModifyRequest(UserInfoModifyRequest request)
         {
-			string constr = "Server=.;DataBase=物资调配;" +
+			string constr = "Server=.;DataBase=Material;" +
 				"Integrated Security=True";
 			// 建立SqlConnection对象
 			SqlConnection con = new SqlConnection(constr);
@@ -104,7 +104,7 @@ namespace MDS.Server
 		public static RegisterResponse HandleRegisterRequest(RegisterRequest request)
 		{
 			//TODO:数据库
-			string constr = "Server=.;DataBase=物资调配;" +
+			string constr = "Server=.;DataBase=Material;" +
 				"Integrated Security=True";
 			// 建立SqlConnection对象
 			SqlConnection con = new SqlConnection(constr);
