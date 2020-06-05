@@ -35,14 +35,14 @@ namespace MDS.Client.AdminPages
         private void Goto_Detail_History(object sender, RoutedEventArgs e)
         {
             MaterialAuditConstruct flag = (MaterialAuditConstruct)history.SelectedItem;
-            MaterialAuditDetialPage materialAuditDetialPage = new MaterialAuditDetialPage(flag);
+            MaterialAuditDetialPage materialAuditDetialPage = new MaterialAuditDetialPage(flag, 2);
             materialAuditDetialPage.ShowDialog();
         }
 
         private void Goto_Detail_Waiting(object sender, RoutedEventArgs e)
         {
             MaterialAuditConstruct flag = (MaterialAuditConstruct)waiting.SelectedItem;
-            MaterialAuditDetialPage materialAuditDetialPage = new MaterialAuditDetialPage(flag);
+            MaterialAuditDetialPage materialAuditDetialPage = new MaterialAuditDetialPage(flag, 1);
             materialAuditDetialPage.ShowDialog();
         }
 
@@ -55,7 +55,7 @@ namespace MDS.Client.AdminPages
         private async Task UpdateHistoryList()
         {
             await Task.Delay(100);
-            MaterialAuditList materialAuditList = new MaterialAuditList();
+            MaterialAuditListResponse materialAuditList = new MaterialAuditListResponse();
             materialAuditList.m_normals = new List<Normal>();
             materialAuditList.m_normals.Add(new Normal()
             {
@@ -63,7 +63,7 @@ namespace MDS.Client.AdminPages
                 User = "一号",
                 Time = DateTime.Now,
                 State = AdminState.FINISH,
-                Reviewer = "me",
+                Reviewer = 2,
                 Result = AdminResult.FAIL,
                 Content = "sssss",
                 Remarks = "zzzzz"
@@ -88,7 +88,7 @@ namespace MDS.Client.AdminPages
         private async Task UpdateWaitingList()
         {
             await Task.Delay(100);
-            MaterialAuditList materialAuditList = new MaterialAuditList();
+            MaterialAuditListResponse materialAuditList = new MaterialAuditListResponse();
             materialAuditList.m_normals = new List<Normal>();
             materialAuditList.m_normals.Add(new Normal()
             {
@@ -96,7 +96,7 @@ namespace MDS.Client.AdminPages
                 User = "一号",
                 Time = DateTime.Now,
                 State = AdminState.FINISH,
-                Reviewer = "me",
+                Reviewer = 2,
                 Result = AdminResult.FAIL,
                 Content = "sssss",
                 Remarks = "zzzzz"

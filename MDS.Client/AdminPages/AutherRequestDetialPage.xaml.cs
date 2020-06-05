@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -22,7 +23,7 @@ namespace MDS.Client.AdminPages
     {
         private AutherRequestConstruct Info_List = new AutherRequestConstruct();
 
-        public AutherRequestDetialPage(AutherRequestConstruct List)
+        public AutherRequestDetialPage(AutherRequestConstruct List, int flag)
         {
             InitializeComponent();
             this.Info_List = List;
@@ -34,23 +35,48 @@ namespace MDS.Client.AdminPages
             ResultTextBlock.Text = "认证结果: " + Info_List.Result;
             ContentTextBlock.Text = "认证内容: " + Info_List.Content;
             RemarksTextBlock.Text = "备注: " + Info_List.Remarks;
+            if (flag == 1)
+            {
+                Thread thread = new Thread(new ThreadStart(close_window));
+                thread.Start();
+            }
+            else
+            {
+                agree_button.Visibility = Visibility.Hidden;
+                refuse_button.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void close_window()
+        {
+            while (true)
+            {
+                if (AdminInfo.Event_Result == true)
+                {
+                    AdminInfo.Event_Result = false;
+                    Dispatcher.Invoke(
+                        new Action(
+                            delegate
+                            {
+                                Close();
+                            }));
+                    break;
+                }
+                Thread.CurrentThread.Join(100);
+            }
         }
 
         private void Refuse_Click(object sender, RoutedEventArgs e)
         {
-
+            Certain_Passward certain_Passward = new Certain_Passward(4, Info_List.Number);
+            certain_Passward.ShowDialog();
         }
 
         private void Agree_Click(object sender, RoutedEventArgs e)
         {
-
+            Certain_Passward certain_Passward = new Certain_Passward(3, Info_List.Number);
+            certain_Passward.ShowDialog();
         }
     }
 
-    /*public class StringToDisplay : INotifyPropertyChanging
-    {
-        private string text { set; get; }
-
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
-    }*/
 }

@@ -79,7 +79,8 @@
                 Height="40"
                 Width="80"
                 FontSize="20"
-                Background="Green"/>
+                Background="Green"
+                x:Name="agree_button"/>
         <Button Content="拒绝"
                 Click="Refuse_Click"
                 Grid.Column="1"
@@ -88,7 +89,8 @@
                 Height="40"
                 Width="80"
                 FontSize="20"
-                Background="Red"/>
+                Background="Red"
+                x:Name="refuse_button"/>
         
     </Grid>
 </Window>

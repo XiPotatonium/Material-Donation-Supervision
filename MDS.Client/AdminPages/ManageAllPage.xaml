@@ -19,31 +19,21 @@
             <RowDefinition Height="350"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="二级密码设置"
-                   Grid.Column="1"
-                   Grid.Row="1"
-                   Margin="0,0,0,0"
-                   FontSize="25"/>
         <TextBlock Text="物资实时分布"
                    Grid.Column="1"
-                   Grid.Row="1"
-                   Margin="300,0,0,0"
-                   FontSize="25"/>
-        <Button Content="修改密码"
+                   Grid.Row="0"
+                   FontSize="25"
+                   Block.TextAlignment="Center"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
+        <Button Content="修改二级密码"
                 Grid.Column="1"
-                Grid.Row="1"
-                Margin="-550,-180,0,0"
+                Grid.Row="2"
+                Margin="550,0,0,0"
                 Height="40"
-                Width="100"
+                Width="130"
                 FontSize="15"
                 Background="Green"/>
-        <Button Content="找回密码"
-                Grid.Column="1"
-                Grid.Row="1"
-                Margin="-550,-60,0,0"
-                Height="40"
-                Width="100"
-                FontSize="15"
-                Background="Green"/>
+        
     </Grid>
 </Page>

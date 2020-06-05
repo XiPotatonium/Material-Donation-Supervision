@@ -1,0 +1,55 @@
+﻿<Window x:Class="MDS.Client.AdminPages.Change_Passward"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MDS.Client.AdminPages"
+        mc:Ignorable="d"
+        Title="修改密码" Height="150" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="原密码:"
+                       Grid.Column="0"
+                       FontSize="15"/>
+            <TextBox Grid.Column="2"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Stretch"
+                     x:Name="old_passward"/>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="现密码:"
+                       Grid.Column="0"
+                       FontSize="15"/>
+            <TextBox x:Name="new_passward"
+                     Grid.Column="2"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Center"/>
+        </Grid>
+        <Button Grid.Column="1"
+                Grid.Row="4"
+                Content="确认"
+                Click="change_click"/>
+    </Grid>
+</Window>

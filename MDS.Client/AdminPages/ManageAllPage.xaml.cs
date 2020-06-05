@@ -32,7 +32,7 @@ namespace MDS.Client.AdminPages
         public DateTime Time { set; get; }
         //public Button Detail { set; get; }
         public AdminState State { set; get; }
-        public string Reviewer { set; get; }
+        public int Reviewer { set; get; }
         public AdminResult Result { set; get; }
         public string Content { set; get; }
         public string Remarks { set; get; }
@@ -46,7 +46,7 @@ namespace MDS.Client.AdminPages
         public DateTime Time { set; get; }
         //public Button Detail { set; get; }
         public AdminState State { set; get; }
-        public string Reviewer { set; get; }
+        public int Reviewer { set; get; }
         public AdminResult Result { set; get; }
         public string Content { set; get; }
         public string Remarks { set; get; }

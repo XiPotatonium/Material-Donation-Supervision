@@ -37,14 +37,14 @@ namespace MDS.Client.AdminPages
         private void Goto_Detail_History(object sender, RoutedEventArgs e)
         {
             AutherRequestConstruct flag = (AutherRequestConstruct)history.SelectedItem;
-            AutherRequestDetialPage autherRequestDetialPage = new AutherRequestDetialPage(flag);
+            AutherRequestDetialPage autherRequestDetialPage = new AutherRequestDetialPage(flag, 2);
             autherRequestDetialPage.ShowDialog();
         }
 
         private void Goto_Detail_Waiting(object sender, RoutedEventArgs e)
         {
             AutherRequestConstruct flag = (AutherRequestConstruct)waiting.SelectedItem;
-            AutherRequestDetialPage autherRequestDetialPage = new AutherRequestDetialPage(flag);
+            AutherRequestDetialPage autherRequestDetialPage = new AutherRequestDetialPage(flag, 1);
             autherRequestDetialPage.ShowDialog();
         }
 
@@ -57,7 +57,7 @@ namespace MDS.Client.AdminPages
         private async Task UpdateHistoryList()
         {
             await Task.Delay(100);
-            AutherRequestList autherRequestList = new AutherRequestList();
+            AutherRequestListResponse autherRequestList = new AutherRequestListResponse();
             autherRequestList.a_normals = new List<Normal>();
             autherRequestList.a_normals.Add(new Normal()
             {
@@ -65,7 +65,7 @@ namespace MDS.Client.AdminPages
                 User = "一号",
                 Time = DateTime.Now,
                 State = AdminState.FINISH,
-                Reviewer = "me",
+                Reviewer = 1,
                 Result = AdminResult.FAIL,
                 Content = "sssss",
                 Remarks = "zzzzz"
@@ -90,7 +90,7 @@ namespace MDS.Client.AdminPages
         private async Task UpdateWaitingList()
         {
             await Task.Delay(100);
-            AutherRequestList autherRequestList = new AutherRequestList();
+            AutherRequestListResponse autherRequestList = new AutherRequestListResponse();
             autherRequestList.a_normals = new List<Normal>();
             autherRequestList.a_normals.Add(new Normal()
             {
@@ -98,7 +98,7 @@ namespace MDS.Client.AdminPages
                 User = "一号",
                 Time = DateTime.Now,
                 State = AdminState.FINISH,
-                Reviewer = "me",
+                Reviewer = 1,
                 Result = AdminResult.FAIL,
                 Content = "sssss",
                 Remarks = "zzzzz"
