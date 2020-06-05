@@ -13,6 +13,10 @@ namespace DemoServer
 {
     class Program
     {
+        static void PrintConsoleLog(string s)
+        {
+            Console.WriteLine(DateTime.Now.ToString() + ":" + s);
+        }
         public static object DeserializeObject(byte[] bytes)
         {
             object obj = null;
@@ -71,7 +75,7 @@ namespace DemoServer
                 DeliveryDataService DeliveryDataService = new DeliveryDataService() { UserId = id };
                 ApplicationDataService ApplicationDataService = new ApplicationDataService() { UserId = id };
                 DonationDataService DonationDataService = new DonationDataService() { UserId = id };
-                if (recv is LoginRequest loginRequest)
+               /* if (recv is LoginRequest loginRequest)
                 {
                     responseBody = objecttostring(UserInfoService.HandleLoginRequest(loginRequest));
                 }
@@ -149,7 +153,7 @@ namespace DemoServer
                 else
                 {
                     System.Diagnostics.Debug.Assert(false);
-                }
+                }*/
 
                 response.ContentLength64 = responseBody.Length;
                 response.ContentType = "text/html";
@@ -169,16 +173,23 @@ namespace DemoServer
             }
            
         }
-
+        static void test()
+        {
+            UserInfoService service = new UserInfoService();
+            var response = service.HandleLoginRequest(new LoginRequest());
+        }
         static void Main(string[] args)
         {
             try
             {
+                Connect.ConnectDatabase();
+                PrintConsoleLog(DateTime.Now.ToString() + ":成功连接到云数据库");
+                test();
                 using (HttpListener listener = new HttpListener())
                 {
                     listener.Prefixes.Add("http://localhost:6666/");
                     listener.Start();
-                    Console.WriteLine("开始监听");
+                    PrintConsoleLog("开始监听");
                     while (true)
                     {
                         try
@@ -195,7 +206,7 @@ namespace DemoServer
             }
             catch (Exception err)
             {
-                Console.WriteLine("程序异常，请重新打开程序：" + err.Message);
+                PrintConsoleLog("程序异常，请重新打开程序：" + err.Message);
             }
         }
       

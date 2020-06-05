@@ -14,7 +14,7 @@ namespace MDS.Server.Service
 	class ApplicationDataService
 	{
 		public int UserId { get; set; }
-		public static int ApplicationID = 10000;
+		/*public static int ApplicationID = 10000;
 		public enum ApplicationState
 		{
 			Aborted,        // 撤销的申请
@@ -24,7 +24,7 @@ namespace MDS.Server.Service
 			Done
 		}
 
-		public static GetApplicationListResponse HandleGetApplicationListRequest(GetApplicationListRequest request)
+		public GetApplicationListResponse HandleGetApplicationListRequest(GetApplicationListRequest request)
 		{
 
 			//TODO: 数据库操作
@@ -46,6 +46,7 @@ namespace MDS.Server.Service
 			{
 				List<Item> Itema = new List<Item>();
 
+				
 				for (int j = 0; j < ds.table[0].Rows.Count; j++)
 				{
 					Itema.Add(
@@ -77,7 +78,7 @@ namespace MDS.Server.Service
 
 
 
-		public static GetApplicationDetailResponse HandleGetApplicationDetailRequest(GetApplicationDetailRequest request)
+		public GetApplicationDetailResponse HandleGetApplicationDetailRequest(GetApplicationDetailRequest request)
 		{
 			//TODO：数据库操作
 			string constr = "Server=.;DataBase=物资调配;" +
@@ -246,6 +247,6 @@ namespace MDS.Server.Service
 			con.close();
 			return new VoidResponse();
 			
-		}
+		}*/
 	}
 }

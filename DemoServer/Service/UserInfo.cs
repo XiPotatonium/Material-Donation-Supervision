@@ -11,20 +11,12 @@ namespace MDS.Server
     class UserInfoService
     {
 		public int UserId { get; set; }
-		public static LoginResponse HandleLoginRequest(LoginRequest request)
+		public LoginResponse HandleLoginRequest(LoginRequest request)
         {
-			//TODO: 数据库查询
-			string constr = "Server=.;DataBase=物资调配;" +
-				"Integrated Security=True";
-			// 建立SqlConnection对象
-			SqlConnection con = new SqlConnection(constr);
-			// 打开连接
-			con.Open();
+			//TODO: 数据库查询			
 			// 指定SQL语句
 			SqlCommand com = new SqlCommand
-				("select PhoneNumber,Passwords,UserId from Users where PhoneNumber='" 
-				    + request.PhoneNumber + "' and Passwords='" + 
-					request.Password + "'", con);
+				("select PhoneNumber,Passwords,UserId from Users", Connect.Connection);
 			// 建立SqlDataAdapter和DataSet对象
 			SqlDataAdapter da = new SqlDataAdapter(com);
 			DataSet ds = new DataSet();
@@ -32,21 +24,21 @@ namespace MDS.Server
 			int n = da.Fill(ds, "Users");
 			if (n != 0)
 			{				
-                con.Close();
 				return new LoginResponse()
 				{
-					UserId = ds.table[0].Rows[0]["UserId"].ToString()
+					UserId = int.Parse(ds.Tables[0].Rows[0]["UserId"].ToString())
 					//UserId = (request.Password + request.PhoneNumber).Length
 				};
+			}
+			else
+			{
+				return new LoginResponse() { UserId = -1 };
 			}
 			
 		}
   
-		
-
-
-
-        public static UserInfoResponse HandleUserInfoRequest(UserInfoRequest request)
+	
+        /*public UserInfoResponse HandleUserInfoRequest(UserInfoRequest request)
         {
 			string constr = "Server=.;DataBase=物资调配;" +
 				"Integrated Security=True";
@@ -80,7 +72,7 @@ namespace MDS.Server
 
 
 
-        public static VoidResponse HandleModifyRequest(UserInfoModifyRequest request)
+        publicVoidResponse HandleModifyRequest(UserInfoModifyRequest request)
         {
 			string constr = "Server=.;DataBase=物资调配;" +
 				"Integrated Security=True";
@@ -127,6 +119,6 @@ namespace MDS.Server
 			{
 				UserID = c
 			};
-		}
+		}*/
 	}
 }

@@ -19,8 +19,8 @@ namespace MDS.Server
 			Done
 		}
 		public int UserId { get; set; }
-		public static int DonationID = 100000;
-		public static GetDonationListResponse HandleGetDonationListRequest(GetDonationListRequest request)
+		/*public static int DonationID = 100000;
+		public GetDonationListResponse HandleGetDonationListRequest(GetDonationListRequest request)
 		{
 
 			//TODO: 数据库操作
@@ -73,7 +73,7 @@ namespace MDS.Server
 
 
 
-		public static GetDonationDetailResponse HandleGetDonationDetailRequest(GetDonationDetailRequest request)
+		public GetDonationDetailResponse HandleGetDonationDetailRequest(GetDonationDetailRequest request)
 		{
 			//TODO: 数据库
 			string constr = "Server=.;DataBase=物资调配;" +
@@ -103,7 +103,7 @@ namespace MDS.Server
 
 
 
-		public static AvailableDonationMaterialResponse HandleAvailableDonationMaterialRequest(AvailableDonationMaterialRequest request)
+		public AvailableDonationMaterialResponse HandleAvailableDonationMaterialRequest(AvailableDonationMaterialRequest request)
 		{
 			//TODO: 数据库
 			//TODO：数据库操作
@@ -148,7 +148,7 @@ namespace MDS.Server
 
 
 		
-		public static NewDonationResponse HandleNewDonationRequest(NewDonationRequest request)
+		public NewDonationResponse HandleNewDonationRequest(NewDonationRequest request)
 		{
 			//TODO: 数据库查询
 			string constr = "Server=.;DataBase=物资调配;" +
@@ -227,7 +227,7 @@ namespace MDS.Server
 
 
 
-		public static VoidResponse HandleCancelDonationRequest(CancelDonationRequest request)
+		public VoidResponse HandleCancelDonationRequest(CancelDonationRequest request)
 		{
 			//TODO: 数据库
 			string constr = "Server=.;DataBase=物资调配;" +
@@ -240,7 +240,7 @@ namespace MDS.Server
 			con.close();
 			return new VoidResponse();
 			//return new VoidResponse();
-		}
+		}*/
 	}
 
 }
