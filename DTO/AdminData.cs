@@ -22,10 +22,10 @@ namespace DTO
     public class Normal
     {
         public string Number { set; get; } //申请编号（用户认证、物资申请）
-        public string User { set; get; } //申请人
+        public int UserID { set; get; } //申请人
         public DateTime Time { set; get; } //申请时间
         public AdminState State { set; get; }  //申请状态（已完成、待审核）
-        public int Reviewer { set; get; } //审核人id
+        public int ReviewerID { set; get; } //审核人id
         public AdminResult Result { set; get; } //审核结果 PASS：通过 FAIL：未通过 NONE：未处理
         public string Content { set; get; } //申请的具体内容
         public string Remarks { set; get; }  //备注
@@ -138,5 +138,18 @@ namespace DTO
     public class SecondaryPasswordChangeResponse
     {
         public int flag { set; get; }  //0:成功 1:密码相同 2:密码为空
+    }
+
+    //管理员分配给配送员任务
+    public class AssignTasksRequest : IReturn<AssignTasksResponse>
+    {
+        public int AdminID { set; get; } //管理员ID
+        public int DeliverID { set; get; } //配送员ID
+        public string TaskID { set; get; } //任务编号
+    }
+
+    public class AssignTasksResponse
+    {
+        public int result { set; get; } //返回结果0：成功
     }
 }
