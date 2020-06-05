@@ -102,21 +102,13 @@ namespace MDS.Client.NavigationPages
         private void RefreshUserInfoDisplay()
         {
             UserNameTextBlock.Text = UserInfo.PhoneNumber;
-            switch (UserInfo.UserType)
+            UserTypeTextBlock.Text = UserInfo.UserType switch
             {
-                case UserType.NORMAL:
-                    UserTypeTextBlock.Text = "普通用户";
-                    break;
-                case UserType.ADMIN:
-                    UserTypeTextBlock.Text = "管理员";
-                    break;
-                case UserType.DELIVERER:
-                    UserTypeTextBlock.Text = "配送员";
-                    break;
-                default:
-                    UserTypeTextBlock.Text = "NT用户";
-                    break;
-            }
+                UserType.NORMAL => "普通用户",
+                UserType.ADMIN => "管理员",
+                UserType.DELIVERER => "配送员",
+                _ => "NT用户",
+            };
             HomeAddressTextBlock.Text = UserInfo.HomeAddress;
         }
 
@@ -184,27 +176,15 @@ namespace MDS.Client.NavigationPages
             Name = item.Name;
             Quantity = item.Quantity;
             StartTime = item.StartTime;
-            switch (item.State)
+            State = item.State switch
             {
-                case ApplicationState.Aborted:
-                    State = "已撤销";
-                    break;
-                case ApplicationState.Applying:
-                    State = "待审核";
-                    break;
-                case ApplicationState.Delivering:
-                    State = "配送中";
-                    break;
-                case ApplicationState.Received:
-                    State = "已送达";
-                    break;
-                case ApplicationState.Done:
-                    State = "已完成";
-                    break;
-                default:
-                    State = "UNK";
-                    break;
-            }
+                ApplicationState.Aborted => "已撤销",
+                ApplicationState.Applying => "待审核",
+                ApplicationState.Delivering => "配送中",
+                ApplicationState.Received => "已送达",
+                ApplicationState.Done => "已完成",
+                _ => "UNK",
+            };
         }
     }
 
@@ -226,24 +206,14 @@ namespace MDS.Client.NavigationPages
             Name = item.Name;
             Quantity = item.Quantity;
             StartTime = item.StartTime;
-            switch (item.State)
+            State = item.State switch
             {
-                case DonationState.Aborted:
-                    State = "已撤销";
-                    break;
-                case DonationState.Applying:
-                    State = "待审批";
-                    break;
-                case DonationState.WaitingDelivery:
-                    State = "待配送";
-                    break;
-                case DonationState.Done:
-                    State = "已完成";
-                    break;
-                default:
-                    State = "UNK";
-                    break;
-            }
+                DonationState.Aborted => "已撤销",
+                DonationState.Applying => "待审批",
+                DonationState.WaitingDelivery => "待配送",
+                DonationState.Done => "已完成",
+                _ => "UNK",
+            };
         }
     }
 }
