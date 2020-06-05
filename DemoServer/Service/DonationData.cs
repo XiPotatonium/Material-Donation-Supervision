@@ -24,7 +24,7 @@ namespace MDS.Server
 		{
 
 			//TODO: 数据库操作
-			string constr = "Server=.;DataBase=物资调配;" +
+			string constr = "Server=.;DataBase=Material;" +
 				"Integrated Security=True";
 			// 建立SqlConnection对象
 			SqlConnection con = new SqlConnection(constr);
@@ -76,7 +76,7 @@ namespace MDS.Server
 		public static GetDonationDetailResponse HandleGetDonationDetailRequest(GetDonationDetailRequest request)
 		{
 			//TODO: 数据库
-			string constr = "Server=.;DataBase=物资调配;" +
+			string constr = "Server=.;DataBase=Material;" +
 				"Integrated Security=True";
 			// 建立SqlConnection对象
 			SqlConnection con = new SqlConnection(constr);
@@ -107,7 +107,7 @@ namespace MDS.Server
 		{
 			//TODO: 数据库
 			//TODO：数据库操作
-			string constr = "Server=.;DataBase=物资调配;" +
+			string constr = "Server=.;DataBase=Material;" +
 				"Integrated Security=True";
 			// 建立SqlConnection对象
 			SqlConnection con = new SqlConnection(constr);
@@ -151,7 +151,7 @@ namespace MDS.Server
 		public static NewDonationResponse HandleNewDonationRequest(NewDonationRequest request)
 		{
 			//TODO: 数据库查询
-			string constr = "Server=.;DataBase=物资调配;" +
+			string constr = "Server=.;DataBase=Material;" +
 				"Integrated Security=True";
 			// 建立SqlConnection对象
 			SqlConnection con = new SqlConnection(constr);
@@ -230,7 +230,7 @@ namespace MDS.Server
 		public static VoidResponse HandleCancelDonationRequest(CancelDonationRequest request)
 		{
 			//TODO: 数据库
-			string constr = "Server=.;DataBase=物资调配;" +
+			string constr = "Server=.;DataBase=Material;" +
 				"Integrated Security=True";
 			// 建立SqlConnection对象
 			SqlConnection con = new SqlConnection(constr);
