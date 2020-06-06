@@ -38,5 +38,12 @@ namespace MDS.Server
             var service = new ApplicationDataService() { UserId = 1024 };
             var response = service.HandleNewApplicationRequest(new NewApplicationRequest() { });
         }
+
+        public static void UserInfoTest()
+        {
+            var service = new UserInfoService();
+            var response = service.HandleUserInfoRequest(new UserInfoRequest() { UserId = 1024 });
+            System.Diagnostics.Debug.Assert(!string.IsNullOrEmpty(response.PhoneNumber));
+        }
     }
 }

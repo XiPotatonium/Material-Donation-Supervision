@@ -12,7 +12,7 @@ namespace DTO
     }
     public class Item
     {
-        public string GUID { set; get; }
+        public int GUID { set; get; }
         public string Name { set; get; }
         public int Quantity { set; get; }
         public int StartID { set; get; }
@@ -54,8 +54,8 @@ namespace DTO
     public class DeliveryMoveRequest : IReturn<DeliveryMoveResponse>
     {
         public int DelivererId { set; get; }        // 配送员id
-        public string GUID { set; get; }            // 订单号
-        public string SecureId { set; get; }        // 验证id
+        public int GUID { set; get; }            // 订单号
+        public int SecureId { set; get; }        // 验证id
     }
 
     [Serializable]
