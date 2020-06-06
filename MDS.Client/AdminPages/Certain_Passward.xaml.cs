@@ -25,6 +25,7 @@ namespace MDS.Client.AdminPages
         private string Number; //申请编号
         public Certain_Passward(int mode, string Number)
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             this.mode = mode;
             this.Number = Number;
