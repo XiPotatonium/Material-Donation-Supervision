@@ -19,8 +19,6 @@ namespace MDS.Server.Service
     public class ApplicationDataService
     {
         public int UserId { get; set; }
-        public static int ApplicationID = 10000;
-
 
         public GetApplicationListResponse HandleGetApplicationListRequest(GetApplicationListRequest request)
         {
@@ -60,23 +58,25 @@ namespace MDS.Server.Service
         public GetApplicationDetailResponse HandleGetApplicationDetailRequest(GetApplicationDetailRequest request)
         {
             // 指定SQL语句
-            SqlCommand com = new SqlCommand
-                ("select ApplyID,ApplyGUID,ApplierAddress from Transaction where ApplyID="
-                    + request.ApplicationId + "", Connect.Connection);
+            SqlCommand com = new SqlCommand(
+                $"select Address " +
+                $"from Tranc " +
+                $"where TransactionId={request.ApplicationId}"
+                , Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataSet ds = new DataSet();
 
-            da.Fill(ds, "Transaction");
+            da.Fill(ds, "Tranc");
             return new GetApplicationDetailResponse()
             {
-                Address = ds.Tables[0].Rows[0]["ApplierAddress"].ToString()
+                Address = ds.Tables[0].Rows[0]["Address"].ToString()
             };
         }
 
         public AvailableApplicationMaterialResponse HandleAvailableApplicationMaterialRequest(AvailableApplicationMaterialRequest request)
         {
             // 指定SQL语句
-            SqlCommand com = new SqlCommand("Select MaterialID,MaterialName,MaterialDescription,MaterialConstraint from Materials "
+            SqlCommand com = new SqlCommand("Select MaterialID, MaterialName, MaterialDescription, MaterialConstraint from Materials "
                     , Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataSet ds = new DataSet();
@@ -104,40 +104,49 @@ namespace MDS.Server.Service
         public NewApplicationResponse HandleNewApplicationRequest(NewApplicationRequest request)
         {
             // 指定SQL语句
-            SqlCommand com = new SqlCommand
-                ("select MaterialId,MaterialName,MaterilaQuantity from Materials where MaterialId= "
-                    + request.MaterialId + "", Connect.Connection);
+            SqlCommand com = new SqlCommand(
+                $"select MaterialId, MaterialName, MaterilaQuantity " +
+                $"from Materials " +
+                $"where MaterialId={request.MaterialId}"
+                , Connect.Connection);
             // 建立SqlDataAdapter和DataSet对象
             SqlDataAdapter dataAdapter = new SqlDataAdapter(com);
             DataSet dataSet = new DataSet();
 
-            dataAdapter.Fill(dataSet, "Materials");
-            if (request.Quantity <= (int)dataSet.Tables[0].Rows[0]["MaterialQuantity"])
+            int n = dataAdapter.Fill(dataSet, "Materials");
+            if (n != 0 && request.Quantity <= (int)dataSet.Tables[0].Rows[0]["MaterialQuantity"])
             {
+                string materialName = dataSet.Tables[0].Rows[0]["MaterialName"].ToString();
                 try
                 {
                     SqlTransaction transaction = Connect.Connection.BeginTransaction();
 
-                    com = new SqlCommand("Update Materials set MaterilaQuantity = MaterialQuantity -" +
-                        request.Quantity + " where MaterialId = " + request.MaterialId + "", Connect.Connection, transaction);
+                    com = new SqlCommand(
+                        $"update Materials " +
+                        $"set MaterilaQuantity = MaterialQuantity - {request.Quantity} " + 
+                        $"where MaterialId={request.MaterialId}"
+                        , Connect.Connection, transaction);
 
                     com.ExecuteNonQuery();
 
-                    com.CommandText = "insert into Transaction(ApplyID,ApplyGUID, ApplierId, ApplierAddress,MaterialName,MaterialQuantity,ApplicationState,StateIndex,StartTime) values("
-                        + ApplicationID + "'," + UserId + ",'" + request.Address + "','" + dataSet.Tables[0].Rows[0]["MaterialName"]
-                        + "'," + request.Quantity + ",'Applying" + "', 1 ,'" + DateTime.Now.ToString() + "')";
+                    DateTime now = DateTime.Now;
 
-                    com.ExecuteNonQuery();
+                    com.CommandText = $"insert into Tranc(UserId, Address, MaterialId, MaterialQuantity, TransactionState, TransactionType, StartTime, AdminId) " +
+                        $"output inserted.id values({UserId}, {request.Address}, {request.MaterialId}, {request.Quantity}, {(int)ApplicationState.Applying}, {(int)TransactionType.APPLICATION}, {now}, -1";
+
+                    dataAdapter = new SqlDataAdapter(com);
+                    dataSet = new DataSet();
+                    n = dataAdapter.Fill(dataSet, "Tranc");
 
                     return new NewApplicationResponse()
                     {
                         Item = new GetApplicationListResponse.Item()
                         {
-                            ID = ApplicationID,
-                            Name = dataSet.Tables[0].Rows[0]["MaterialName"].ToString(),
+                            ID = request.MaterialId,
+                            Name = materialName,
                             Quantity = request.Quantity,
                             State = ApplicationState.Applying,
-                            StartTime = DateTime.Now                    
+                            StartTime = now
                         }
                     };
                 }
@@ -160,17 +169,50 @@ namespace MDS.Server.Service
 
         public VoidResponse HandleCancelApplicationRequest(CancelApplicationRequest request)
         {
-            SqlCommand com = new SqlCommand($"Update Transaction set ApplicationState = Aborted ,StateIndex = 0 where ApplyID = {request.ApplicationId}"
-                , Connect.Connection);
+            SqlTransaction transaction = Connect.Connection.BeginTransaction();
+            try
+            {
+                SqlCommand com = new SqlCommand(
+                    $"update Tranc " +
+                    $"set TransactionState = {(int)ApplicationState.Aborted}" +
+                    $"where TransactionId = {request.ApplicationId}"
+                    , Connect.Connection, transaction);
+                com.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                if (transaction != null)
+                {
+                    transaction.Rollback();
+                }
+                // TODO 错误报告
+                throw ex;
+            }
             return new VoidResponse();
         }
 
         public static VoidResponse HandleConfirmApplicationDoneRequest(ConfirmApplicationDoneRequest request)
         {
-            SqlCommand com = new SqlCommand($"Update Transaction set ApplicationState = Done, StateIndex = 4  where ApplyID = {request.ApplicationId}"
-                , Connect.Connection);
+            SqlTransaction transaction = Connect.Connection.BeginTransaction();
+            try
+            {
+                SqlCommand com = new SqlCommand(
+                    $"update Tranc " +
+                    $"set TransactionState = {(int)ApplicationState.Done}" +
+                    $"where TransactionId = {request.ApplicationId}"
+                    , Connect.Connection, transaction);
+                com.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                if (transaction != null)
+                {
+                    transaction.Rollback();
+                }
+                // TODO 错误报告
+                throw ex;
+            }
             return new VoidResponse();
-
         }
     }
 }

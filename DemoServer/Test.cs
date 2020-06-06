@@ -20,5 +20,23 @@ namespace MDS.Server
             var service = new ApplicationDataService() { UserId = 1024 };
             var response = service.HandleGetApplicationListRequest(new GetApplicationListRequest() { });
         }
+
+        public static void HandleGetApplicationDetailRequestTest()
+        {
+            var service = new ApplicationDataService() { UserId = 1024 };
+            var response = service.HandleGetApplicationDetailRequest(new GetApplicationDetailRequest() { ApplicationId = 1 });
+        }
+
+        public static void HandleAvailableApplicationMaterialRequestTest()
+        {
+            var service = new ApplicationDataService() { UserId = 1024 };
+            var response = service.HandleAvailableApplicationMaterialRequest(new AvailableApplicationMaterialRequest() { });
+        }
+
+        public static void HandleNewApplicationRequestTest()
+        {
+            var service = new ApplicationDataService() { UserId = 1024 };
+            var response = service.HandleNewApplicationRequest(new NewApplicationRequest() { });
+        }
     }
 }
