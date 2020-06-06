@@ -23,23 +23,22 @@ namespace MDS.Server.Service
         public GetApplicationListResponse HandleGetApplicationListRequest(GetApplicationListRequest request)
         {
             // 指定SQL语句
-            int a = (int)TransactionType.APPLICATION;
             SqlCommand com = new SqlCommand(
                 $"select Tranc.TransactionId, Materials.MaterialName, Tranc.MaterialQuantity, Tranc.TransactionState, Tranc.StartTime " +
                 $"from Tranc left join Materials " +
                 $"on Tranc.MaterialId=Materials.MaterialID " +
-                $"where Tranc.UserId={UserId} and Tranc.TransactionType={a}"
+                $"where Tranc.UserId={UserId} and Tranc.TransactionType={(int)TransactionType.APPLICATION}"
                 , Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
 
             using DataSet ds = new DataSet();
             da.Fill(ds, "Tranc");
 
-            List<GetApplicationListResponse.Item> Itema = new List<GetApplicationListResponse.Item>();
+            List<GetApplicationListResponse.Item> items = new List<GetApplicationListResponse.Item>();
 
             for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
             {
-                Itema.Add(new GetApplicationListResponse.Item()
+                items.Add(new GetApplicationListResponse.Item()
                 {
                     ID = (int)ds.Tables[0].Rows[j]["TransactionId"],
                     Name = ds.Tables[0].Rows[j]["MaterialName"].ToString(),
@@ -51,7 +50,7 @@ namespace MDS.Server.Service
 
             return new GetApplicationListResponse()
             {
-                Items = Itema
+                Items = items
             };
         }
 
@@ -82,11 +81,11 @@ namespace MDS.Server.Service
             using DataSet ds = new DataSet();
 
             da.Fill(ds, "Materials");
-            List<AvailableApplicationMaterialResponse.Item> Itema = new List<AvailableApplicationMaterialResponse.Item>();
+            List<AvailableApplicationMaterialResponse.Item> items = new List<AvailableApplicationMaterialResponse.Item>();
 
             for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
             {
-                Itema.Add(new AvailableApplicationMaterialResponse.Item()
+                items.Add(new AvailableApplicationMaterialResponse.Item()
                 {
                     Id = (int)ds.Tables[0].Rows[j]["MaterialID"],
                     Name = ds.Tables[0].Rows[j]["MaterialName"].ToString(),
@@ -97,7 +96,7 @@ namespace MDS.Server.Service
             }
             return new AvailableApplicationMaterialResponse()
             {
-                Items = Itema
+                Items = items
             };
         }
 

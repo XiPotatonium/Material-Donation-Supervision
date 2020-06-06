@@ -16,83 +16,82 @@ namespace MDS.Server.Service
         public GetDonationListResponse HandleGetDonationListRequest(GetDonationListRequest request)
         {
             SqlCommand com = new SqlCommand(
-                $"select DonateID, DonateGUID, MaterialName, MaterialQuantity, DonationState, StateIndex, StartTime " +
-                $"from Donation " +
-                $"where DonatorID= {UserId}"
+                $"select Tranc.TransactionId, Materials.MaterialName, Tranc.MaterialQuantity, Tranc.TransactionState, Tranc.StartTime " +
+                $"from Tranc left join Materials " +
+                $"on Tranc.MaterialId=Materials.MaterialID " +
+                $"where Tranc.UserId={UserId} and Tranc.TransactionType={(int)TransactionType.DONATION}"
                 , Connect.Connection);
-
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataSet ds = new DataSet();
 
-            da.Fill(ds, "Donation");
-            List<GetDonationListResponse.Item> Itema = new List<GetDonationListResponse.Item>();
+            da.Fill(ds, "Tranc");
+            List<GetDonationListResponse.Item> items = new List<GetDonationListResponse.Item>();
 
             for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
             {
-                Itema.Add(new GetDonationListResponse.Item()
+                items.Add(new GetDonationListResponse.Item()
                 {
-                    ID = (int)ds.Tables[0].Rows[j]["DonateID"],
+                    ID = (int)ds.Tables[0].Rows[j]["TransactionId"],
                     Name = ds.Tables[0].Rows[j]["MaterialName"].ToString(),
                     Quantity = (int)ds.Tables[0].Rows[j]["MaterialQuantity"],
-                    State = (DonationState)ds.Tables[0].Rows[j]["StateIndex"],
-                    StartTime = Convert.ToDateTime(ds.Tables[0].Rows[j]["StartTime"].ToString())
+                    State = (DonationState)ds.Tables[0].Rows[j]["TransactionState"],
+                    StartTime = (DateTime)ds.Tables[0].Rows[j]["StartTime"]
                 });
 
             }
             return new GetDonationListResponse()
             {
-                Items = Itema
+                Items = items
             };
         }
 
         public GetDonationDetailResponse HandleGetDonationDetailRequest(GetDonationDetailRequest request)
         {
             SqlCommand com = new SqlCommand(
-                $"Select DonateID, DonateGUID, DonatorAddress " +
-                $"from Donation " +
-                $"where DonateID={request.DonationId}", Connect.Connection);
-
+                $"select Address " +
+                $"from Tranc " +
+                $"where TransactionId={request.DonationId}"
+                , Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataSet ds = new DataSet();
 
-            da.Fill(ds, "Donation");
+            da.Fill(ds, "Tranc");
             return new GetDonationDetailResponse()
             {
-                Address = ds.Tables[0].Rows[0]["DonatorAddress"].ToString()
+                Address = ds.Tables[0].Rows[0]["Address"].ToString()
             };
         }
 
         public AvailableDonationMaterialResponse HandleAvailableDonationMaterialRequest(AvailableDonationMaterialRequest request)
         {
             // 指定SQL语句
-            SqlCommand com = new SqlCommand(
-                $"select MaterialID, MaterialName, MaterialDescription, MaterialConstraint from Materials"
-                , Connect.Connection);
-
+            SqlCommand com = new SqlCommand("Select MaterialID, MaterialName, MaterialDescription, MaterialConstraint from Materials "
+                    , Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
-            DataSet ds = new DataSet();
+            using DataSet ds = new DataSet();
 
             da.Fill(ds, "Materials");
-            List<AvailableDonationMaterialResponse.Item> Itema = new List<AvailableDonationMaterialResponse.Item>();
+            List<AvailableDonationMaterialResponse.Item> items = new List<AvailableDonationMaterialResponse.Item>();
 
             for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
             {
-                Itema.Add(new AvailableDonationMaterialResponse.Item()
+                items.Add(new AvailableDonationMaterialResponse.Item()
                 {
                     Id = (int)ds.Tables[0].Rows[j]["MaterialID"],
                     Name = ds.Tables[0].Rows[j]["MaterialName"].ToString(),
                     Description = ds.Tables[0].Rows[j]["MaterialDescription"].ToString()
                 });
-            }
 
+            }
             return new AvailableDonationMaterialResponse()
             {
-                Items = Itema
+                Items = items
             };
         }
 
         public NewDonationResponse HandleNewDonationRequest(NewDonationRequest request)
         {
+            NewDonationResponse ret;
             SqlCommand com = new SqlCommand(
                 $"select MaterialID, MaterialName, MaterialQuantity " +
                 $"from Materials " +
@@ -104,35 +103,52 @@ namespace MDS.Server.Service
             DataSet ds = new DataSet();
 
             int n = da.Fill(ds, "Materials");
-
             if (n != 0)
             {
-                com = new SqlCommand(
+                try
+                {
+                    SqlTransaction transaction = Connect.Connection.BeginTransaction();
+                    com = new SqlCommand(
                     $"update Materials " +
                     $"set MaterilaQuantity = MaterialQuantity + {request.Quantity}" +
-                    $"where MaterialId = {request.MaterialId}", 
+                    $"where MaterialId = {request.MaterialId}",
                     Connect.Connection);
 
-                DateTime now = DateTime.Now;
+                    com.ExecuteNonQuery();
 
-                com.CommandText = $"insert into Tranc(UserId, Address, MaterialId, MaterialQuantity, TransactionState, TransactionType, StartTime, AdminId) " +
-                    $"values({UserId}, {request.Address}, {request.MaterialId}, {request.Quantity}, {(int)DonationState.Applying}, {(int)TransactionType.DONATION}, {now}, -1";
+                    DateTime now = DateTime.Now;
 
-                return new NewDonationResponse()
-                {
-                    Item = new GetDonationListResponse.Item()
+                    com.CommandText = $"insert into Tranc(UserId, Address, MaterialId, MaterialQuantity, TransactionState, TransactionType, StartTime, AdminId) " +
+                        $"values({UserId}, {request.Address}, {request.MaterialId}, {request.Quantity}, {(int)DonationState.Applying}, {(int)TransactionType.DONATION}, {now}, -1";
+
+                    ret = new NewDonationResponse()
                     {
-                        Name = ds.Tables[0].Rows[0]["MaterialName"].ToString(),
-                        Quantity = request.Quantity,
-                        State = DonationState.Applying,
-                        StartTime = now
+                        Item = new GetDonationListResponse.Item()
+                        {
+                            Name = ds.Tables[0].Rows[0]["MaterialName"].ToString(),
+                            Quantity = request.Quantity,
+                            State = DonationState.Applying,
+                            StartTime = now
+                        }
+                    };
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    if (com.Transaction != null)
+                    {
+                        com.Transaction.Rollback();
                     }
-                };
+                    throw ex;
+                }
             }
             else
             {
-                return new NewDonationResponse() { };
+                Console.WriteLine($"DEBUG: material {request.MaterialId} doesn't exist");
+                ret = new NewDonationResponse() { };
             }
+            return ret;
         }
 
         public static VoidResponse HandleCancelDonationRequest(CancelDonationRequest request)
