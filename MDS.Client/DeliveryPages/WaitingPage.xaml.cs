@@ -35,34 +35,17 @@ namespace MDS.Client.DeliveryPages
             await UpdateWaitingList();
         }
         private async Task UpdateWaitingList()
-        {/*
+        {
             DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryListRequest()
             {
                 DelivererId = UserInfo.Id,
                 State = DeliveryState.Waiting
             });
-            *////todo 假数据
-            await Task.Delay(100);
-            DeliveryListResponse deliveryListResponse = new DeliveryListResponse();
-            deliveryListResponse.Items = new List<Item>();
-            deliveryListResponse.Items.Add(new Item()
-            {
-                GUID = "qh1i2hisqh1is",
-                Name = "水",
-                Quantity = 100,
-                StartID = 12345,
-                FinishID = 98765,
-                Departure = "a小区",
-                Destination = "0仓库",
-                StartTime = DateTime.Now,
-                FinishTime = DateTime.Now
-            });
-            /////////////////
             foreach (Item item in deliveryListResponse.Items)
             {
                 waitingList.Add(new DeliveryListViewModel()
                 {
-                    GUID = item.GUID,
+                    GUID = item.GUID.ToString(),
                     Name = item.Name,
                     Quantity = item.Quantity,
                     StartID = item.StartID,
