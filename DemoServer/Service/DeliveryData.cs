@@ -188,8 +188,10 @@ namespace MDS.Server
 					   };
 					}
 				else {
-					    SqlCommand comc =  new SqlCommand("Update Delivery set DeliveryState = 'Processing',StateIndex = 1" 
+					    SqlCommand comc =  new SqlCommand("Update Delivery set DeliveryState = 'Processing',StateIndex = 1,DeliverFinishTime = '"
+									      + DataTime.Now.ToString() +"'"
 					             , con);
+					   
 					  return new DeliveryMoveResponse(){
 					    Check = 0
 					   };
@@ -204,7 +206,8 @@ namespace MDS.Server
 					   };
 					}
 				else {
-					    SqlCommand comc =  new SqlCommand("Update Delivery set DeliveryState = 'Processing',StateIndex = 1" 
+					    SqlCommand comc =  new SqlCommand("Update Delivery set DeliveryState = 'Processing',StateIndex = 1,DeliverFinishTime = '"
+									      + DataTime.Now.ToString() +"'"
 					             , con);
 					  return new DeliveryMoveResponse(){
 					    Check = 0
@@ -221,8 +224,8 @@ namespace MDS.Server
 					   };
 					}
 				else {
-					    SqlCommand comc =  new SqlCommand("Update Delivery set DeliveryState = 'Finished',StateIndex = 2" 
-					             , con);
+					    SqlCommand comc =  new SqlCommand("Update Delivery set DeliveryState = 'Finished',StateIndex = 2,DeliverFinishTime = '" 
+					           + DataTime.Now.ToString() +"'"   , con);
 					  return new DeliveryMoveResponse(){
 					    Check = 0
 					   };
@@ -238,8 +241,8 @@ namespace MDS.Server
 					   };
 					}
 				else {
-					    SqlCommand comc =  new SqlCommand("Update Delivery set DeliveryState = 'Finished',StateIndex = 2" 
-					             , con);
+					    SqlCommand comc =  new SqlCommand("Update Delivery set DeliveryState = 'Finished',StateIndex = 2,DeliverFinishTime = '" 
+					           + DataTime.Now.ToString() +"'"   , con);
 					  return new DeliveryMoveResponse(){
 					    Check = 0
 					   };
