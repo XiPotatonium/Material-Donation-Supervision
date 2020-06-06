@@ -175,9 +175,9 @@ namespace DemoServer
         }
         static void test()
         {
-            UserInfoService service = new UserInfoService();
-            var response = service.HandleLoginRequest(new LoginRequest());
-        }
+            Test.UserLoginTest();
+            PrintConsoleLog("Pass UserLoginTest");
+        }       
         static void Main(string[] args)
         {
             try

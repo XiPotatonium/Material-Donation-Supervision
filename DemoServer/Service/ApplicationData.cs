@@ -36,7 +36,6 @@ namespace MDS.Server.Service
                 Itema.Add(new GetApplicationListResponse.Item()
                 {
                     ID = (int)ds.Tables[0].Rows[j]["ApplyID"],
-                    GUID = ds.Tables[0].Rows[j]["ApplyGUID"].ToString(),
                     Name = ds.Tables[0].Rows[j]["MaterialName"].ToString(),
                     Quantity = (int)ds.Tables[0].Rows[j]["MaterialQuantity"],
                     State = (ApplicationState)ds.Tables[0].Rows[j]["StateIndex"],
@@ -131,7 +130,6 @@ namespace MDS.Server.Service
                         Item = new GetApplicationListResponse.Item()
                         {
                             ID = ApplicationID,
-                            GUID = guid,
                             Name = dataSet.Tables[0].Rows[0]["MaterialName"].ToString(),
                             Quantity = request.Quantity,
                             State = ApplicationState.Applying,
