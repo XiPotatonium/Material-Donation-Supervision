@@ -175,6 +175,7 @@ namespace DemoServer
         }
         static void test()
         {
+            Test.HandleNewApplicationRequestTest();
             Test.HandleAvailableApplicationMaterialRequestTest();
             Test.HandleGetApplicationDetailRequestTest();
             Test.HandleGetApplicationListRequestTest();

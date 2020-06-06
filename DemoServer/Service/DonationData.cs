@@ -138,10 +138,14 @@ namespace MDS.Server.Service
         public static VoidResponse HandleCancelDonationRequest(CancelDonationRequest request)
         {
             SqlCommand com = new SqlCommand(
-                $"update Donations " +
-                $"set DonationState = Aborted, StateIndex = 0 " +
-                $"where DonateGUID = {request.DonationId}"
+                $"update Tranc " +
+                $"set TransactionState = {(int)DonationState.Aborted}" +
+                $"where TransactionId = {request.DonationId}"
                 , Connect.Connection);
+            if (com.ExecuteNonQuery() == 0)
+            {
+                Console.WriteLine($"DEBUG: unable to abort donation {request.DonationId}");
+            }
             return new VoidResponse();
         }
     }

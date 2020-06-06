@@ -36,7 +36,12 @@ namespace MDS.Server
         public static void HandleNewApplicationRequestTest()
         {
             var service = new ApplicationDataService() { UserId = 1024 };
-            var response = service.HandleNewApplicationRequest(new NewApplicationRequest() { });
+            var response = service.HandleNewApplicationRequest(new NewApplicationRequest() 
+            { 
+                Address = "测试地址1", 
+                MaterialId = 1, 
+                Quantity = 1
+            });
         }
 
         public static void UserInfoTest()

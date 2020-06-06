@@ -64,7 +64,7 @@ namespace MDS.Server.Service
                 $"where TransactionId={request.ApplicationId}"
                 , Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
-            DataSet ds = new DataSet();
+            using DataSet ds = new DataSet();
 
             da.Fill(ds, "Tranc");
             return new GetApplicationDetailResponse()
@@ -79,7 +79,7 @@ namespace MDS.Server.Service
             SqlCommand com = new SqlCommand("Select MaterialID, MaterialName, MaterialDescription, MaterialConstraint from Materials "
                     , Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
-            DataSet ds = new DataSet();
+            using DataSet ds = new DataSet();
 
             da.Fill(ds, "Materials");
             List<AvailableApplicationMaterialResponse.Item> Itema = new List<AvailableApplicationMaterialResponse.Item>();
@@ -105,15 +105,16 @@ namespace MDS.Server.Service
         {
             // 指定SQL语句
             SqlCommand com = new SqlCommand(
-                $"select MaterialId, MaterialName, MaterilaQuantity " +
+                $"select MaterialId, MaterialName, MaterialQuantity " +
                 $"from Materials " +
                 $"where MaterialId={request.MaterialId}"
                 , Connect.Connection);
             // 建立SqlDataAdapter和DataSet对象
             SqlDataAdapter dataAdapter = new SqlDataAdapter(com);
-            DataSet dataSet = new DataSet();
+            using DataSet dataSet = new DataSet();
 
             int n = dataAdapter.Fill(dataSet, "Materials");
+            NewApplicationResponse ret;
             if (n != 0 && request.Quantity <= (int)dataSet.Tables[0].Rows[0]["MaterialQuantity"])
             {
                 string materialName = dataSet.Tables[0].Rows[0]["MaterialName"].ToString();
@@ -123,7 +124,7 @@ namespace MDS.Server.Service
 
                     com = new SqlCommand(
                         $"update Materials " +
-                        $"set MaterilaQuantity = MaterialQuantity - {request.Quantity} " + 
+                        $"set MaterilaQuantity = MaterialQuantity - {request.Quantity} " +
                         $"where MaterialId={request.MaterialId}"
                         , Connect.Connection, transaction);
 
@@ -135,20 +136,21 @@ namespace MDS.Server.Service
                         $"output inserted.id values({UserId}, {request.Address}, {request.MaterialId}, {request.Quantity}, {(int)ApplicationState.Applying}, {(int)TransactionType.APPLICATION}, {now}, -1";
 
                     dataAdapter = new SqlDataAdapter(com);
-                    dataSet = new DataSet();
                     n = dataAdapter.Fill(dataSet, "Tranc");
 
-                    return new NewApplicationResponse()
+                    ret = new NewApplicationResponse()
                     {
                         Item = new GetApplicationListResponse.Item()
                         {
-                            ID = request.MaterialId,
+                            ID = (int)dataSet.Tables[0].Rows[0]["id"],
                             Name = materialName,
                             Quantity = request.Quantity,
                             State = ApplicationState.Applying,
                             StartTime = now
                         }
                     };
+
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
@@ -156,61 +158,42 @@ namespace MDS.Server.Service
                     {
                         com.Transaction.Rollback();
                     }
-                    // TODO 错误报告
                     throw ex;
                 }
             }
             else
             {
-                // TODO 错误报告
-                return new NewApplicationResponse() { Item = null };
+                Console.WriteLine($"DEBUG: no enough material for {request.MaterialId} or material doesn't exist");
+                ret = new NewApplicationResponse() { Item = null };
             }
+
+            return ret;
         }
 
         public VoidResponse HandleCancelApplicationRequest(CancelApplicationRequest request)
         {
-            SqlTransaction transaction = Connect.Connection.BeginTransaction();
-            try
+            SqlCommand com = new SqlCommand(
+                $"update Tranc " +
+                $"set TransactionState = {(int)ApplicationState.Aborted}" +
+                $"where TransactionId = {request.ApplicationId}"
+                , Connect.Connection);
+            if (com.ExecuteNonQuery() == 0)
             {
-                SqlCommand com = new SqlCommand(
-                    $"update Tranc " +
-                    $"set TransactionState = {(int)ApplicationState.Aborted}" +
-                    $"where TransactionId = {request.ApplicationId}"
-                    , Connect.Connection, transaction);
-                com.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                if (transaction != null)
-                {
-                    transaction.Rollback();
-                }
-                // TODO 错误报告
-                throw ex;
+                Console.WriteLine($"DEBUG: unable to cancel application {request.ApplicationId}");
             }
             return new VoidResponse();
         }
 
         public static VoidResponse HandleConfirmApplicationDoneRequest(ConfirmApplicationDoneRequest request)
         {
-            SqlTransaction transaction = Connect.Connection.BeginTransaction();
-            try
+            SqlCommand com = new SqlCommand(
+                $"update Tranc " +
+                $"set TransactionState = {(int)ApplicationState.Done}" +
+                $"where TransactionId = {request.ApplicationId}"
+                , Connect.Connection);
+            if (com.ExecuteNonQuery() == 0)
             {
-                SqlCommand com = new SqlCommand(
-                    $"update Tranc " +
-                    $"set TransactionState = {(int)ApplicationState.Done}" +
-                    $"where TransactionId = {request.ApplicationId}"
-                    , Connect.Connection, transaction);
-                com.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                if (transaction != null)
-                {
-                    transaction.Rollback();
-                }
-                // TODO 错误报告
-                throw ex;
+                Console.WriteLine($"DEBUG: unable to confirm application {request.ApplicationId}");
             }
             return new VoidResponse();
         }
