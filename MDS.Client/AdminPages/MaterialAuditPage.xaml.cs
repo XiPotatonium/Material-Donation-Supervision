@@ -54,19 +54,30 @@ namespace MDS.Client.AdminPages
 
         private async Task UpdateHistoryList()
         {
-            MaterialAuditListResponse materialAuditList = await NetworkHelper.GetAsync(new MaterialAuditListRequest()
+            await Task.Delay(100);
+            MaterialAuditListResponse materialAuditList = new MaterialAuditListResponse();
+            materialAuditList.m_normals = new List<Normal>();
+            materialAuditList.m_normals.Add(new Normal()
             {
-                //todo
+                Number = "0011",
+                UserID = 5,
+                Time = DateTime.Now,
+                State = AdminState.FINISH,
+                ReviewerID = 2,
+                Result = AdminResult.FAIL,
+                Content = "sssss",
+                Remarks = "zzzzz"
             });
+
             foreach (Normal normal in materialAuditList.m_normals)
             {
                 MaterialAuditList_left.Add(new MaterialAuditConstruct()
                 {
                     Number = normal.Number,
-                    Applicant = normal.UserID.ToString(),
+                    ApplicantID = normal.UserID,
                     Time = normal.Time,
                     State = normal.State,
-                    Reviewer = normal.ReviewerID,
+                    ReviewerID = normal.ReviewerID,
                     Result = normal.Result,
                     Content = normal.Content,
                     Remarks = normal.Remarks
@@ -76,19 +87,30 @@ namespace MDS.Client.AdminPages
 
         private async Task UpdateWaitingList()
         {
-            MaterialAuditListResponse materialAuditList = await NetworkHelper.GetAsync(new MaterialAuditListRequest()
+            await Task.Delay(100);
+            MaterialAuditListResponse materialAuditList = new MaterialAuditListResponse();
+            materialAuditList.m_normals = new List<Normal>();
+            materialAuditList.m_normals.Add(new Normal()
             {
-                //todo
+                Number = "0011",
+                UserID = 6,
+                Time = DateTime.Now,
+                State = AdminState.FINISH,
+                ReviewerID = 2,
+                Result = AdminResult.FAIL,
+                Content = "sssss",
+                Remarks = "zzzzz"
             });
+
             foreach (Normal normal in materialAuditList.m_normals)
             {
                 MaterialAuditList_right.Add(new MaterialAuditConstruct()
                 {
                     Number = normal.Number,
-                    Applicant = normal.UserID.ToString(),
+                    ApplicantID = normal.UserID,
                     Time = normal.Time,
                     State = normal.State,
-                    Reviewer = normal.ReviewerID,
+                    ReviewerID = normal.ReviewerID,
                     Result = normal.Result,
                     Content = normal.Content,
                     Remarks = normal.Remarks

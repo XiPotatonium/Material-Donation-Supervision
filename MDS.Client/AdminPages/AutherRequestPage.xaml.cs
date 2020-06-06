@@ -56,19 +56,30 @@ namespace MDS.Client.AdminPages
 
         private async Task UpdateHistoryList()
         {
-            AutherRequestListResponse autherRequestList = await NetworkHelper.GetAsync(new AutherRequestListRequest()
+            await Task.Delay(100);
+            AutherRequestListResponse autherRequestList = new AutherRequestListResponse();
+            autherRequestList.a_normals = new List<Normal>();
+            autherRequestList.a_normals.Add(new Normal()
             {
-                //todo
+                Number = "0011",
+                UserID = 6,
+                Time = DateTime.Now,
+                State = AdminState.FINISH,
+                ReviewerID = 1,
+                Result = AdminResult.FAIL,
+                Content = "sssss",
+                Remarks = "zzzzz"
             });
+
             foreach (Normal normal in autherRequestList.a_normals)
             {
                 AutherRequestList_left.Add(new AutherRequestConstruct()
                 {
                     Number = normal.Number,
-                    User = normal.UserID.ToString(),
+                    UserID = normal.UserID,
                     Time = normal.Time,
                     State = normal.State,
-                    Reviewer = normal.ReviewerID,
+                    ReviewerID = normal.ReviewerID,
                     Result = normal.Result,
                     Content = normal.Content,
                     Remarks = normal.Remarks
@@ -78,19 +89,30 @@ namespace MDS.Client.AdminPages
 
         private async Task UpdateWaitingList()
         {
-            AutherRequestListResponse autherRequestList = await NetworkHelper.GetAsync(new AutherRequestListRequest()
+            await Task.Delay(100);
+            AutherRequestListResponse autherRequestList = new AutherRequestListResponse();
+            autherRequestList.a_normals = new List<Normal>();
+            autherRequestList.a_normals.Add(new Normal()
             {
-                //todo
+                Number = "0011",
+                UserID = 6,
+                Time = DateTime.Now,
+                State = AdminState.FINISH,
+                ReviewerID = 1,
+                Result = AdminResult.FAIL,
+                Content = "sssss",
+                Remarks = "zzzzz"
             });
+
             foreach (Normal normal in autherRequestList.a_normals)
             {
                 AutherRequestList_right.Add(new AutherRequestConstruct()
                 {
                     Number = normal.Number,
-                    User = normal.UserID.ToString(),
+                    UserID = normal.UserID,
                     Time = normal.Time,
                     State = normal.State,
-                    Reviewer = normal.ReviewerID,
+                    ReviewerID = normal.ReviewerID,
                     Result = normal.Result,
                     Content = normal.Content,
                     Remarks = normal.Remarks

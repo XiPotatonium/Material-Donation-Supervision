@@ -23,16 +23,22 @@ namespace MDS.Client.AdminPages
         {
             InitializeComponent();
         }
+
+        private void Goto_Change(object sender, RoutedEventArgs e)
+        {
+            Change_Passward change_Passward = new Change_Passward();
+            change_Passward.ShowDialog();
+        }
     }
 
     public class AutherRequestConstruct
     {
         public string Number { set; get; }
-        public string User { set; get; }
+        public int UserID { set; get; }
         public DateTime Time { set; get; }
         //public Button Detail { set; get; }
         public AdminState State { set; get; }
-        public int Reviewer { set; get; }
+        public int ReviewerID { set; get; }
         public AdminResult Result { set; get; }
         public string Content { set; get; }
         public string Remarks { set; get; }
@@ -42,11 +48,11 @@ namespace MDS.Client.AdminPages
     public class MaterialAuditConstruct
     {
         public string Number { set; get; }
-        public string Applicant { set; get; }
+        public int ApplicantID { set; get; }
         public DateTime Time { set; get; }
         //public Button Detail { set; get; }
         public AdminState State { set; get; }
-        public int Reviewer { set; get; }
+        public int ReviewerID { set; get; }
         public AdminResult Result { set; get; }
         public string Content { set; get; }
         public string Remarks { set; get; }

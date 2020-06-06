@@ -19,12 +19,19 @@ namespace DTO
         PASS, FAIL, NONE
     }
 
+    //物资申请、物资捐赠、配送员身份认证、管理员身份认证
+    public enum ReviewType
+    {
+        APPLY, DONATE, DELIVERAUTHENTICANTION, ADMINAUTHENTICANTION
+    }
+
     public class Normal
     {
         public string Number { set; get; } //申请编号（用户认证、物资申请）
         public int UserID { set; get; } //申请人
         public DateTime Time { set; get; } //申请时间
         public AdminState State { set; get; }  //申请状态（已完成、待审核）
+        public ReviewType Type { set; get; } //审核的类型
         public int ReviewerID { set; get; } //审核人id
         public AdminResult Result { set; get; } //审核结果 PASS：通过 FAIL：未通过 NONE：未处理
         public string Content { set; get; } //申请的具体内容
@@ -137,9 +144,22 @@ namespace DTO
 
     public class SecondaryPasswordChangeResponse
     {
-        public int flag { set; get; }  //0:成功 1:密码相同 2:密码为空
+        public int flag { set; get; }  //0:成功 1:密码相同 2:密码为空 3:密码错误
+    }
+    /*
+    [Serializable]
+    //获取未分配任务列表
+    public class InitialTaskListRequest : IReturn<InitialTaskListResponse>
+    {
+        public DeliveryState State { set; get; } //分发状态（应为initial）
     }
 
+    public class InitialTaskListResponse
+    {
+        public string GUID { set; get; } //订单号
+    }*/
+
+    /*[Serializable]
     //管理员分配给配送员任务
     public class AssignTasksRequest : IReturn<AssignTasksResponse>
     {
@@ -150,6 +170,6 @@ namespace DTO
 
     public class AssignTasksResponse
     {
-        public int result { set; get; } //返回结果0：成功
-    }
+        public int result { set; get; } //返回结果0：成功 1：配送员ID不存在
+    }*/
 }
