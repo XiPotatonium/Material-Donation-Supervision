@@ -51,8 +51,6 @@ namespace MDS.Client.NavigationPages
             GetApplicationListResponse response = await NetworkHelper.GetAsync(new GetApplicationListRequest(){ })
                 .Progress(ParentWindow.PART_ProgressBar);
 
-            response = new GetApplicationListResponse() { Items = new List<GetApplicationListResponse.Item>() };
-
             UserApplications = new ObservableCollection<ApplicationListViewModel>(
                 response.Items.Select(i => new ApplicationListViewModel(i)));
             UserApplicationList.ItemsSource = UserApplications;
@@ -62,8 +60,6 @@ namespace MDS.Client.NavigationPages
         {
             GetDonationListResponse response = await NetworkHelper.GetAsync(new GetDonationListRequest() { })
                 .Progress(ParentWindow.PART_ProgressBar);
-
-            response = new GetDonationListResponse() { Items = new List<GetDonationListResponse.Item>() };
 
             UserDonations = new ObservableCollection<DonationListViewModel>(
                 response.Items.Select(i => new DonationListViewModel(i)));
@@ -120,6 +116,15 @@ namespace MDS.Client.NavigationPages
                 PhoneNumber = NewPhoneTextBox.Text,
                 HomeAddress = NewAddressTextBox.Text
             }).Progress(ParentWindow.PART_ProgressBar);
+
+            UserInfoResponse response = await NetworkHelper.GetAsync(new UserInfoRequest()
+            {
+                UserId = UserInfo.Id
+            }).Progress(ParentWindow.PART_ProgressBar);
+
+            UserInfo.PhoneNumber = response.PhoneNumber;
+            UserInfo.HomeAddress = response.HomeAddress;
+            UserInfo.UserType = response.UserType;
 
             RefreshUserInfoDisplay();
         }

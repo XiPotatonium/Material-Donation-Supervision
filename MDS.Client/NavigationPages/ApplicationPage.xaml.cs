@@ -198,6 +198,7 @@ namespace MDS.Client.NavigationPages
             {
                 MaterialNameTextBlock.Text = selected.Name;
                 QuantityInputBox.QuantityConstraintHint = $"限量{selected.Constraint}";
+                MaterialDetailTextBlock.Text = selected.Description;
             }
             else
             {

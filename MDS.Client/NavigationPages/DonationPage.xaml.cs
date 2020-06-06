@@ -164,6 +164,7 @@ namespace MDS.Client.NavigationPages
             if (selected != null)
             {
                 MaterialNameTextBlock.Text = selected.Name;
+                MaterialDetailTextBlock.Text = selected.Description;
             }
             else
             {
