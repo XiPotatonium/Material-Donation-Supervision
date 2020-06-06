@@ -1,10 +1,10 @@
-use 物资调配;
-
+--create database Material
+use Material
 create table Users(    --建立用户表
    PhoneNumber varchar(20) primary key,
    Passwords varchar(20) not null,
    UserID int not null,
-   HomeAddress varchar(20),
+   HomeAddress varchar(70),
   -- UserType varchar(20) constraint usertypes check (UserType = 'NORMAL' or 
     --       UserType = 'ADMIN' or UserType = 'DELIVERER')
 );
@@ -25,7 +25,7 @@ create table Donation(    --建立捐赠表
     DonateID int primary key,
     DonateGUID varchar(10) unique,
 	DonatorName varchar(20),
-	DonatorAddress varchar(20),
+	DonatorAddress varchar(70),
 	MaterialName varchar(20),
 	MaterialQuantity int,
 	DonationState varchar(20) constraint donationstates check ( DonationState = 'Aborted' or DonationState = 'Applying' 
@@ -50,7 +50,7 @@ create table Applications(         --建立申请表
 	     or ApplicationState = 'Delivering' or ApplicationState = 'Received' or ApplicationState = 'Done'),
 		 StateIndex int,
    StartTime varchar(15),
-  -- ApplierAddress varchar(30),
+  -- ApplierAddress varchar(70),
 
   -- foreign key(MaterialName) references Materials(MaterialName) on delete cascade,
 	--foreign key(ApplierName) references Users(PhoneNumber) on delete cascade
@@ -59,19 +59,20 @@ create table Applications(         --建立申请表
 
 
 create table Delivery(                 --建立快递表
-    DeliveryGUID varchar(10) primary key,
-	DeliveryerName varchar(20),
 
+    DeliveryGUID varchar(10) primary key,
+	DeliveryerId int,
+	AdminId int,
 	DeliveryState varchar(15) not null constraint donatestates check (DeliveryState = 'Waiting' or DeliveryState = 'Processing'
                 or DeliveryState = 'Finished'),
-    
-	DeliverDeparture varchar(15),
-	DeliverDestination varchar(15),
+    StateIndex int,
+	DeliverDeparture varchar(70),
+	DeliverDestination varchar(70),
     DeliverStartTime varchar(15),
 	DeliverFinishTime varchar(15),
 
- --   foreign key(DeliveryGUID) references DonationOrApplication(DonateOrApplyGUID) on delete cascade,
-	foreign key(DeliveryerName) references Users(PhoneNumber) on delete cascade,
+   -- foreign key(DeliveryGUID) references DonationOrApplication(DonateOrApplyGUID) on delete cascade,
+	--foreign key(DeliveryerName) references Users(PhoneNumber) on delete cascade,
 
 );
 
@@ -89,3 +90,4 @@ values(30003,'KN95口罩',0,'KN95口罩比普通医用口罩标准更加严格�
 
 insert into Materials
 values(30004,'护目镜',0,'长期接触易感人群者应佩戴护目镜，防止病菌进入眼睛',' ');
+
