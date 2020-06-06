@@ -23,6 +23,7 @@ namespace DTO
     [Serializable]
     public class GetDonationListResponse
     {
+        [Serializable]
         public class Item
         {
             public int ID { set; get; }     // 字段参考Application
@@ -69,6 +70,7 @@ namespace DTO
     [Serializable]
     public class AvailableDonationMaterialResponse
     {
+        [Serializable]
         public class Item
         {
             public int Id { set; get; }             // 物资名称对应一个Id

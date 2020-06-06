@@ -91,22 +91,6 @@ namespace MDS.Client.NavigationPages
                 // 1. 请求所有可选的物资
                 AvailableApplicationMaterialResponse response = await NetworkHelper.GetAsync(
                     new AvailableApplicationMaterialRequest() { }).Progress(ParentWindow.PART_ProgressBar);
-                // TODO 删除假数据
-                response = new AvailableApplicationMaterialResponse() { Items = new List<AvailableApplicationMaterialResponse.Item>() };
-                response.Items.Add(new AvailableApplicationMaterialResponse.Item()
-                {
-                    Id = 1,
-                    Name = "物资1",
-                    Constraint = 10,
-                    Description = "物资一的介绍"      // TODO UI设计
-                });
-                response.Items.Add(new AvailableApplicationMaterialResponse.Item()
-                {
-                    Id = 2,
-                    Name = "物资2",
-                    Constraint = 100,
-                    Description = "物资er的介绍"
-                });
 
                 MaterialListViewModels = new ObservableCollection<ApplicationMaterialListViewModel>(response.Items.Select(i => new ApplicationMaterialListViewModel(i)));
                 MaterialSelectListBox.ItemsSource = MaterialListViewModels;

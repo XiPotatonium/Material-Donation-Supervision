@@ -31,19 +31,12 @@ namespace MDS.Client
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             PART_Frame.Content = new MyMainPage(this);
-            // TODO 用户信息假数据
 
             UserInfoResponse response = await NetworkHelper.GetAsync(new UserInfoRequest()
             {
                 UserId = UserInfo.Id
             }).Progress(PART_ProgressBar);
 
-            response = new UserInfoResponse()
-            {
-                PhoneNumber = "152-1111-1111",
-                HomeAddress = "XX省-XX市-XX区-XX街道-XX小区-XXXXXXXXXXXXX",
-                UserType = UserType.ADMIN
-            };
             UserInfo.PhoneNumber = response.PhoneNumber;
             UserInfo.HomeAddress = response.HomeAddress;
             UserInfo.UserType = response.UserType;
