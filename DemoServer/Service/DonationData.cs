@@ -11,16 +11,10 @@ namespace MDS.Server
 
 	public class DonationDataService
 	{
-		public enum DonationState
-		{
-			Aborted,
-			Applying,
-			WaitingDelivery,
-			Done
-		}
+		
 		public int UserId { get; set; }
-		/*public static int DonationID = 100000;
-		public GetDonationListResponse HandleGetDonationListRequest(GetDonationListRequest request)
+		public static int DonationID = 100000;
+		public static GetDonationListResponse HandleGetDonationListRequest(GetDonationListRequest request)
 		{
 
 			//TODO: 数据库操作
@@ -73,7 +67,7 @@ namespace MDS.Server
 
 
 
-		public GetDonationDetailResponse HandleGetDonationDetailRequest(GetDonationDetailRequest request)
+		public static GetDonationDetailResponse HandleGetDonationDetailRequest(GetDonationDetailRequest request)
 		{
 			//TODO: 数据库
 			string constr = "Server=.;DataBase=Material;" +
@@ -103,7 +97,7 @@ namespace MDS.Server
 
 
 
-		public AvailableDonationMaterialResponse HandleAvailableDonationMaterialRequest(AvailableDonationMaterialRequest request)
+		public static AvailableDonationMaterialResponse HandleAvailableDonationMaterialRequest(AvailableDonationMaterialRequest request)
 		{
 			//TODO: 数据库
 			//TODO：数据库操作
@@ -148,7 +142,7 @@ namespace MDS.Server
 
 
 		
-		public NewDonationResponse HandleNewDonationRequest(NewDonationRequest request)
+		public static NewDonationResponse HandleNewDonationRequest(NewDonationRequest request)
 		{
 			//TODO: 数据库查询
 			string constr = "Server=.;DataBase=Material;" +
@@ -195,7 +189,7 @@ namespace MDS.Server
 			}
 			else {
 				DonationID = DonationID + 1;
-				string d = Hash(Datetime.Now.toString());
+				string d = System.Guid.NewGuid().ToString("D");
 				SqlCommand comc = new SqlCommand("insert into Materials(MaterialId,MaterialName,MaterialQuantity) Values" +
 					"(" + request.MaterialId + "," + request.Quantity + ")", con);
 
@@ -227,7 +221,7 @@ namespace MDS.Server
 
 
 
-		public VoidResponse HandleCancelDonationRequest(CancelDonationRequest request)
+		public static VoidResponse HandleCancelDonationRequest(CancelDonationRequest request)
 		{
 			//TODO: 数据库
 			string constr = "Server=.;DataBase=Material;" +
@@ -240,7 +234,7 @@ namespace MDS.Server
 			con.close();
 			return new VoidResponse();
 			//return new VoidResponse();
-		}*/
+		}
 	}
 
 }
