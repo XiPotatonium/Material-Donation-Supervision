@@ -24,7 +24,7 @@ namespace MDS.Client.DeliveryPages
         private MutualString info = new MutualString();
         public InputDialog(string guid, int t)
         {
-            this.GUID = guid;
+            this.GUID = int.Parse(guid);
             this.type = t;
             if (this.type == 0)
             {
