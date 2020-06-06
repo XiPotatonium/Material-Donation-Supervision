@@ -6,7 +6,9 @@ namespace DTO
 {
     public enum DeliveryState
     {
-        Waiting,    // 待接单（配送员尚未取得物资）
+        Alone,      // 无主订单
+        Checking,   // 待审核
+        Waiting,    // 待取货（配送员尚未取得物资）
         Processing, // 配送中（物资在配送员手中）
         Finished    // 已完成
     }
@@ -62,5 +64,12 @@ namespace DTO
     public class DeliveryMoveResponse
     {
         public int Check { set; get; }             // 操作结果号
+    }
+
+    [Serializable]
+    public class DeliveryApplyRequest : IReturn<DeliveryMoveResponse>
+    {
+        public int TransactionId { set; get; }      // 订单号
+        public int DelivermanId { set; get; }        // 配送员id
     }
 }
