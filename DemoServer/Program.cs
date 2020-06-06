@@ -176,9 +176,9 @@ namespace DemoServer
         static void test()
         {
             Test.UserLoginTest();
-            PrintConsoleLog("Pass UserLoginTest");
             Test.UserInfoTest();
-            PrintConsoleLog("Pass UserInfoTest");
+            Test.ModifyRequestTest();
+            Test.RegisterRequestTest();
         }       
         static void Main(string[] args)
         {
