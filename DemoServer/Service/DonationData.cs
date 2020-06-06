@@ -105,43 +105,26 @@ namespace MDS.Server.Service
             int n = da.Fill(ds, "Materials");
             if (n != 0)
             {
-                try
+                DateTime now = DateTime.Now;
+
+                com.CommandText = $"INSERT INTO Tranc (UserId, Address, MaterialId, MaterialQuantity, TransactionState, TransactionType, StartTime, AdminId) " +
+                            $"OUTPUT INSERTED.TransactionId values ({UserId}, '{request.Address}', {request.MaterialId}, {request.Quantity}, " +
+                            $"{(int)ApplicationState.Applying}, {(int)TransactionType.DONATION}, '{now}', -1)";
+
+                // https://stackoverflow.com/questions/18373461/execute-insert-command-and-return-inserted-id-in-sql
+                int modified = Convert.ToInt32(com.ExecuteScalar());
+
+                ret = new NewDonationResponse()
                 {
-                    SqlTransaction transaction = Connect.Connection.BeginTransaction();
-                    com = new SqlCommand(
-                    $"update Materials " +
-                    $"set MaterilaQuantity = MaterialQuantity + {request.Quantity}" +
-                    $"where MaterialId = {request.MaterialId}",
-                    Connect.Connection);
-
-                    com.ExecuteNonQuery();
-
-                    DateTime now = DateTime.Now;
-
-                    com.CommandText = $"insert into Tranc(UserId, Address, MaterialId, MaterialQuantity, TransactionState, TransactionType, StartTime, AdminId) " +
-                        $"values({UserId}, {request.Address}, {request.MaterialId}, {request.Quantity}, {(int)DonationState.Applying}, {(int)TransactionType.DONATION}, {now}, -1";
-
-                    ret = new NewDonationResponse()
+                    Item = new GetDonationListResponse.Item()
                     {
-                        Item = new GetDonationListResponse.Item()
-                        {
-                            Name = ds.Tables[0].Rows[0]["MaterialName"].ToString(),
-                            Quantity = request.Quantity,
-                            State = DonationState.Applying,
-                            StartTime = now
-                        }
-                    };
-
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    if (com.Transaction != null)
-                    {
-                        com.Transaction.Rollback();
+                        ID = modified,
+                        Name = ds.Tables[0].Rows[0]["MaterialName"].ToString(),
+                        Quantity = request.Quantity,
+                        State = DonationState.Applying,
+                        StartTime = now
                     }
-                    throw ex;
-                }
+                };
             }
             else
             {

@@ -30,8 +30,7 @@ namespace MDS.Server.Service
                 $"where Tranc.UserId={UserId} and Tranc.TransactionType={(int)TransactionType.APPLICATION}"
                 , Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
-
-            using DataSet ds = new DataSet();
+            DataSet ds = new DataSet();
             da.Fill(ds, "Tranc");
 
             List<GetApplicationListResponse.Item> items = new List<GetApplicationListResponse.Item>();
@@ -63,7 +62,7 @@ namespace MDS.Server.Service
                 $"where TransactionId={request.ApplicationId}"
                 , Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
-            using DataSet ds = new DataSet();
+            DataSet ds = new DataSet();
 
             da.Fill(ds, "Tranc");
             return new GetApplicationDetailResponse()
@@ -78,7 +77,7 @@ namespace MDS.Server.Service
             SqlCommand com = new SqlCommand("Select MaterialID, MaterialName, MaterialDescription, MaterialConstraint from Materials "
                     , Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
-            using DataSet ds = new DataSet();
+            DataSet ds = new DataSet();
 
             da.Fill(ds, "Materials");
             List<AvailableApplicationMaterialResponse.Item> items = new List<AvailableApplicationMaterialResponse.Item>();
@@ -110,7 +109,7 @@ namespace MDS.Server.Service
                 , Connect.Connection);
             // 建立SqlDataAdapter和DataSet对象
             SqlDataAdapter dataAdapter = new SqlDataAdapter(com);
-            using DataSet dataSet = new DataSet();
+            DataSet dataSet = new DataSet();
 
             int n = dataAdapter.Fill(dataSet, "Materials");
             NewApplicationResponse ret;
@@ -123,7 +122,7 @@ namespace MDS.Server.Service
 
                     com = new SqlCommand(
                         $"update Materials " +
-                        $"set MaterilaQuantity = MaterialQuantity - {request.Quantity} " +
+                        $"set MaterialQuantity = MaterialQuantity - {request.Quantity} " +
                         $"where MaterialId={request.MaterialId}"
                         , Connect.Connection, transaction);
 
@@ -131,17 +130,18 @@ namespace MDS.Server.Service
 
                     DateTime now = DateTime.Now;
 
-                    com.CommandText = $"insert into Tranc(UserId, Address, MaterialId, MaterialQuantity, TransactionState, TransactionType, StartTime, AdminId) " +
-                        $"output inserted.id values({UserId}, {request.Address}, {request.MaterialId}, {request.Quantity}, {(int)ApplicationState.Applying}, {(int)TransactionType.APPLICATION}, {now}, -1";
+                    com.CommandText = $"INSERT INTO Tranc (UserId, Address, MaterialId, MaterialQuantity, TransactionState, TransactionType, StartTime, AdminId) " +
+                        $"OUTPUT INSERTED.TransactionId values ({UserId}, '{request.Address}', {request.MaterialId}, {request.Quantity}, " +
+                        $"{(int)ApplicationState.Applying}, {(int)TransactionType.APPLICATION}, '{now}', -1)";
 
-                    dataAdapter = new SqlDataAdapter(com);
-                    n = dataAdapter.Fill(dataSet, "Tranc");
+                    // https://stackoverflow.com/questions/18373461/execute-insert-command-and-return-inserted-id-in-sql
+                    int modified = Convert.ToInt32(com.ExecuteScalar());
 
                     ret = new NewApplicationResponse()
                     {
                         Item = new GetApplicationListResponse.Item()
                         {
-                            ID = (int)dataSet.Tables[0].Rows[0]["id"],
+                            ID = modified,
                             Name = materialName,
                             Quantity = request.Quantity,
                             State = ApplicationState.Applying,
