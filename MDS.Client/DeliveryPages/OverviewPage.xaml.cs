@@ -37,32 +37,17 @@ namespace MDS.Client.DeliveryPages
             userWaitingCount.DataContext = listCount;
         }
         private async Task UpdateProcessingList()
-        {/*
+        {
             DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryListRequest()
             {
                 DelivererId = UserInfo.Id,
                 State = DeliveryState.Processing
-            });*/
-            // TODO 假数据
-
-            await Task.Delay(100);
-            DeliveryListResponse deliveryListResponse = new DeliveryListResponse();
-            deliveryListResponse.Items = new List<Item>();
-            deliveryListResponse.Items.Add(new Item()
-            {
-                GUID = "qh1i2hisqh1is",
-                Name = "水",
-                Quantity = 100,
-                Departure = "a小区",
-                Destination = "0仓库",
-                StartTime = DateTime.Now
             });
-            //////
             foreach (Item item in deliveryListResponse.Items)
             {
                 processingList.Add(new DeliveryListViewModel()
                 {
-                    GUID = item.GUID,
+                    GUID = item.GUID.ToString(),
                     Name = item.Name,
                     Quantity = item.Quantity,
                     Departure = item.Departure,
@@ -73,33 +58,17 @@ namespace MDS.Client.DeliveryPages
             listCount.ProcessingCount = processingList.Count;
         }
         private async Task UpdateWaitingList()
-        {/*
+        {
             DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryListRequest()
             {
                 DelivererId = UserInfo.Id,
                 State = DeliveryState.Waiting
-            });*/
-
-
-            // TODO 假数据
-            await Task.Delay(100);
-            DeliveryListResponse deliveryListResponse = new DeliveryListResponse();
-            deliveryListResponse.Items = new List<Item>();
-            deliveryListResponse.Items.Add(new Item()
-            {
-                GUID = "uytg76uyt67u",
-                Name = "开水",
-                Quantity = 100,
-                Departure = "8仓库",
-                Destination = "a小区",
-                StartTime = DateTime.Now
             });
-            //////
             foreach (Item item in deliveryListResponse.Items)
             {
                 waitingList.Add(new DeliveryListViewModel()
                 {
-                    GUID = item.GUID,
+                    GUID = item.GUID.ToString(),
                     Name = item.Name,
                     Quantity = item.Quantity,
                     Departure = item.Departure,
