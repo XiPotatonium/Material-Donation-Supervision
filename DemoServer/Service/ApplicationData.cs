@@ -16,7 +16,7 @@ namespace MDS.Server.Service
         DONATION
     }
 
-    class ApplicationDataService
+    public class ApplicationDataService
     {
         public int UserId { get; set; }
         public static int ApplicationID = 10000;
@@ -25,16 +25,17 @@ namespace MDS.Server.Service
         public GetApplicationListResponse HandleGetApplicationListRequest(GetApplicationListRequest request)
         {
             // 指定SQL语句
+            int a = (int)TransactionType.APPLICATION;
             SqlCommand com = new SqlCommand(
-                $"select Transaction.TransactionId, Materials.MaterialName, Transaction.MaterialQuantity, Transaction.TransactionState, Transaction.StartTime " +
-                $"from Transaction left join Materials " +
-                $"on Transaction.MaterialId=Materials.MaterialID " +
-                $"where UserId={UserId} and TransactionType={TransactionType.APPLICATION}"
+                $"select Tranc.TransactionId, Materials.MaterialName, Tranc.MaterialQuantity, Tranc.TransactionState, Tranc.StartTime " +
+                $"from Tranc left join Materials " +
+                $"on Tranc.MaterialId=Materials.MaterialID " +
+                $"where Tranc.UserId={UserId} and Tranc.TransactionType={a}"
                 , Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
 
             using DataSet ds = new DataSet();
-            da.Fill(ds, "Transaction");
+            da.Fill(ds, "Tranc");
 
             List<GetApplicationListResponse.Item> Itema = new List<GetApplicationListResponse.Item>();
 
@@ -42,11 +43,11 @@ namespace MDS.Server.Service
             {
                 Itema.Add(new GetApplicationListResponse.Item()
                 {
-                    ID = (int)ds.Tables[0].Rows[j]["Transaction.TransactionId"],
-                    Name = ds.Tables[0].Rows[j]["Materials.MaterialName"].ToString(),
-                    Quantity = (int)ds.Tables[0].Rows[j]["Transaction.MaterialQuantity"],
-                    State = (ApplicationState)ds.Tables[0].Rows[j]["Transaction.TransactionState"],
-                    StartTime = (DateTime)ds.Tables[0].Rows[j]["Transaction.StartTime"]
+                    ID = (int)ds.Tables[0].Rows[j]["TransactionId"],
+                    Name = ds.Tables[0].Rows[j]["MaterialName"].ToString(),
+                    Quantity = (int)ds.Tables[0].Rows[j]["MaterialQuantity"],
+                    State = (ApplicationState)ds.Tables[0].Rows[j]["TransactionState"],
+                    StartTime = (DateTime)ds.Tables[0].Rows[j]["StartTime"]
                 });
             }
 

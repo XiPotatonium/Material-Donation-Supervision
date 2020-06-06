@@ -175,6 +175,7 @@ namespace DemoServer
         }
         static void test()
         {
+            Test.HandleGetApplicationListRequestTest();
             Test.UserLoginTest();
             PrintConsoleLog("Pass UserLoginTest");
         }       
