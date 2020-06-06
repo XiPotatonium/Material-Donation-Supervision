@@ -44,7 +44,7 @@ namespace MDS.Server
 
         public UserInfoResponse HandleUserInfoRequest(UserInfoRequest request)
         {
-            SqlCommand com = new SqlCommand($"select PhoneNumber, HomeAddress, UserType from Users where UserId = {request.UserId}", Connect.Connection);
+            SqlCommand com = new SqlCommand($"select PhoneNumber, HomeAddress, UserType from Users where UserId = {UserId}", Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
             using (DataSet ds = new DataSet())
             {
@@ -68,29 +68,39 @@ namespace MDS.Server
 
         public VoidResponse HandleModifyRequest(UserInfoModifyRequest request)
         {
-            SqlCommand com = new SqlCommand($"UPDATE userinfo SET HomeAddress = '{request.HomeAddress}' and PhoneNumber = ", Connect.Connection);
+            SqlCommand com = new SqlCommand($"UPDATE Users SET HomeAddress = '{request.HomeAddress}', PhoneNumber = '{request.PhoneNumber}' WHERE UserID = {UserId} ", Connect.Connection);
             com.ExecuteNonQuery();
             return new VoidResponse();
         }
 
-        /*public static RegisterResponse HandleRegisterRequest(RegisterRequest request)
+        public RegisterResponse HandleRegisterRequest(RegisterRequest request)
 		{
-			//TODO:数据库
-			string constr = "Server=.;DataBase=Material;" +
-				"Integrated Security=True";
-			// 建立SqlConnection对象
-			SqlConnection con = new SqlConnection(constr);
-			// 打开连接
-			con.Open();
-			int c = (int)(Convert.ToInt64(request.PhoneNumber) % pow(10, 9));
-			SqlCommand com = new SqlCommand("insert into Users(PhoneNumber,Passwords,UserId) values ('"
-					+ request.PhoneNumber + "','" + request.Password + "'," +  c +
-					+ ")", con);
-            con.Close();
-			return new RegisterResponse()
-			{
-				UserID = c
-			};
-		}*/
+            SqlCommand com = new SqlCommand($"insert into Users(PhoneNumber,Passwords,HomeAddress) values('{request.PhoneNumber}','{request.Password}','暂无')"
+                ,Connect.Connection);
+            com.ExecuteNonQuery();
+            SqlCommand ncom = new SqlCommand($"select UserID from Users where PhoneNumber = '{request.PhoneNumber}' and Passwords = '{request.Password}'"
+                , Connect.Connection);
+            SqlDataAdapter da = new SqlDataAdapter(ncom);
+            using (DataSet ds = new DataSet())
+            {
+                da.Fill(ds, "Users");
+                if (ds.Tables[0].Rows.Count != 0)
+                {
+                    var rows = ds.Tables[0].Rows;
+                    return new RegisterResponse()
+                    {
+                        UserId = int.Parse(rows[0]["UserID"].ToString())
+                    };
+                }
+                else
+                {
+                    return new RegisterResponse()
+                    {
+                        UserId = -1
+                    };
+                }
+            }
+        }
+
     }
 }

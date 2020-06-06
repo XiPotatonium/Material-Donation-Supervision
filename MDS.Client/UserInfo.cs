@@ -11,5 +11,6 @@ namespace MDS.Client
         public static string PhoneNumber { set; get; }
         public static string HomeAddress { set; get; }
         public static UserType UserType { set; get; }
+        public static int AdminId { set; get; }
     }
 }

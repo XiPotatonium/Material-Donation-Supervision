@@ -75,7 +75,7 @@ namespace DemoServer
                 DeliveryDataService DeliveryDataService = new DeliveryDataService() { UserId = id };
                 ApplicationDataService ApplicationDataService = new ApplicationDataService() { UserId = id };
                 DonationDataService DonationDataService = new DonationDataService() { UserId = id };
-               /* if (recv is LoginRequest loginRequest)
+                if (recv is LoginRequest loginRequest)
                 {
                     responseBody = objecttostring(UserInfoService.HandleLoginRequest(loginRequest));
                 }
@@ -92,7 +92,7 @@ namespace DemoServer
                     responseBody = objecttostring(UserInfoService.HandleModifyRequest(userInfoModifyRequest));
                 }
                 // DonationDataService
-                else if (recv is GetDonationListRequest getDonationListRequest)
+                /*else if (recv is GetDonationListRequest getDonationListRequest)
                 {
                     responseBody = objecttostring(DonationDataService.HandleGetDonationListRequest(getDonationListRequest));
                 }
@@ -180,9 +180,9 @@ namespace DemoServer
             Test.HandleGetApplicationDetailRequestTest();
             Test.HandleGetApplicationListRequestTest();
             Test.UserLoginTest();
-            PrintConsoleLog("Pass UserLoginTest");
             Test.UserInfoTest();
-            PrintConsoleLog("Pass UserInfoTest");
+            Test.ModifyRequestTest();
+            Test.RegisterRequestTest();
         }       
         static void Main(string[] args)
         {
