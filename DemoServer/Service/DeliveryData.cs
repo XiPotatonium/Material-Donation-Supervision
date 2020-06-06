@@ -10,6 +10,7 @@ namespace MDS.Server.Service
 {
     public class DeliveryDataService
     {
+		public int UserId { get; set; }
 		public DeliveryListNumResponse HandleDeliveryListNumRequest(DeliveryListNumRequest request)
 		{
 			SqlCommand com = new SqlCommand
