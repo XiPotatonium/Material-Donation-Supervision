@@ -14,7 +14,7 @@ namespace MDS.Server
 		
 		public int UserId { get; set; }
 		public static int DonationID = 100000;
-		public static GetDonationListResponse HandleGetDonationListRequest(GetDonationListRequest request)
+		/*public static GetDonationListResponse HandleGetDonationListRequest(GetDonationListRequest request)
 		{
 
 			//TODO: 数据库操作
@@ -234,7 +234,7 @@ namespace MDS.Server
 			con.close();
 			return new VoidResponse();
 			//return new VoidResponse();
-		}
+		}*/
 	}
 
 }
