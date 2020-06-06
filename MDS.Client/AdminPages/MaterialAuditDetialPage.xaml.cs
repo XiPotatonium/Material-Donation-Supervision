@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DTO;
 
 namespace MDS.Client.AdminPages
 {
@@ -20,18 +21,34 @@ namespace MDS.Client.AdminPages
     public partial class MaterialAuditDetialPage : Window
     {
         private MaterialAuditConstruct Info_List = new MaterialAuditConstruct();
+        private string Add_Result;
         public MaterialAuditDetialPage(MaterialAuditConstruct List, int flag)
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             this.Info_List = List;
+            switch (Info_List.Result)
+            {
+                case AdminResult.FAIL:
+                    Add_Result = "未通过";
+                    break;
+                case AdminResult.NONE:
+                    Add_Result = "未处理";
+                    break;
+                case AdminResult.PASS:
+                    Add_Result = "通过";
+                    break;
+                default:
+                    break;
+            }
             AdminInfo.Event_Result = false;
             NumberTextBlock.Text = "编号: " + Info_List.Number;
             ApplicantTextBlock.Text = "申请人: " + Info_List.ApplicantID;
             TimeTextBlock.Text = "申请时间: " + Info_List.Time;
             StateTextBlock.Text = "申请状态: " + Info_List.State;
+            ReviewTypeTextBlock.Text = "申请类型: " + Info_List.Type;
             ReviewerTextBlock.Text = "审核人: " + Info_List.ReviewerID;
-            ResultTextBlock.Text = "申请结果: " + Info_List.Result;
+            ResultTextBlock.Text = "申请结果: " + Add_Result;
             ContentTextBlock.Text = "申请内容: " + Info_List.Content;
             RemarksTextBlock.Text = "备注: " + Info_List.Remarks;
             if(flag == 1)

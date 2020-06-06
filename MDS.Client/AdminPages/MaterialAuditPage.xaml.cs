@@ -54,6 +54,12 @@ namespace MDS.Client.AdminPages
 
         private async Task UpdateHistoryList()
         {
+            /*MaterialAuditListResponse materialAuditListResponse = await NetworkHelper.GetAsync(new MaterialAuditListRequest()
+            {
+                AdminID = UserInfo.Id,
+                state = AdminState.FINISH
+            });*/
+            //测试假数据
             await Task.Delay(100);
             MaterialAuditListResponse materialAuditList = new MaterialAuditListResponse();
             materialAuditList.m_normals = new List<Normal>();
@@ -63,6 +69,7 @@ namespace MDS.Client.AdminPages
                 UserID = 5,
                 Time = DateTime.Now,
                 State = AdminState.FINISH,
+                Type = ReviewType.APPLY,
                 ReviewerID = 2,
                 Result = AdminResult.FAIL,
                 Content = "sssss",
@@ -76,7 +83,8 @@ namespace MDS.Client.AdminPages
                     Number = normal.Number,
                     ApplicantID = normal.UserID,
                     Time = normal.Time,
-                    State = normal.State,
+                    State = normal.State == AdminState.FINISH ? "已处理" : "未处理",
+                    Type = normal.Type == ReviewType.APPLY ? "申请" : "捐赠",
                     ReviewerID = normal.ReviewerID,
                     Result = normal.Result,
                     Content = normal.Content,
@@ -87,6 +95,12 @@ namespace MDS.Client.AdminPages
 
         private async Task UpdateWaitingList()
         {
+            /*MaterialAuditListResponse materialAuditListResponse = await NetworkHelper.GetAsync(new MaterialAuditListRequest()
+            {
+                AdminID = UserInfo.Id,
+                state = AdminState.WAIT
+            });*/
+            //测试假数据
             await Task.Delay(100);
             MaterialAuditListResponse materialAuditList = new MaterialAuditListResponse();
             materialAuditList.m_normals = new List<Normal>();
@@ -96,6 +110,7 @@ namespace MDS.Client.AdminPages
                 UserID = 6,
                 Time = DateTime.Now,
                 State = AdminState.FINISH,
+                Type = ReviewType.DONATE,
                 ReviewerID = 2,
                 Result = AdminResult.FAIL,
                 Content = "sssss",
@@ -109,7 +124,8 @@ namespace MDS.Client.AdminPages
                     Number = normal.Number,
                     ApplicantID = normal.UserID,
                     Time = normal.Time,
-                    State = normal.State,
+                    State = normal.State == AdminState.FINISH ? "已处理" : "未处理",
+                    Type = normal.Type == ReviewType.APPLY ? "申请" : "捐赠",
                     ReviewerID = normal.ReviewerID,
                     Result = normal.Result,
                     Content = normal.Content,
