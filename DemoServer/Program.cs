@@ -182,7 +182,7 @@ namespace DemoServer
             Test.UserLoginTest();
             Test.UserInfoTest();
             Test.ModifyRequestTest();
-            Test.RegisterRequestTest();
+            //Test.RegisterRequestTest();
         }       
         static void Main(string[] args)
         {
