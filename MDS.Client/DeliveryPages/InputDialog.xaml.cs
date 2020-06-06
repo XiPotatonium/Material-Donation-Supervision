@@ -19,7 +19,7 @@ namespace MDS.Client.DeliveryPages
     /// </summary>
     public partial class InputDialog : Window
     {
-        private string GUID;
+        private int GUID;
         private int type;
         private MutualString info = new MutualString();
         public InputDialog(string guid, int t)
@@ -43,7 +43,7 @@ namespace MDS.Client.DeliveryPages
             {
                 DelivererId = UserInfo.Id,
                 GUID = this.GUID,
-                SecureId = userInput.Password   // todo string这里可能有问题
+                SecureId = int.Parse(userInput.Password)   // todo string这里可能有问题
             });
 
             deliveryMoveResponse = new DeliveryMoveResponse() { Check = 0 };    // todo 假数据
