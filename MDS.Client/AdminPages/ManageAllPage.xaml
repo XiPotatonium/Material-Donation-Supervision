@@ -33,7 +33,8 @@
                 Height="40"
                 Width="130"
                 FontSize="15"
-                Background="Green"/>
+                Background="Green"
+                Click="Goto_Change"/>
         
     </Grid>
 </Page>

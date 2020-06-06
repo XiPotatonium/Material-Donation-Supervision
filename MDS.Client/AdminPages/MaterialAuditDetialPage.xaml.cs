@@ -22,14 +22,15 @@ namespace MDS.Client.AdminPages
         private MaterialAuditConstruct Info_List = new MaterialAuditConstruct();
         public MaterialAuditDetialPage(MaterialAuditConstruct List, int flag)
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             this.Info_List = List;
             AdminInfo.Event_Result = false;
             NumberTextBlock.Text = "编号: " + Info_List.Number;
-            ApplicantTextBlock.Text = "申请人: " + Info_List.Applicant;
+            ApplicantTextBlock.Text = "申请人: " + Info_List.ApplicantID;
             TimeTextBlock.Text = "申请时间: " + Info_List.Time;
             StateTextBlock.Text = "申请状态: " + Info_List.State;
-            ReviewerTextBlock.Text = "审核人: " + Info_List.Reviewer;
+            ReviewerTextBlock.Text = "审核人: " + Info_List.ReviewerID;
             ResultTextBlock.Text = "申请结果: " + Info_List.Result;
             ContentTextBlock.Text = "申请内容: " + Info_List.Content;
             RemarksTextBlock.Text = "备注: " + Info_List.Remarks;

@@ -62,10 +62,10 @@ namespace MDS.Client.AdminPages
             autherRequestList.a_normals.Add(new Normal()
             {
                 Number = "0011",
-                User = "一号",
+                UserID = 6,
                 Time = DateTime.Now,
                 State = AdminState.FINISH,
-                Reviewer = 1,
+                ReviewerID = 1,
                 Result = AdminResult.FAIL,
                 Content = "sssss",
                 Remarks = "zzzzz"
@@ -76,10 +76,10 @@ namespace MDS.Client.AdminPages
                 AutherRequestList_left.Add(new AutherRequestConstruct()
                 {
                     Number = normal.Number,
-                    User = normal.User,
+                    UserID = normal.UserID,
                     Time = normal.Time,
                     State = normal.State,
-                    Reviewer = normal.Reviewer,
+                    ReviewerID = normal.ReviewerID,
                     Result = normal.Result,
                     Content = normal.Content,
                     Remarks = normal.Remarks
@@ -95,10 +95,10 @@ namespace MDS.Client.AdminPages
             autherRequestList.a_normals.Add(new Normal()
             {
                 Number = "0011",
-                User = "一号",
+                UserID = 6,
                 Time = DateTime.Now,
                 State = AdminState.FINISH,
-                Reviewer = 1,
+                ReviewerID = 1,
                 Result = AdminResult.FAIL,
                 Content = "sssss",
                 Remarks = "zzzzz"
@@ -109,10 +109,10 @@ namespace MDS.Client.AdminPages
                 AutherRequestList_right.Add(new AutherRequestConstruct()
                 {
                     Number = normal.Number,
-                    User = normal.User,
+                    UserID = normal.UserID,
                     Time = normal.Time,
                     State = normal.State,
-                    Reviewer = normal.Reviewer,
+                    ReviewerID = normal.ReviewerID,
                     Result = normal.Result,
                     Content = normal.Content,
                     Remarks = normal.Remarks

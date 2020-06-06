@@ -19,12 +19,13 @@ namespace MDS.Client.AdminPages
     {
         public Change_Passward()
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
         }
 
         private void change_click(object sender, RoutedEventArgs e)
         {
-
+            
         }
     }
 }

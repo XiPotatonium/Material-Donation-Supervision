@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MDS.Client.AdminPages"
         mc:Ignorable="d"
-        Title="二级密码验证" Height="120" Width="300">
+        Title="二级密码验证" Height="140" Width="300">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>

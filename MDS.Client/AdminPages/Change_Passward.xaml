@@ -28,10 +28,10 @@
             <TextBlock Text="原密码:"
                        Grid.Column="0"
                        FontSize="15"/>
-            <TextBox Grid.Column="2"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Stretch"
-                     x:Name="old_passward"/>
+            <PasswordBox Grid.Column="2"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Stretch"
+                         x:Name="old_passward"/>
         </Grid>
         <Grid Grid.Row="3" Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -42,7 +42,7 @@
             <TextBlock Text="现密码:"
                        Grid.Column="0"
                        FontSize="15"/>
-            <TextBox x:Name="new_passward"
+            <PasswordBox x:Name="new_passward"
                      Grid.Column="2"
                      HorizontalAlignment="Stretch"
                      VerticalAlignment="Center"/>
