@@ -10,8 +10,12 @@ using System.Threading;
 
 namespace MDS.Server.Service
 {
+    enum TransactionType
+    {
+        APPLICATION,
+        DONATION
+    }
 
-    //public int ApplicationID = 10000;
     class ApplicationDataService
     {
         public int UserId { get; set; }
@@ -21,13 +25,16 @@ namespace MDS.Server.Service
         public GetApplicationListResponse HandleGetApplicationListRequest(GetApplicationListRequest request)
         {
             // 指定SQL语句
-            SqlCommand com = new SqlCommand
-                ($"select ApplyID,ApplyGUID,MaterialName,MaterialQuantity,ApplicationState,StateIndex,StartTime from Applications where ApplierID={UserId}"
+            SqlCommand com = new SqlCommand(
+                $"select Transaction.TransactionId, Materials.MaterialName, Transaction.MaterialQuantity, Transaction.TransactionState, Transaction.StartTime " +
+                $"from Transaction left join Materials " +
+                $"on Transaction.MaterialId=Materials.MaterialID " +
+                $"where UserId={UserId} and TransactionType={TransactionType.APPLICATION}"
                 , Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
-            DataSet ds = new DataSet();
 
-            da.Fill(ds, "Applications");
+            using DataSet ds = new DataSet();
+            da.Fill(ds, "Transaction");
 
             List<GetApplicationListResponse.Item> Itema = new List<GetApplicationListResponse.Item>();
 
@@ -35,14 +42,14 @@ namespace MDS.Server.Service
             {
                 Itema.Add(new GetApplicationListResponse.Item()
                 {
-                    ID = (int)ds.Tables[0].Rows[j]["ApplyID"],
-                    Name = ds.Tables[0].Rows[j]["MaterialName"].ToString(),
-                    Quantity = (int)ds.Tables[0].Rows[j]["MaterialQuantity"],
-                    State = (ApplicationState)ds.Tables[0].Rows[j]["StateIndex"],
-
-                    StartTime = Convert.ToDateTime(ds.Tables[0].Rows[j]["StartTime"].ToString())
+                    ID = (int)ds.Tables[0].Rows[j]["Transaction.TransactionId"],
+                    Name = ds.Tables[0].Rows[j]["Materials.MaterialName"].ToString(),
+                    Quantity = (int)ds.Tables[0].Rows[j]["Transaction.MaterialQuantity"],
+                    State = (ApplicationState)ds.Tables[0].Rows[j]["Transaction.TransactionState"],
+                    StartTime = (DateTime)ds.Tables[0].Rows[j]["Transaction.StartTime"]
                 });
             }
+
             return new GetApplicationListResponse()
             {
                 Items = Itema
@@ -53,12 +60,12 @@ namespace MDS.Server.Service
         {
             // 指定SQL语句
             SqlCommand com = new SqlCommand
-                ("select ApplyID,ApplyGUID,ApplierAddress from Applications where ApplyID="
+                ("select ApplyID,ApplyGUID,ApplierAddress from Transaction where ApplyID="
                     + request.ApplicationId + "", Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataSet ds = new DataSet();
 
-            da.Fill(ds, "Applications");
+            da.Fill(ds, "Transaction");
             return new GetApplicationDetailResponse()
             {
                 Address = ds.Tables[0].Rows[0]["ApplierAddress"].ToString()
@@ -106,10 +113,6 @@ namespace MDS.Server.Service
             dataAdapter.Fill(dataSet, "Materials");
             if (request.Quantity <= (int)dataSet.Tables[0].Rows[0]["MaterialQuantity"])
             {
-                ApplicationID += 1;
-
-                string guid = Guid.NewGuid().ToString();
-
                 try
                 {
                     SqlTransaction transaction = Connect.Connection.BeginTransaction();
@@ -119,8 +122,8 @@ namespace MDS.Server.Service
 
                     com.ExecuteNonQuery();
 
-                    com.CommandText = "insert into Applications(ApplyID,ApplyGUID, ApplierId, ApplierAddress,MaterialName,MaterialQuantity,ApplicationState,StateIndex,StartTime) values("
-                        + ApplicationID + ",'" + guid + "'," + UserId + ",'" + request.Address + "','" + dataSet.Tables[0].Rows[0]["MaterialName"]
+                    com.CommandText = "insert into Transaction(ApplyID,ApplyGUID, ApplierId, ApplierAddress,MaterialName,MaterialQuantity,ApplicationState,StateIndex,StartTime) values("
+                        + ApplicationID + "'," + UserId + ",'" + request.Address + "','" + dataSet.Tables[0].Rows[0]["MaterialName"]
                         + "'," + request.Quantity + ",'Applying" + "', 1 ,'" + DateTime.Now.ToString() + "')";
 
                     com.ExecuteNonQuery();
@@ -156,14 +159,14 @@ namespace MDS.Server.Service
 
         public VoidResponse HandleCancelApplicationRequest(CancelApplicationRequest request)
         {
-            SqlCommand com = new SqlCommand($"Update Applications set ApplicationState = Aborted ,StateIndex = 0 where ApplyID = {request.ApplicationId}"
+            SqlCommand com = new SqlCommand($"Update Transaction set ApplicationState = Aborted ,StateIndex = 0 where ApplyID = {request.ApplicationId}"
                 , Connect.Connection);
             return new VoidResponse();
         }
 
         public static VoidResponse HandleConfirmApplicationDoneRequest(ConfirmApplicationDoneRequest request)
         {
-            SqlCommand com = new SqlCommand($"Update Applications set ApplicationState = Done, StateIndex = 4  where ApplyID = {request.ApplicationId}"
+            SqlCommand com = new SqlCommand($"Update Transaction set ApplicationState = Done, StateIndex = 4  where ApplyID = {request.ApplicationId}"
                 , Connect.Connection);
             return new VoidResponse();
 
