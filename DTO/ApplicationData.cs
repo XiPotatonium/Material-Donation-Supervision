@@ -28,7 +28,6 @@ namespace DTO
         public class Item
         {
             public int ID { set; get; }             // 申请的ID，可以直接对应数据库表中的id，后续关于这个item的查询都会发送这个id
-            public string GUID { set; get; }        // 申请编号，生成的guid
             public string Name { set; get; }        // 申请的东西的名字
             public int Quantity { set; get; }       // 数量，整数
             public ApplicationState State { set; get; } // 申请状态

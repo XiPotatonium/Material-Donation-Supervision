@@ -125,7 +125,7 @@ namespace MDS.Client.NavigationPages
             {
                 // 不是第一步，需要显示订单的详细内容
                 PART_Card.Visibility = Visibility.Visible;
-                CardApplicationGUID.Text = ApplicationViewModel.GUID;
+                CardApplicationId.Text = ApplicationViewModel.Id;
                 CardApplicationName.Text = ApplicationViewModel.Name;
                 CardApplicationQuantity.Text = ApplicationViewModel.Quantity.ToString();
                 CardApplicationTime.Text = ApplicationViewModel.StartTime.ToString();

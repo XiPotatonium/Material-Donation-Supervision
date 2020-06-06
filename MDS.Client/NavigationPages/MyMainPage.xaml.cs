@@ -56,7 +56,6 @@ namespace MDS.Client.NavigationPages
             response.Items.Add(new GetApplicationListResponse.Item()
             {
                 ID = 0,
-                GUID = "uhsdhasdbqwi2178412d",
                 Name = "消毒水(500ml)",
                 Quantity = 5,
                 State = ApplicationState.Received,
@@ -65,7 +64,6 @@ namespace MDS.Client.NavigationPages
             response.Items.Add(new GetApplicationListResponse.Item()
             {
                 ID = 1,
-                GUID = "uhsdhasdbqwi2178412d",
                 Name = "医用酒精(500ml)",
                 Quantity = 100,
                 State = ApplicationState.Delivering,
@@ -86,7 +84,7 @@ namespace MDS.Client.NavigationPages
             response = new GetDonationListResponse() { Items = new List<GetDonationListResponse.Item>() };
             response.Items.Add(new GetDonationListResponse.Item()
             {
-                GUID = "uhsdhasdbqwi2178412d",
+                ID = 1,
                 Name = "医用酒精(500ml)",
                 Quantity = 100,
                 State = DonationState.Done,
@@ -160,7 +158,7 @@ namespace MDS.Client.NavigationPages
 
     public class ApplicationListViewModel
     {
-        public string GUID { set; get; }
+        public string Id { set; get; }
         public string Name { set; get; }
         public int Quantity { set; get; }
         public string State { set; get; }
@@ -172,7 +170,7 @@ namespace MDS.Client.NavigationPages
         {
             OriginalItem = item;
 
-            GUID = item.GUID;
+            Id = item.ID.ToString();
             Name = item.Name;
             Quantity = item.Quantity;
             StartTime = item.StartTime;
@@ -190,7 +188,7 @@ namespace MDS.Client.NavigationPages
 
     public class DonationListViewModel
     {
-        public string GUID { set; get; }
+        public string Id { set; get; }
         public string Name { set; get; }
         public int Quantity { set; get; }
         public string State { set; get; }
@@ -202,7 +200,7 @@ namespace MDS.Client.NavigationPages
         {
             OriginalItem = item;
 
-            GUID = item.GUID;
+            Id = item.ID.ToString();
             Name = item.Name;
             Quantity = item.Quantity;
             StartTime = item.StartTime;

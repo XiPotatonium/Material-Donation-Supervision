@@ -114,7 +114,7 @@ namespace MDS.Client.NavigationPages
             {
                 // 不是第一步，需要显示订单的详细内容
                 PART_Card.Visibility = Visibility.Visible;
-                CardDonationGUID.Text = DonationViewModel.GUID;
+                CardDonationId.Text = DonationViewModel.Id;
                 CardDonationName.Text = DonationViewModel.Name;
                 CardDonationQuantity.Text = DonationViewModel.Quantity.ToString();
                 CardDonationTime.Text = DonationViewModel.StartTime.ToString();

@@ -185,7 +185,7 @@
                                VerticalAlignment="Center" HorizontalAlignment="Left"
                                Style="{StaticResource MaterialDesignTextBlock}">
                         <Run Text="订单编号:"/>
-                        <Run x:Name="CardDonationGUID" Text="faseji1d1h9sja1"/>
+                        <Run x:Name="CardDonationId" Text="faseji1d1h9sja1"/>
                     </TextBlock>
                     <TextBlock Grid.Row="2" Grid.Column="1" Margin="16 0 16 8"
                                VerticalAlignment="Center" HorizontalAlignment="Left"

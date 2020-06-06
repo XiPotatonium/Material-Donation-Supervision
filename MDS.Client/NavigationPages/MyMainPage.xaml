@@ -126,7 +126,7 @@
                                         </TextBlock>
                                         <TextBlock>
                                             <Run Text="订单编号: "/>
-                                            <Run Text="{Binding GUID}"/>
+                                            <Run Text="{Binding Id}"/>
                                         </TextBlock>
                                         <TextBlock>
                                             <Run Text="订单状态: "/>
@@ -191,7 +191,7 @@
                                         </TextBlock>
                                         <TextBlock>
                                             <Run Text="订单编号: "/>
-                                            <Run Text="{Binding GUID}"/>
+                                            <Run Text="{Binding Id}"/>
                                         </TextBlock>
                                         <TextBlock>
                                             <Run Text="订单状态: "/>

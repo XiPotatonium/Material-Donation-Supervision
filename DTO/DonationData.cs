@@ -26,7 +26,6 @@ namespace DTO
         public class Item
         {
             public int ID { set; get; }     // 字段参考Application
-            public string GUID { set; get; }
             public string Name { set; get; }
             public int Quantity { set; get; }
             public DonationState State { set; get; }
