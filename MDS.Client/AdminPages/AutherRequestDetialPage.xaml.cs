@@ -1,4 +1,4 @@
-﻿using DTO;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,13 +25,14 @@ namespace MDS.Client.AdminPages
 
         public AutherRequestDetialPage(AutherRequestConstruct List, int flag)
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             this.Info_List = List;
             NumberTextBlock.Text = "编号: " + Info_List.Number;
-            UserTextBlock.Text = "认证人: " + Info_List.User;
+            UserTextBlock.Text = "认证人: " + Info_List.UserID;
             TimeTextBlock.Text = "认证时间: " + Info_List.Time;
             StateTextBlock.Text = "认证状态: " + Info_List.State;
-            ReviewerTextBlock.Text = "审核人: " + Info_List.Reviewer;
+            ReviewerTextBlock.Text = "审核人: " + Info_List.ReviewerID;
             ResultTextBlock.Text = "认证结果: " + Info_List.Result;
             ContentTextBlock.Text = "认证内容: " + Info_List.Content;
             RemarksTextBlock.Text = "备注: " + Info_List.Remarks;
