@@ -12,7 +12,7 @@ namespace MDS.Server
     {
         public int UserId { get; set; }
 
-        public DeliveryListNumResponse HandleDeliveryListNumRequest(DeliveryListNumRequest request)
+        /*public DeliveryListNumResponse HandleDeliveryListNumRequest(DeliveryListNumRequest request)
         {
             //TODO:数据库
 			string constr = "Server=.;DataBase=Material;" +
@@ -259,7 +259,7 @@ namespace MDS.Server
 		    }
             
             
-        }
+        }*/
 
     }
 }

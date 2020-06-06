@@ -12,7 +12,7 @@ namespace MDS.Server
     {
         public int UserId { get; set; }
 		
-		public AssignTasksResponse HandleAssignTasksRequest(AssignTasksRequest request)
+		/*public AssignTasksResponse HandleAssignTasksRequest(AssignTasksRequest request)
 		{
 			string constr = "Server=.;DataBase=Material;" +
 			  "Integrated Security=True";
@@ -73,7 +73,7 @@ namespace MDS.Server
 
 			}
 
-		}
+		}*/
 
 		
 
