@@ -10,7 +10,10 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MyMainPage"
       Loaded="Page_Loaded">
-
+    <Page.Resources>
+        <local:ApplicationStateIconConverter x:Key="applyCvt"/>
+        <local:DonationStateIconConverter x:Key="donationCvt"/>
+    </Page.Resources>
 
     <materialDesign:DialogHost x:Name="ModifyInfoDialog" 
                                Grid.RowSpan="2"
@@ -113,11 +116,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock VerticalAlignment="Center"
-                                               Style="{StaticResource MaterialDesignCaptionTextBlock}"
-                                               Foreground="DeepSkyBlue"
-                                               Text="{Binding State}" />
-                                    <materialDesign:PackIcon Kind="TruckDelivery" />
+                                    <materialDesign:PackIcon Kind="{Binding OriginState, Converter={StaticResource applyCvt}}" />
                                     <StackPanel Margin="13,0,0,0"
                                             Grid.Column="1">
                                         <TextBlock>
@@ -179,10 +178,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock VerticalAlignment="Center"
-                                               Style="{StaticResource MaterialDesignCaptionTextBlock}"
-                                               Foreground="DeepSkyBlue"
-                                               Text="{Binding State}" />
+                                    <materialDesign:PackIcon Kind="{Binding OriginState, Converter={StaticResource donationCvt}}" />
                                     <StackPanel Margin="13,0,0,0"
                                             Grid.Column="1">
                                         <TextBlock>

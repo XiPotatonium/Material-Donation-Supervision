@@ -47,10 +47,16 @@ namespace MDS.Client.NavigationPages
     {
         public object Convert(object value, Type targetType, object parameters, CultureInfo culture)
         {
-            string item = (string)value;
-            if (item == "A")
-                return " M870.4 332.8 780.8 243.2 416 601.6 243.2 435.2 153.6 524.8 416 780.8 416 780.8 416 780.8Z";
-            return "";
+            DonationState state = (DonationState)value;
+            PackIconKind icon = state switch
+            {
+                DonationState.Aborted => PackIconKind.Delete,
+                DonationState.Applying => PackIconKind.ApplicationImport,
+                DonationState.WaitingDelivery => PackIconKind.TruckDelivery,
+                DonationState.Done => PackIconKind.Check,
+                _ => PackIconKind.Help,
+            };
+            return icon;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -183,7 +189,7 @@ namespace MDS.Client.NavigationPages
         public int Quantity { set; get; }
         public string State { set; get; }
         public DateTime StartTime { set; get; }
-        public ApplicationState ApplicationState { set; get; }
+        public ApplicationState OriginState { set; get; }
 
         public GetApplicationListResponse.Item OriginalItem { get; }
 
