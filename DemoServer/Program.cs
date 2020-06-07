@@ -184,14 +184,14 @@ namespace DemoServer
         static void test()
         {
             // Test.HandleNewApplicationRequestTest();
-            Test.HandleAvailableApplicationMaterialRequestTest();
-            Test.HandleGetApplicationDetailRequestTest();
-            Test.HandleGetApplicationListRequestTest();
-            Test.UserLoginTest();
-            Test.UserInfoTest();
-            Test.ModifyRequestTest();
+            //Test.HandleAvailableApplicationMaterialRequestTest();
+            //Test.HandleGetApplicationDetailRequestTest();
+            //Test.HandleGetApplicationListRequestTest();
+            //Test.UserLoginTest();
+            //Test.UserInfoTest();
+            //Test.ModifyRequestTest();
             //Test.RegisterRequestTest();
-            Test.MaterialAuditListRequestTest();
+            //Test.MaterialAuditListRequestTest();
         }       
         static void Main(string[] args)
         {
