@@ -56,29 +56,13 @@ namespace MDS.Client.AdminPages
 
         private async Task UpdateHistoryList()
         {
-            /*AutherRequestListResponse autherRequestListResponse = await NetworkHelper.GetAsync(new AutherRequestListRequest()
+            AutherRequestListResponse autherRequestListResponse = await NetworkHelper.GetAsync(new AutherRequestListRequest()
             {
                 AdminID = UserInfo.Id,
                 state = AdminState.FINISH
-            });*/
-            //测试假数据
-            await Task.Delay(100);
-            AutherRequestListResponse autherRequestList = new AutherRequestListResponse();
-            autherRequestList.a_normals = new List<Normal>();
-            autherRequestList.a_normals.Add(new Normal()
-            {
-                Number = "0011",
-                UserID = 6,
-                Time = DateTime.Now,
-                State = AdminState.FINISH,
-                Type = ReviewType.ADMINAUTHENTICANTION,
-                ReviewerID = 1,
-                Result = AdminResult.FAIL,
-                Content = "sssss",
-                Remarks = "zzzzz"
             });
 
-            foreach (Normal normal in autherRequestList.a_normals)
+            foreach (Normal normal in autherRequestListResponse.a_normals)
             {
                 AutherRequestList_left.Add(new AutherRequestConstruct()
                 {
@@ -97,29 +81,13 @@ namespace MDS.Client.AdminPages
 
         private async Task UpdateWaitingList()
         {
-            /*AutherRequestListResponse autherRequestListResponse = await NetworkHelper.GetAsync(new AutherRequestListRequest()
+            AutherRequestListResponse autherRequestListResponse = await NetworkHelper.GetAsync(new AutherRequestListRequest()
             {
                 AdminID = UserInfo.Id,
                 state = AdminState.WAIT
-            });*/
-            //测试假数据
-            await Task.Delay(100);
-            AutherRequestListResponse autherRequestList = new AutherRequestListResponse();
-            autherRequestList.a_normals = new List<Normal>();
-            autherRequestList.a_normals.Add(new Normal()
-            {
-                Number = "0011",
-                UserID = 6,
-                Time = DateTime.Now,
-                State = AdminState.FINISH,
-                Type = ReviewType.DELIVERAUTHENTICANTION,
-                ReviewerID = 1,
-                Result = AdminResult.FAIL,
-                Content = "sssss",
-                Remarks = "zzzzz"
             });
 
-            foreach (Normal normal in autherRequestList.a_normals)
+            foreach (Normal normal in autherRequestListResponse.a_normals)
             {
                 AutherRequestList_right.Add(new AutherRequestConstruct()
                 {

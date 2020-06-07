@@ -97,16 +97,15 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock
-                    Text="你的申请"
-                    FontWeight="Bold"
-                    Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                    Grid.Row="0"/>
+                    <TextBlock Text="你的申请"
+                                FontWeight="Bold"
+                                Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                Grid.Row="0"/>
                     <ListBox x:Name="UserApplicationList"
-                         Margin="0,5"
-                         Grid.Row="1"
-                         HorizontalContentAlignment="Stretch"
-                         MouseDoubleClick="UserApplicationList_MouseDoubleClick">
+                            Margin="0,5"
+                            Grid.Row="1"
+                            HorizontalContentAlignment="Stretch"
+                            MouseDoubleClick="UserApplicationList_MouseDoubleClick">
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="{x:Type local:ApplicationListViewModel}">
                                 <Grid HorizontalAlignment="Stretch">
@@ -118,6 +117,7 @@
                                                Style="{StaticResource MaterialDesignCaptionTextBlock}"
                                                Foreground="DeepSkyBlue"
                                                Text="{Binding State}" />
+                                    <materialDesign:PackIcon Kind="TruckDelivery" />
                                     <StackPanel Margin="13,0,0,0"
                                             Grid.Column="1">
                                         <TextBlock>
