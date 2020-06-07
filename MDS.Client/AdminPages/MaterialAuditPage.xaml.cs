@@ -32,18 +32,22 @@ namespace MDS.Client.AdminPages
             waiting.DataContext = MaterialAuditList_right;
         }
 
-        private void Goto_Detail_History(object sender, RoutedEventArgs e)
+        private async void Goto_Detail_History(object sender, RoutedEventArgs e)
         {
             MaterialAuditConstruct flag = (MaterialAuditConstruct)history.SelectedItem;
             MaterialAuditDetialPage materialAuditDetialPage = new MaterialAuditDetialPage(flag, 2);
             materialAuditDetialPage.ShowDialog();
+            await UpdateHistoryList();
+            await UpdateWaitingList();
         }
 
-        private void Goto_Detail_Waiting(object sender, RoutedEventArgs e)
+        private async void Goto_Detail_Waiting(object sender, RoutedEventArgs e)
         {
             MaterialAuditConstruct flag = (MaterialAuditConstruct)waiting.SelectedItem;
             MaterialAuditDetialPage materialAuditDetialPage = new MaterialAuditDetialPage(flag, 1);
             materialAuditDetialPage.ShowDialog();
+            await UpdateHistoryList();
+            await UpdateWaitingList();
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -54,6 +58,8 @@ namespace MDS.Client.AdminPages
 
         private async Task UpdateHistoryList()
         {
+            MaterialAuditList_left.Clear();
+            MaterialAuditList_right.Clear();
             MaterialAuditListResponse materialAuditListResponse = await NetworkHelper.GetAsync(new MaterialAuditListRequest()
             {
                 AdminID = UserInfo.Id,
