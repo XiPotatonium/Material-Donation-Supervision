@@ -3,70 +3,117 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:MDS.Client.AdminPages"
-      mc:Ignorable="d" 
+      xmlns:local="clr-namespace:MDS.Client.AdminPages" 
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" 
       Title="Detail" WindowStartupLocation="CenterScreen"
       Height="300" Width="500">
+    <materialDesign:DialogHost x:Name="SecondaryPasswordPopup" IsOpen="False"
+                               Grid.RowSpan="2"
+                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <materialDesign:DialogHost.DialogContent>
+            <Grid Margin="10" Width="200">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           Text="请输入二级密码"
+                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                <PasswordBox Grid.Row="1"
+                             HorizontalAlignment="Stretch"
+                             x:Name="SecondaryPasswordBox"
+                             Margin="0,20"
+                             FontSize="15"/>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="PasswordConfirmButton" Content="确认" Grid.Column="0"
+                            Click="PasswordConfirmButton_Click" Margin="10,0"/>
+                    <Button x:Name="PasswordCancelButton" Content="取消" Grid.Column="1"
+                            Click="PasswordCancelButton_Click" Margin="10,0"/>
+                </Grid>
+            </Grid>
+        </materialDesign:DialogHost.DialogContent>
+        <Grid>
+            <Grid Margin="30" HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Number}"
+                       x:Name="NumberTextBlock"
+                       Grid.Row="0" Grid.Column="0"
+                       FontSize="15"/>
+                <TextBlock Text="{Binding Applicant}"
+                       x:Name="ApplicantTextBlock"
+                       Grid.Row="0" Grid.Column="1"
+                       FontSize="15"/>
+                <TextBlock Text="{Binding Time}"
+                       x:Name="TimeTextBlock"
+                       Grid.Row="1" Grid.Column="0"
+                       FontSize="15"/>
+                <TextBlock Text="{Binding State}"
+                       x:Name="StateTextBlock"
+                       Grid.Row="1" Grid.Column="1"
+                       FontSize="15"/>
+                <TextBlock Text="{Binding Type}"
+                       x:Name="ReviewTypeTextBlock"
+                       Grid.Row="2" Grid.Column="0"
+                       FontSize="15"/>
+                <TextBlock Text="{Binding Result}"
+                       x:Name="ResultTextBlock"
+                       Grid.Row="2" Grid.Column="1"
+                       FontSize="15"/>
+                <TextBlock Text="{Binding Content}"
+                       x:Name="ContentTextBlock"
+                       Grid.Row="3" Grid.Column="0"
+                       FontSize="15"/>
+                <TextBlock Text="{Binding Reviewer}"
+                       x:Name="ReviewerTextBlock"
+                       Grid.Row="3" Grid.Column="1"
+                       FontSize="15"/>
+                <StackPanel Grid.Row="4" Grid.ColumnSpan="2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <Button Content="同意"
+                        Click="Agree_Click"
+                        Margin="0,0,10,0"
+                        Height="40" Width="80" FontSize="20"
+                        x:Name="agree_button"/>
+                    <Button Content="拒绝"
+                        Click="Refuse_Click"
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        Margin="10,0,0,0"
+                        Background="{StaticResource ValidationErrorBrush}"
+                        Height="40" Width="80" FontSize="20"
+                        x:Name="refuse_button"/>
+                </StackPanel>
 
-    <Grid Margin="30" HorizontalAlignment="Stretch">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <TextBlock Text="{Binding Number}"
-                   x:Name="NumberTextBlock"
-                   Grid.Row="0" Grid.Column="0"
-                   FontSize="15"/>
-        <TextBlock Text="{Binding Applicant}"
-                   x:Name="ApplicantTextBlock"
-                   Grid.Row="0" Grid.Column="1"
-                   FontSize="15"/>
-        <TextBlock Text="{Binding Time}"
-                   x:Name="TimeTextBlock"
-                   Grid.Row="1" Grid.Column="0"
-                   FontSize="15"/>
-        <TextBlock Text="{Binding State}"
-                   x:Name="StateTextBlock"
-                   Grid.Row="1" Grid.Column="1"
-                   FontSize="15"/>
-        <TextBlock Text="{Binding Type}"
-                   x:Name="ReviewTypeTextBlock"
-                   Grid.Row="2" Grid.Column="0"
-                   FontSize="15"/>
-        <TextBlock Text="{Binding Result}"
-                   x:Name="ResultTextBlock"
-                   Grid.Row="2" Grid.Column="1"
-                   FontSize="15"/>
-        <TextBlock Text="{Binding Content}"
-                   x:Name="ContentTextBlock"
-                   Grid.Row="3" Grid.Column="0"
-                   FontSize="15"/>
-        <TextBlock Text="{Binding Reviewer}"
-                   x:Name="ReviewerTextBlock"
-                   Grid.Row="3" Grid.Column="1"
-                   FontSize="15"/>
-        <StackPanel Grid.Row="4" Grid.ColumnSpan="2"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Button Content="同意"
-                    Click="Agree_Click"
-                    Margin="0,0,10,0"
-                    Height="40" Width="80" FontSize="20"
-                    x:Name="agree_button"/>
-            <Button Content="拒绝"
-                    Click="Refuse_Click"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                    Margin="10,0,0,0"
-                    Background="{StaticResource ValidationErrorBrush}"
-                    Height="40" Width="80" FontSize="20"
-                    x:Name="refuse_button"/>
-        </StackPanel>
-    </Grid>
+            </Grid> 
+
+            <materialDesign:Snackbar x:Name="PART_SnackBar"
+                                 IsActive="False"
+                                 VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+                                 Grid.RowSpan="3" Margin="5,0,5,5">
+                <materialDesign:SnackbarMessage x:Name="SnackBarContent" 
+                                            Content="警告消息"
+                                            ActionContent="我知道了"
+                                            ActionClick="SnackBarContent_ActionClick"/>
+            </materialDesign:Snackbar>
+        </Grid>
+
+    </materialDesign:DialogHost>
 </Window>

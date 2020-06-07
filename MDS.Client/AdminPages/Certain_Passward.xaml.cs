@@ -27,6 +27,7 @@ namespace MDS.Client.AdminPages
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
+            DialogResult = false;
             this.mode = mode;
             this.Number = Number;
         }
@@ -45,7 +46,7 @@ namespace MDS.Client.AdminPages
                     if(materialAuditMoveResponse_agree.flag == 0)
                     {
                         MessageBox.Show("已同意");
-                        AdminInfo.Event_Result = true;
+                        DialogResult = true;
                         this.Close();
                     }
                     else
@@ -65,7 +66,7 @@ namespace MDS.Client.AdminPages
                     if (materialAuditMoveResponse_refuse.flag == 0)
                     {
                         MessageBox.Show("已拒绝");
-                        AdminInfo.Event_Result = true;
+                        DialogResult = true;
                         this.Close();
                     }
                     else
@@ -84,7 +85,7 @@ namespace MDS.Client.AdminPages
                     if (autherRequestMoveResponse_agree.flag == 0)
                     {
                         MessageBox.Show("已同意");
-                        AdminInfo.Event_Result = true;
+                        DialogResult = true;
                         this.Close();
                     }
                     else
@@ -104,7 +105,7 @@ namespace MDS.Client.AdminPages
                     if (autherRequestMoveResponse_refuse.flag == 0)
                     {
                         MessageBox.Show("已拒绝");
-                        AdminInfo.Event_Result = true;
+                        DialogResult = true;
                         this.Close();
                     }
                     else

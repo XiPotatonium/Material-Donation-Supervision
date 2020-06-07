@@ -67,21 +67,21 @@ namespace MDS.Client.AdminPages
 
         private void close_window()
         {
-            while (true)
-            {
-                if (AdminInfo.Event_Result == true)
-                {
-                    AdminInfo.Event_Result = false;
-                    Dispatcher.Invoke(
-                        new Action(
-                            delegate
-                            {
-                                Close();
-                            }));
-                    break;
-                }
-                Thread.CurrentThread.Join(100);
-            }
+            //while (true)
+            //{
+            //    if (AdminInfo.Event_Result == true)
+            //    {
+            //        AdminInfo.Event_Result = false;
+            //        Dispatcher.Invoke(
+            //            new Action(
+            //                delegate
+            //                {
+            //                    Close();
+            //                }));
+            //        break;
+            //    }
+            //    Thread.CurrentThread.Join(100);
+            //}
         }
 
         private void Refuse_Click(object sender, RoutedEventArgs e)

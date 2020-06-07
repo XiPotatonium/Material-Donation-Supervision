@@ -5,11 +5,6 @@ using DTO;
 
 namespace MDS.Client.AdminPages
 {
-    public static class AdminInfo
-    {
-        public static bool Event_Result { set; get; }
-    }
-
     public class AutherRequestConstruct
     {
         public string Number { set; get; }
