@@ -98,6 +98,12 @@ namespace MDS.Server.Service
 							$"where TransacyionId = {(int)request.GUID}",
 							Connect.Connection);
 						cmd2.ExecuteNonQuery();
+						SqlCommand cmd3 = new SqlCommand(
+							$"update Tranc " +
+							$"set TransactionState = {ApplicationState.Delivering}" +
+							$"where TransacyionId = {(int)request.GUID}",
+							Connect.Connection);
+						cmd3.ExecuteNonQuery();
 						return new DeliveryMoveResponse()
 						{
 							Check = 0 //表示成功
@@ -121,6 +127,12 @@ namespace MDS.Server.Service
 							$"where TransacyionId = {(int)request.GUID}",
 							Connect.Connection);
 						cmd2.ExecuteNonQuery();
+						SqlCommand cmd3 = new SqlCommand(
+							$"update Tranc " +
+							$"set TransactionState = {ApplicationState.Delivering}" +
+							$"where TransacyionId = {(int)request.GUID}",
+							Connect.Connection);
+						cmd3.ExecuteNonQuery();
 						return new DeliveryMoveResponse()
 						{
 							Check = 0 //表示成功
@@ -147,6 +159,12 @@ namespace MDS.Server.Service
 							$"where TransacyionId = {(int)request.GUID}",
 							Connect.Connection);
 						cmd2.ExecuteNonQuery();
+						SqlCommand cmd3 = new SqlCommand(
+							$"update Tranc " +
+							$"set TransactionState = {ApplicationState.Received}" +
+							$"where TransacyionId = {(int)request.GUID}",
+							Connect.Connection);
+						cmd3.ExecuteNonQuery();
 						return new DeliveryMoveResponse()
 						{
 							Check = 0 //表示成功
@@ -162,6 +180,12 @@ namespace MDS.Server.Service
 						$"where TransacyionId = {(int)request.GUID}",
 						Connect.Connection);
 					cmd2.ExecuteNonQuery();
+					SqlCommand cmd3 = new SqlCommand(
+						$"update Tranc " +
+						$"set TransactionState = {ApplicationState.Received}" +
+						$"where TransacyionId = {(int)request.GUID}",
+						Connect.Connection);
+					cmd3.ExecuteNonQuery();
 					if (request.SecureId == secureId)
 					{
 						return new DeliveryMoveResponse()
