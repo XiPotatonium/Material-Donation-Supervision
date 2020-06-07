@@ -6,6 +6,7 @@ namespace DTO
 {
     public enum DonationState
     {
+        Refused,
         Aborted,
         Applying, 
         WaitingDelivery, 

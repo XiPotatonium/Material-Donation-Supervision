@@ -73,5 +73,15 @@ namespace MDS.Server
                 Console.WriteLine("Fail RegisterRequestTest");
             }
         }
+
+        public static void MaterialAuditListRequestTest()
+        {
+            var service = new AdminDataService();
+            var response = service.HandleMaterialAuditListRequest(new MaterialAuditListRequest() { state=AdminState.WAIT, AdminID = -1});
+            if (response.m_normals.Count > 0)
+            {
+                Console.WriteLine("Pass MaterialAuditListRequestTest");
+            }
+        }
     }
 }
