@@ -11,18 +11,18 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25"/>
-            <ColumnDefinition Width="350"/>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="350"/>
-            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="350*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="350*"/>
+            <ColumnDefinition Width="25*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="350"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="350*"/>
+            <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="历史审核" 
                    FontSize="20" 
@@ -42,7 +42,6 @@
         </TextBlock>
         <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto"  Grid.Row="3" Grid.Column="1">
             <DataGrid x:Name="history" 
-                      Style="{StaticResource MaterialDesignDataGrid}" 
                       ItemsSource="{Binding}"
                       IsReadOnly="True"
                       CanUserAddRows="False"
@@ -50,12 +49,8 @@
                       CanUserResizeColumns="False"
                       CanUserSortColumns="True"
                       CanUserReorderColumns="True" 
+                      Background="White"
                       AutoGenerateColumns="False">
-                <DataGrid.ColumnHeaderStyle>
-                    <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                    </Style>
-                </DataGrid.ColumnHeaderStyle>
                 <DataGrid.Resources>
                     <Style x:Key="CenterAlignmentStycle" TargetType="TextBlock">
                         <Setter Property="TextAlignment" Value="Center"/>
@@ -63,11 +58,11 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="编号" Width="60" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="用户" Width="60" Binding="{Binding ApplicantID}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="时间" Width="100" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="类型" Width="70" Binding="{Binding Type}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTemplateColumn Header=" " Width="60">
+                    <DataGridTextColumn Header="编号" Width="Auto" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="用户" Width="Auto" Binding="{Binding ApplicantID}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="时间" Width="Auto" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="类型" Width="Auto" Binding="{Binding Type}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTemplateColumn Header=" " Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -79,44 +74,40 @@
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>
-        <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Grid.Row="3" Grid.Column="3">
-            <DataGrid x:Name="waiting" 
-                      Style="{StaticResource MaterialDesignDataGrid}" 
+        <DataGrid x:Name="waiting"                      
                       ItemsSource="{Binding}"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Stretch"
+                      Grid.Row="3" Grid.Column="3"
                       IsReadOnly="True"
                       CanUserAddRows="False"
                       CanUserDeleteRows="False"
                       CanUserResizeColumns="False"
                       CanUserSortColumns="True"
                       CanUserReorderColumns="True" 
+                      Background="White"
                       AutoGenerateColumns="False">
-                <DataGrid.ColumnHeaderStyle>
-                    <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                    </Style>
-                </DataGrid.ColumnHeaderStyle>
-                <DataGrid.Resources>
-                    <Style x:Key="CenterAlignmentStycle" TargetType="TextBlock">
-                        <Setter Property="TextAlignment" Value="Center"/>
-                        <Setter Property="VerticalAlignment" Value="Center"/>
-                    </Style>
-                </DataGrid.Resources>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="编号" Width="60" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="用户" Width="60" Binding="{Binding ApplicantID}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="时间" Width="100" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="类型" Width="70" Binding="{Binding Type}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTemplateColumn Header=" " Width="60">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <Button Content="详情" Click="Goto_Detail_Waiting" Background="Gray"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-        </ScrollViewer>
+            <DataGrid.Resources>
+                <Style x:Key="CenterAlignmentStycle" TargetType="TextBlock">
+                    <Setter Property="TextAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="编号" Width="Auto" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                <DataGridTextColumn Header="用户" Width="Auto" Binding="{Binding ApplicantID}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                <DataGridTextColumn Header="时间" Width="Auto" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                <DataGridTextColumn Header="类型" Width="Auto" Binding="{Binding Type}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                <DataGridTemplateColumn Header=" " Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Button Content="详情" Click="Goto_Detail_Waiting" Background="Gray"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

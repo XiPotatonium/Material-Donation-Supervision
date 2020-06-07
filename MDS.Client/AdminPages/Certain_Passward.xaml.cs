@@ -42,7 +42,6 @@ namespace MDS.Client.AdminPages
                         Number = this.Number,
                         Secondary_passward = certain_password.Password
                     });
-                    materialAuditMoveResponse_agree = new MaterialAuditAgreeResponse() { flag = 0 };
                     if(materialAuditMoveResponse_agree.flag == 0)
                     {
                         MessageBox.Show("已同意");
@@ -81,8 +80,7 @@ namespace MDS.Client.AdminPages
                         AdminID = UserInfo.Id,
                         Number = this.Number,
                         Secondary_passward = certain_password.Password
-                    });
-                    autherRequestMoveResponse_agree = new AutherRequestAgreeResponse() { flag = 0 };
+                    });                  
                     if (autherRequestMoveResponse_agree.flag == 0)
                     {
                         MessageBox.Show("已同意");
