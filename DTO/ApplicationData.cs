@@ -6,6 +6,7 @@ namespace DTO
 {
     public enum ApplicationState
     {
+        Refused,
         Aborted,        // 撤销的申请
         Applying,       // 已提交但未审核的申请
         Delivering,     // 已审核但未送达的申请

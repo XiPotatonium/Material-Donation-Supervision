@@ -8,6 +8,10 @@ using MDS.Server;
 using System.Threading;
 using System.Threading.Tasks;
 using MDS.Server.Service;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace DemoServer
 {
@@ -180,13 +184,14 @@ namespace DemoServer
         static void test()
         {
             // Test.HandleNewApplicationRequestTest();
-            Test.HandleAvailableApplicationMaterialRequestTest();
-            Test.HandleGetApplicationDetailRequestTest();
-            Test.HandleGetApplicationListRequestTest();
-            Test.UserLoginTest();
-            Test.UserInfoTest();
-            Test.ModifyRequestTest();
-            Test.RegisterRequestTest();
+            //Test.HandleAvailableApplicationMaterialRequestTest();
+            //Test.HandleGetApplicationDetailRequestTest();
+            //Test.HandleGetApplicationListRequestTest();
+            //Test.UserLoginTest();
+            //Test.UserInfoTest();
+            //Test.ModifyRequestTest();
+            //Test.RegisterRequestTest();
+            //Test.MaterialAuditListRequestTest();
         }       
         static void Main(string[] args)
         {
@@ -194,7 +199,8 @@ namespace DemoServer
             {
                 Connect.ConnectDatabase();
                 PrintConsoleLog(DateTime.Now.ToString() + ":成功连接到云数据库");
-                test();
+                Material.GetMaterialIdName();
+                test();               
                 using (HttpListener listener = new HttpListener())
                 {
                     listener.Prefixes.Add("http://localhost:6666/");
@@ -220,5 +226,26 @@ namespace DemoServer
             }
         }
       
+    }
+
+    public static class Material
+    {
+        public static Dictionary<int, string> MaterialMap;
+        public static void GetMaterialIdName()
+        {
+            MaterialMap = new Dictionary<int, string>();
+            SqlCommand com = new SqlCommand("SELECT * FROM Materials", Connect.Connection);
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            using (DataSet ds = new DataSet())
+            {
+                da.Fill(ds, "Materials");
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    MaterialMap.Add(int.Parse(ds.Tables[0].Rows[i]["MaterialID"].ToString())
+                        , ds.Tables[0].Rows[i]["MaterialName"].ToString());
+                }
+            }
+            
+        }
     }
 }
