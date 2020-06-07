@@ -9,14 +9,6 @@
       Title="ManagePage">
 
     <Grid>
-        <TabControl x:Name="MainTabControl" BorderThickness="0"
-                    Style="{StaticResource MaterialDesignAppBarTabControl}">
-            <TabItem Header="物资审核" x:Name="MaterialAuditPageTab">
-                <Frame x:Name="MaterialAuditPageFrame" Margin="0,0"/>
-            </TabItem>
-            <TabItem Header="身份认证" x:Name="AutherRequestPageTab">
-                <Frame x:Name="AutherRequestPageFrame" Margin="0,0"/>
-            </TabItem>
-        </TabControl>
+        <Frame x:Name="MaterialAuditPageFrame" Margin="0,0"/>
     </Grid>
 </Page>

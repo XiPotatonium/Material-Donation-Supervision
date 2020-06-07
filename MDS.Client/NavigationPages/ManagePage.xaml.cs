@@ -23,13 +23,11 @@ namespace MDS.Client.NavigationPages
     {
         private MainWindow parentWindow { get; } = null;
         //private ManageAllPage myManageAllPage { set; get; } = new ManageAllPage();
-        private AutherRequestPage myAutherRequestPage { set; get; } = new AutherRequestPage();
         private MaterialAuditPage myMaterialAuditPage { set; get; } = new MaterialAuditPage();
         public ManagePage()
         {
             InitializeComponent();
             //ManageAllPageFrame.Content = myManageAllPage;
-            AutherRequestPageFrame.Content = myAutherRequestPage;
             MaterialAuditPageFrame.Content = myMaterialAuditPage;
         }
     }

@@ -57,8 +57,8 @@ namespace MDS.Client
             UserInfo.PhoneNumber = response.PhoneNumber;
             UserInfo.HomeAddress = response.HomeAddress;
             UserInfo.UserType = response.UserType;
-            // TODO 要根据用户类型调整tab，目前测试状态，禁用这段代码
-            // RefreshTabDisplay();
+            // 要根据用户类型调整tab，目前测试状态，禁用这段代码
+            RefreshTabDisplay();
         }
 
         /// <summary>
