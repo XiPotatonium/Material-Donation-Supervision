@@ -6,10 +6,10 @@ namespace DTO
 {
     public enum DonationState
     {
-        Aborted,
-        Applying, 
-        WaitingDelivery, 
-        Done
+        Aborted,        // 撤销的捐赠
+        Applying,       // 已提交但未审核的捐赠
+        WaitingDelivery,    // 已审核但未配送完成的捐赠
+        Done            // 配送完成的捐赠
     }
 
     /// <summary>

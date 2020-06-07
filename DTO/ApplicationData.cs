@@ -7,10 +7,10 @@ namespace DTO
     public enum ApplicationState
     {
         Aborted,        // 撤销的申请
-        Applying, 
-        Delivering, 
-        Received, 
-        Done
+        Applying,       // 已提交但未审核的申请
+        Delivering,     // 已审核但未送达的申请
+        Received,       // 配送员已送达但用户未确认的申请
+        Done            // 用户确认的申请
     }
 
 
@@ -75,7 +75,7 @@ namespace DTO
             public int Id { set; get; }             // 物资名称对应一个Id，申请的时候会使用这个Id
             public string Name { set; get; }        // 物资名称
             public string Description { set; get; } // 物资描述
-            public int Constraint { set; get; }     // 物资限制
+            public int Constraint { set; get; }     // 物资限量
         }
 
         public List<Item> Items { set; get; }

@@ -40,7 +40,84 @@ int modified = Convert.ToInt32(com.ExecuteScalar());
 
 客户端通过DTO与服务器进行数据沟通，客户端会填写DTO中的request并发送给服务器，服务器根据收到的的request返回response。不同的操作request和response的结构不同，详见DTO
 
-### 一个物资的数据包的全部信息如下：    
+### 普通用户DTO介绍
+
+#### 用户信息DTO(UserInfo.cs)
+
+```C#
+public enum UserType
+{
+NORMAL,     //普通用户
+ADMIN,      // 管理员
+DELIVERER   // 配送员
+}
+
+/// <summary>
+/// 客户端请求用户数据的请求包
+/// </summary>
+[Serializable]
+public class UserInfoRequest : IReturn<UserInfoResponse>
+{
+public int UserId { set; get; }
+}
+
+/// <summary>
+/// 客户端请求用户数据的返回包
+/// </summary>
+[Serializable]
+public class UserInfoResponse
+{
+public string PhoneNumber { set; get; }
+public string HomeAddress { set; get; }
+public UserType UserType { set; get; }
+}
+
+/// <summary>
+/// 用户请求修改个人信息
+/// </summary>
+[Serializable]
+public class UserInfoModifyRequest : IReturn<VoidResponse>
+{
+public string PhoneNumber { set; get; }
+public string HomeAddress { set; get; }
+}
+```
+
+#### 申请相关DTO(ApplicationData.cs)
+
+申请的状态：
+
+```C#
+public enum ApplicationState
+{
+Aborted,        // 撤销的申请
+Applying,       // 已提交但未审核的申请
+Delivering,     // 已审核但未送达的申请
+Received,       // 配送员已送达但用户未确认的申请
+Done            // 用户确认的申请
+}
+```
+
+其中发申请、撤销和用户确认需要用户手动操作，所以存在这三个请求包。
+
+用户查看申请需要两个包，一个是查看所有申请，会返回每个申请的简要信息。另一个是查询某个申请的详细信息。这些代码比较长请自行浏览对应文件。
+
+#### 捐赠相关DTO(DonationData.cs)
+
+```C#
+public enum DonationState
+{
+Aborted,        // 撤销的捐赠
+Applying,       // 已提交但未审核的捐赠
+WaitingDelivery,    // 已审核但未配送完成的捐赠
+Done            // 配送完成的捐赠
+}
+```
+
+捐赠逻辑和申请相同。只是用户不再需要确认捐赠流程结束。
+
+### 一个物资的数据包的全部信息如下：
+
     string GUID          订单号  
     string Name          物资名称  
     int Quantity         物资数量  
