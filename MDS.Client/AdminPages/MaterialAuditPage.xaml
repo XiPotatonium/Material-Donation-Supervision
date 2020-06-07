@@ -40,8 +40,7 @@
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center">
         </TextBlock>
-        <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto"  Grid.Row="3" Grid.Column="1">
-            <DataGrid x:Name="history" 
+        <DataGrid x:Name="history" 
                       ItemsSource="{Binding}"
                       IsReadOnly="True"
                       CanUserAddRows="False"
@@ -50,30 +49,30 @@
                       CanUserSortColumns="True"
                       CanUserReorderColumns="True" 
                       Background="White"
-                      AutoGenerateColumns="False">
-                <DataGrid.Resources>
-                    <Style x:Key="CenterAlignmentStycle" TargetType="TextBlock">
-                        <Setter Property="TextAlignment" Value="Center"/>
-                        <Setter Property="VerticalAlignment" Value="Center"/>
-                    </Style>
-                </DataGrid.Resources>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="编号" Width="Auto" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="用户" Width="Auto" Binding="{Binding ApplicantID}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="时间" Width="Auto" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="类型" Width="Auto" Binding="{Binding Type}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTemplateColumn Header=" " Width="Auto">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <Button Content="详情" Click="Goto_Detail_History" Background="Gray"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-        </ScrollViewer>
+                      AutoGenerateColumns="False"
+                      Grid.Row="3" Grid.Column="1">
+            <DataGrid.Resources>
+                <Style x:Key="CenterAlignmentStycle" TargetType="TextBlock">
+                    <Setter Property="TextAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="编号" Width="Auto" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                <DataGridTextColumn Header="用户ID" Width="Auto" Binding="{Binding ApplicantID}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                <DataGridTextColumn Header="时间" Width="Auto" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                <DataGridTextColumn Header="类型" Width="Auto" Binding="{Binding Type}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                <DataGridTemplateColumn Header=" " Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Button Content="详情" Click="Goto_Detail_History" Background="Gray"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
         <DataGrid x:Name="waiting"                      
                       ItemsSource="{Binding}"
                       VerticalAlignment="Stretch"
@@ -95,7 +94,7 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="编号" Width="Auto" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                <DataGridTextColumn Header="用户" Width="Auto" Binding="{Binding ApplicantID}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                <DataGridTextColumn Header="用户ID" Width="Auto" Binding="{Binding ApplicantID}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
                 <DataGridTextColumn Header="时间" Width="Auto" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
                 <DataGridTextColumn Header="类型" Width="Auto" Binding="{Binding Type}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
                 <DataGridTemplateColumn Header=" " Width="Auto">
