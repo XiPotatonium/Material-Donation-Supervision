@@ -1,8 +1,10 @@
 ﻿using DTO;
+using MaterialDesignThemes.Wpf;
 using MDS.Client.Extension;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +20,53 @@ using System.Windows.Shapes;
 
 namespace MDS.Client.NavigationPages
 {
+    public class ApplicationStateIconConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameters, CultureInfo culture)
+        {
+            ApplicationState state = (ApplicationState)value;
+            PackIconKind icon = state switch
+            {
+                ApplicationState.Aborted => PackIconKind.Delete,
+                ApplicationState.Applying => PackIconKind.ApplicationImport,
+                ApplicationState.Delivering => PackIconKind.TruckDelivery,
+                ApplicationState.Received => PackIconKind.CallReceived,
+                ApplicationState.Done => PackIconKind.Check,
+                ApplicationState.Refused => PackIconKind.Cancel,
+                _ => PackIconKind.Help
+            };
+            return icon;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class DonationStateIconConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameters, CultureInfo culture)
+        {
+            DonationState state = (DonationState)value;
+            PackIconKind icon = state switch
+            {
+                DonationState.Aborted => PackIconKind.Delete,
+                DonationState.Refused => PackIconKind.Cancel,
+                DonationState.Applying => PackIconKind.ApplicationImport,
+                DonationState.WaitingDelivery => PackIconKind.TruckDelivery,
+                DonationState.Done => PackIconKind.Check,
+                _ => PackIconKind.Help,
+            };
+            return icon;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     /// <summary>
     /// Interaction logic for MyMainPage.xaml
     /// </summary>
@@ -142,6 +191,7 @@ namespace MDS.Client.NavigationPages
         public int Quantity { set; get; }
         public string State { set; get; }
         public DateTime StartTime { set; get; }
+        public ApplicationState OriginState { set; get; }
 
         public GetApplicationListResponse.Item OriginalItem { get; }
 
@@ -149,12 +199,14 @@ namespace MDS.Client.NavigationPages
         {
             OriginalItem = item;
 
+            OriginState = OriginalItem.State;
             Id = item.ID.ToString();
             Name = item.Name;
             Quantity = item.Quantity;
             StartTime = item.StartTime;
             State = item.State switch
             {
+                ApplicationState.Refused => "被拒绝",
                 ApplicationState.Aborted => "已撤销",
                 ApplicationState.Applying => "待审核",
                 ApplicationState.Delivering => "配送中",
@@ -171,6 +223,7 @@ namespace MDS.Client.NavigationPages
         public string Name { set; get; }
         public int Quantity { set; get; }
         public string State { set; get; }
+        public DonationState OriginState { set; get; }
         public DateTime StartTime { set; get; }
 
         public GetDonationListResponse.Item OriginalItem { get; }
@@ -179,12 +232,14 @@ namespace MDS.Client.NavigationPages
         {
             OriginalItem = item;
 
+            OriginState = OriginalItem.State;
             Id = item.ID.ToString();
             Name = item.Name;
             Quantity = item.Quantity;
             StartTime = item.StartTime;
             State = item.State switch
             {
+                DonationState.Refused => "被拒绝",
                 DonationState.Aborted => "已撤销",
                 DonationState.Applying => "待审批",
                 DonationState.WaitingDelivery => "待配送",

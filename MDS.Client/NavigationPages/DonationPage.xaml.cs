@@ -57,7 +57,7 @@ namespace MDS.Client.NavigationPages
                 {
                     UserId = UserInfo.Id,
                     DonationId = DonationViewModel.OriginalItem.ID
-                })).Progress(ParentWindow.PART_ProgressBar);
+                }).Progress(ParentWindow.PART_ProgressBar));
 
                 // 2. 根据DonationViewModel来生成正确的Tab显示
                 switch (DonationViewModel.OriginalItem.State)
@@ -148,7 +148,7 @@ namespace MDS.Client.NavigationPages
             {
                 UserId = UserInfo.Id,
                 DonationId = DonationViewModel.OriginalItem.ID
-            })).Progress(ParentWindow.PART_ProgressBar);
+            }).Progress(ParentWindow.PART_ProgressBar));
             RefreshApplicationCardView();
         }
 
@@ -184,11 +184,6 @@ namespace MDS.Client.NavigationPages
             OriginalItem = response;
 
             Address = response.Address;
-        }
-
-        internal DonationDetailViewModel Progress(ProgressBar pART_ProgressBar)
-        {
-            throw new NotImplementedException();
         }
     }
 
