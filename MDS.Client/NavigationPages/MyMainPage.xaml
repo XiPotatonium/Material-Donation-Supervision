@@ -116,7 +116,8 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <materialDesign:PackIcon Kind="{Binding OriginState, Converter={StaticResource applyCvt}}" />
+                                    <materialDesign:PackIcon Kind="{Binding OriginState, Converter={StaticResource applyCvt}}" 
+                                                             Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     <StackPanel Margin="13,0,0,0"
                                             Grid.Column="1">
                                         <TextBlock>
@@ -162,15 +163,15 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock
-                    Text="你的捐赠"
-                    FontWeight="Bold"
-                    Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                    Grid.Row="0"/>
+                        Text="你的捐赠"
+                        FontWeight="Bold"
+                        Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                        Grid.Row="0"/>
                     <ListBox x:Name="UserDonationList"
-                         Margin="0,5"
-                         Grid.Row="1"
-                         HorizontalContentAlignment="Stretch"
-                         MouseDoubleClick="UserDonationList_MouseDoubleClick">
+                             Margin="0,5"
+                             Grid.Row="1"
+                             HorizontalContentAlignment="Stretch"
+                             MouseDoubleClick="UserDonationList_MouseDoubleClick">
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="{x:Type local:ApplicationListViewModel}">
                                 <Grid HorizontalAlignment="Stretch">
@@ -178,7 +179,8 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <materialDesign:PackIcon Kind="{Binding OriginState, Converter={StaticResource donationCvt}}" />
+                                    <materialDesign:PackIcon Kind="{Binding OriginState, Converter={StaticResource donationCvt}}" 
+                                                             Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     <StackPanel Margin="13,0,0,0"
                                             Grid.Column="1">
                                         <TextBlock>

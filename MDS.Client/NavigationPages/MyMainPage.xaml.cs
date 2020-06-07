@@ -32,6 +32,7 @@ namespace MDS.Client.NavigationPages
                 ApplicationState.Delivering => PackIconKind.TruckDelivery,
                 ApplicationState.Received => PackIconKind.CallReceived,
                 ApplicationState.Done => PackIconKind.Check,
+                ApplicationState.Refused => PackIconKind.Cancel,
                 _ => PackIconKind.Help
             };
             return icon;
@@ -51,6 +52,7 @@ namespace MDS.Client.NavigationPages
             PackIconKind icon = state switch
             {
                 DonationState.Aborted => PackIconKind.Delete,
+                DonationState.Refused => PackIconKind.Cancel,
                 DonationState.Applying => PackIconKind.ApplicationImport,
                 DonationState.WaitingDelivery => PackIconKind.TruckDelivery,
                 DonationState.Done => PackIconKind.Check,
@@ -204,6 +206,7 @@ namespace MDS.Client.NavigationPages
             StartTime = item.StartTime;
             State = item.State switch
             {
+                ApplicationState.Refused => "被拒绝",
                 ApplicationState.Aborted => "已撤销",
                 ApplicationState.Applying => "待审核",
                 ApplicationState.Delivering => "配送中",
@@ -236,6 +239,7 @@ namespace MDS.Client.NavigationPages
             StartTime = item.StartTime;
             State = item.State switch
             {
+                DonationState.Refused => "被拒绝",
                 DonationState.Aborted => "已撤销",
                 DonationState.Applying => "待审批",
                 DonationState.WaitingDelivery => "待配送",
