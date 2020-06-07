@@ -65,7 +65,8 @@ namespace MDS.Client.NavigationPages
                     case ApplicationState.Applying:
                         PART_Stepper.Controller.GotoStep(1);
                         break;
-                    case ApplicationState.Delivering:
+                    case ApplicationState.WaitingDelivery:
+                    case ApplicationState.Delivering:           // 客户端不区分等待配送和配送中
                         PART_Stepper.Controller.GotoStep(2);
                         break;
                     case ApplicationState.Received:
@@ -144,19 +145,19 @@ namespace MDS.Client.NavigationPages
                 ApplicationMaterialListViewModel selected = (ApplicationMaterialListViewModel)MaterialSelectListBox.SelectedItem;
                 if (selected == null)
                 {
-                    ParentWindow.SetSnackBarContentAndPopup("请选择要申请的物资");
+                    MainWindow.SetSnackBarContentAndPopup("请选择要申请的物资");
                     args.Cancel = true;
                     return;
                 }
                 else if (QuantityInputBox.Value == null || QuantityInputBox.Value <= 0)
                 {
-                    ParentWindow.SetSnackBarContentAndPopup("不合法的数目");
+                    MainWindow.SetSnackBarContentAndPopup("不合法的数目");
                     args.Cancel = true;
                     return;
                 }
                 else if (QuantityInputBox.Value > selected.Constraint)
                 {
-                    ParentWindow.SetSnackBarContentAndPopup("超出数量限制");
+                    MainWindow.SetSnackBarContentAndPopup("超出数量限制");
                     args.Cancel = true;
                     return;
                 }
@@ -187,7 +188,7 @@ namespace MDS.Client.NavigationPages
             // 发送撤销请求的包
             await NetworkHelper.GetAsync(new CancelApplicationRequest() { ApplicationId = ApplicationViewModel.OriginalItem.ID })
                 .Progress(ParentWindow.PART_ProgressBar);
-            ParentWindow.SetSnackBarContentAndPopup("申请已取消");
+            MainWindow.SetSnackBarContentAndPopup("申请已取消");
             ParentWindow.NavigateToMainPage();
         }
 

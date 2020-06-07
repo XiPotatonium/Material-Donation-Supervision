@@ -36,7 +36,7 @@ namespace MDS.Client.DeliveryPages
             }
             else if (this.type == DeliveryState.Alone)
             {
-                this.info.output = "请输入ID以确认申请：";
+                this.info.output = "确认申请：";
             }
             else
             {
@@ -68,20 +68,20 @@ namespace MDS.Client.DeliveryPages
 
             if (deliveryMoveResponse.Check == 0)
             {
-                MessageBox.Show("操作成功");
+                MainWindow.SetSnackBarContentAndPopup("操作成功");
                 this.DialogResult = true;
             }
             else if (deliveryMoveResponse.Check == 1)
             {
-                MessageBox.Show("验证ID错误");
+                MainWindow.SetSnackBarContentAndPopup("验证ID错误");
             }
             else if (deliveryMoveResponse.Check == 2)
             {
-                MessageBox.Show("任务状态有误");
+                MainWindow.SetSnackBarContentAndPopup("任务状态有误");
             }
             else
             {
-                MessageBox.Show("验证ID错误");
+                MainWindow.SetSnackBarContentAndPopup("验证ID错误");
             }
             userInput.Password = "";
         }

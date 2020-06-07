@@ -29,9 +29,19 @@ namespace MDS.Server.Service
 		}
 		public DeliveryListResponse HandleDeliveryListRequest(DeliveryListRequest request)
 		{
-			SqlCommand com = new SqlCommand
+			SqlCommand com;
+			if (request.State == DeliveryState.Alone)
+			{
+				com = new SqlCommand
+				($"select * from Delivery inner join Tranc on Delivery.TransactionId = Tranc.TransactionId inner join Materials on Tranc.MaterialId=Materials.MaterialId inner join Users on Delivery.DeliveryAdminId=Users.UserID where DeliveryState={(int)request.State}"
+				, Connect.Connection);
+			}
+			else
+			{
+				com = new SqlCommand
 				($"select * from Delivery inner join Tranc on Delivery.TransactionId = Tranc.TransactionId inner join Materials on Tranc.MaterialId=Materials.MaterialId inner join Users on Delivery.DeliveryAdminId=Users.UserID where DeliverymanId={(int)request.DelivererId} and DeliveryState={(int)request.State}"
 				, Connect.Connection);
+			}
 			SqlDataAdapter da = new SqlDataAdapter(com);
 			DataSet ds = new DataSet();
 			da.Fill(ds, "DeliveryList");
@@ -98,6 +108,12 @@ namespace MDS.Server.Service
 							$"where TransacyionId = {(int)request.GUID}",
 							Connect.Connection);
 						cmd2.ExecuteNonQuery();
+						SqlCommand cmd3 = new SqlCommand(
+							$"update Tranc " +
+							$"set TransactionState = {ApplicationState.Delivering}" +
+							$"where TransacyionId = {(int)request.GUID}",
+							Connect.Connection);
+						cmd3.ExecuteNonQuery();
 						return new DeliveryMoveResponse()
 						{
 							Check = 0 //表示成功
@@ -121,6 +137,12 @@ namespace MDS.Server.Service
 							$"where TransacyionId = {(int)request.GUID}",
 							Connect.Connection);
 						cmd2.ExecuteNonQuery();
+						SqlCommand cmd3 = new SqlCommand(
+							$"update Tranc " +
+							$"set TransactionState = {ApplicationState.Delivering}" +
+							$"where TransacyionId = {(int)request.GUID}",
+							Connect.Connection);
+						cmd3.ExecuteNonQuery();
 						return new DeliveryMoveResponse()
 						{
 							Check = 0 //表示成功
@@ -147,6 +169,12 @@ namespace MDS.Server.Service
 							$"where TransacyionId = {(int)request.GUID}",
 							Connect.Connection);
 						cmd2.ExecuteNonQuery();
+						SqlCommand cmd3 = new SqlCommand(
+							$"update Tranc " +
+							$"set TransactionState = {ApplicationState.Received}" +
+							$"where TransacyionId = {(int)request.GUID}",
+							Connect.Connection);
+						cmd3.ExecuteNonQuery();
 						return new DeliveryMoveResponse()
 						{
 							Check = 0 //表示成功
@@ -162,6 +190,12 @@ namespace MDS.Server.Service
 						$"where TransacyionId = {(int)request.GUID}",
 						Connect.Connection);
 					cmd2.ExecuteNonQuery();
+					SqlCommand cmd3 = new SqlCommand(
+						$"update Tranc " +
+						$"set TransactionState = {ApplicationState.Received}" +
+						$"where TransacyionId = {(int)request.GUID}",
+						Connect.Connection);
+					cmd3.ExecuteNonQuery();
 					if (request.SecureId == secureId)
 					{
 						return new DeliveryMoveResponse()
@@ -188,7 +222,7 @@ namespace MDS.Server.Service
 		{
 			
 			SqlCommand com = new SqlCommand
-				($"select * from Delivery where TransactionId={(int)request.TransactionId} and DeliveryState={DeliveryState.Alone}"
+				($"select * from Delivery where TransactionId={(int)request.TransactionId} and DeliveryState={(int)DeliveryState.Alone}"
 				, Connect.Connection);
 			SqlDataAdapter da = new SqlDataAdapter(com);
 			DataSet ds = new DataSet();
