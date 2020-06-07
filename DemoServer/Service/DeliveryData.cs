@@ -92,6 +92,12 @@ namespace MDS.Server.Service
 					secureId = (int)ds.Tables[0].Rows[0]["UserId"];
 					if (request.SecureId == secureId)
 					{
+						SqlCommand cmd2 = new SqlCommand(
+							$"update Delivery " +
+							$"set DeliveryState = {DeliveryState.Processing}" +
+							$"where TransacyionId = {(int)request.GUID}",
+							Connect.Connection);
+						cmd2.ExecuteNonQuery();
 						return new DeliveryMoveResponse()
 						{
 							Check = 0 //表示成功
@@ -109,6 +115,12 @@ namespace MDS.Server.Service
 							$"where MaterialId = {materialId}",
 							Connect.Connection);
 						cmd.ExecuteNonQuery();
+						SqlCommand cmd2 = new SqlCommand(
+							$"update Delivery " +
+							$"set DeliveryState = {DeliveryState.Processing}" +
+							$"where TransacyionId = {(int)request.GUID}",
+							Connect.Connection);
+						cmd2.ExecuteNonQuery();
 						return new DeliveryMoveResponse()
 						{
 							Check = 0 //表示成功
@@ -129,6 +141,12 @@ namespace MDS.Server.Service
 							$"where MaterialId = {materialId}",
 							Connect.Connection);
 						cmd.ExecuteNonQuery();
+						SqlCommand cmd2 = new SqlCommand(
+							$"update Delivery " +
+							$"set DeliveryState = {DeliveryState.Finished}" +
+							$"where TransacyionId = {(int)request.GUID}",
+							Connect.Connection);
+						cmd2.ExecuteNonQuery();
 						return new DeliveryMoveResponse()
 						{
 							Check = 0 //表示成功
@@ -138,6 +156,12 @@ namespace MDS.Server.Service
 				else
 				{
 					secureId = (int)ds.Tables[0].Rows[0]["UserId"];
+					SqlCommand cmd2 = new SqlCommand(
+						$"update Delivery " +
+						$"set DeliveryState = {DeliveryState.Finished}" +
+						$"where TransacyionId = {(int)request.GUID}",
+						Connect.Connection);
+					cmd2.ExecuteNonQuery();
 					if (request.SecureId == secureId)
 					{
 						return new DeliveryMoveResponse()
