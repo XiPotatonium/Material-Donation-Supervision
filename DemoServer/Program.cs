@@ -193,7 +193,8 @@ namespace DemoServer
             //Test.RegisterRequestTest();
             //Test.MaterialAuditListRequestTest();
             //Test.MaterialAuditAgreeRequestTest();
-            Test.MaterialAuditRefuseRequestTest();
+            //Test.MaterialAuditRefuseRequestTest();
+            Test.SecondaryPasswordChangeRequestTest();
         }       
         static void Main(string[] args)
         {

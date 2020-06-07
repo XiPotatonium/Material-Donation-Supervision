@@ -100,5 +100,11 @@ namespace MDS.Server
             var service = new AdminDataService();
             var response = service.HandleMaterialAuditRefuseRequest(new MaterialAuditRefuseRequest() { Secondary_passward = "123456", AdminID = 13, Number = "18" });
         }
+
+        public static void SecondaryPasswordChangeRequestTest()
+        {
+            var service = new AdminDataService();
+            var response = service.HandleSecondaryPasswordChangeRequest(new SecondaryPasswordChangeRequest() { AdminID = 1, New_password = "1234567", Old_password = "123456" });
+        }
     }
 }

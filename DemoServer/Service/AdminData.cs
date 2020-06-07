@@ -86,9 +86,11 @@ namespace MDS.Server
             if(reader.Read())
             {
                 reader.Close();
-                var ncom = new SqlCommand($"UPDATE Tranc SET TransactionState = {(int)ApplicationState.Delivering} ,AdminId = {request.AdminID} WHERE TransactionId = {request.Number}", Connect.Connection);
+                var ncom = new SqlCommand($"UPDATE Tranc SET TransactionState = {(int)ApplicationState.WaitingDelivery} ,AdminId = {request.AdminID} WHERE TransactionId = {request.Number}", Connect.Connection);
                 if (ncom.ExecuteNonQuery() > 0)
                 {
+                    var dcom = new SqlCommand($"INSERT INTO Delivery(TransactionId, DeliveryState, DeliveryAdminId) VALUES({request.Number},{(int)DeliveryState.Alone}, {request.AdminID}) ", Connect.Connection);
+                    dcom.ExecuteNonQuery();
                     return new MaterialAuditAgreeResponse() { flag = 0 };
                 }
                 else
@@ -125,6 +127,35 @@ namespace MDS.Server
             {
                 reader.Close();
                 return new MaterialAuditRefuseResponse() { flag = -1 };
+            }
+        }
+
+        public SecondaryPasswordChangeResponse HandleSecondaryPasswordChangeRequest(SecondaryPasswordChangeRequest request)
+        {
+            if (string.IsNullOrEmpty(request.New_password))
+            {
+                return new SecondaryPasswordChangeResponse() { flag = 2 };
+            }
+            else if (request.New_password == request.Old_password)
+            {
+                return new SecondaryPasswordChangeResponse() { flag = 1 };
+            }
+            else
+            {
+                var com = new SqlCommand($"SELECT * FROM Users WHERE UserID = {request.AdminID} AND SecondaryPasswd = {request.Old_password}", Connect.Connection);
+                SqlDataReader reader = com.ExecuteReader();
+                if (reader.Read())
+                {
+                    reader.Close();
+                    var ncom = new SqlCommand($"UPDATE Users SET SecondaryPasswd = {request.New_password} WHERE UserID = {request.AdminID}", Connect.Connection);
+                    ncom.ExecuteNonQuery();
+                    return new SecondaryPasswordChangeResponse() { flag = 0 };                       
+                }
+                else
+                {
+                    reader.Close();
+                    return new SecondaryPasswordChangeResponse() { flag = 3 };
+                }
             }
         }
 
