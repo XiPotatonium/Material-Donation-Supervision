@@ -79,6 +79,7 @@ namespace DemoServer
                 DeliveryDataService DeliveryDataService = new DeliveryDataService() { UserId = id };
                 ApplicationDataService ApplicationDataService = new ApplicationDataService() { UserId = id };
                 DonationDataService DonationDataService = new DonationDataService() { UserId = id };
+                AdminDataService AdminDataService = new AdminDataService() { UserId = id };
                 if (recv is LoginRequest loginRequest)
                 {
                     responseBody = objecttostring(UserInfoService.HandleLoginRequest(loginRequest));
@@ -157,6 +158,23 @@ namespace DemoServer
                 else if (recv is ConfirmApplicationDoneRequest confirmApplicationDoneRequest)
                 {
                     responseBody = objecttostring(ApplicationDataService.HandleConfirmApplicationDoneRequest(confirmApplicationDoneRequest));
+                }
+                // AdminDataService
+                else if (recv is MaterialAuditAgreeRequest materialAuditAgreeRequest)
+                {
+                    responseBody = objecttostring(AdminDataService.HandleMaterialAuditAgreeRequest(materialAuditAgreeRequest));
+                }
+                else if (recv is MaterialAuditListRequest materialAuditListRequest)
+                {
+                    responseBody = objecttostring(AdminDataService.HandleMaterialAuditListRequest(materialAuditListRequest));
+                }
+                else if (recv is MaterialAuditRefuseRequest materialAuditRefuseRequest)
+                {
+                    responseBody = objecttostring(AdminDataService.HandleMaterialAuditRefuseRequest(materialAuditRefuseRequest));
+                }
+                else if (recv is SecondaryPasswordChangeRequest secondaryPasswordChangeRequest)
+                {
+                    responseBody = objecttostring(AdminDataService.HandleSecondaryPasswordChangeRequest(secondaryPasswordChangeRequest));
                 }
                 else
                 {

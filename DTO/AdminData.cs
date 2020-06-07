@@ -25,6 +25,7 @@ namespace DTO
         APPLY, DONATE, DELIVERAUTHENTICANTION, ADMINAUTHENTICANTION
     }
 
+    [Serializable]
     public class Normal
     {
         public string Number { set; get; } //申请编号（用户认证、物资申请）
