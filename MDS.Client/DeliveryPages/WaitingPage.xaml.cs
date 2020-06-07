@@ -60,7 +60,7 @@ namespace MDS.Client.DeliveryPages
         public void ButtonMove_Clicked(object sender, RoutedEventArgs e)
         {
             DeliveryListViewModel cur = (DeliveryListViewModel)userWaitingList.SelectedItem;
-            InputDialog dialog = new InputDialog(cur.GUID, 0);
+            InputDialog dialog = new InputDialog(cur.GUID, DeliveryState.Waiting);
             dialog.ShowDialog();
         }
     }

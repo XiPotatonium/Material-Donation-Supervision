@@ -6,7 +6,9 @@ namespace DTO
 {
     public enum UserType
     {
-        NORMAL, ADMIN, DELIVERER
+        NORMAL,     //普通用户
+        ADMIN,      // 管理员
+        DELIVERER   // 配送员
     }
 
     /// <summary>
@@ -24,8 +26,6 @@ namespace DTO
     [Serializable]
     public class UserInfoResponse
     {
-        // public string Name { set; get; }
-        // 2020-05-25，不再区分PhoneNumber和Name，就用PhoneNumber登陆
         public string PhoneNumber { set; get; }
         public string HomeAddress { set; get; }
         public UserType UserType { set; get; }

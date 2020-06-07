@@ -54,29 +54,21 @@ namespace MDS.Client.AdminPages
 
         private async Task UpdateHistoryList()
         {
-            await Task.Delay(100);
-            MaterialAuditListResponse materialAuditList = new MaterialAuditListResponse();
-            materialAuditList.m_normals = new List<Normal>();
-            materialAuditList.m_normals.Add(new Normal()
+            MaterialAuditListResponse materialAuditListResponse = await NetworkHelper.GetAsync(new MaterialAuditListRequest()
             {
-                Number = "0011",
-                UserID = 5,
-                Time = DateTime.Now,
-                State = AdminState.FINISH,
-                ReviewerID = 2,
-                Result = AdminResult.FAIL,
-                Content = "sssss",
-                Remarks = "zzzzz"
+                AdminID = UserInfo.Id,
+                state = AdminState.FINISH
             });
 
-            foreach (Normal normal in materialAuditList.m_normals)
+            foreach (Normal normal in materialAuditListResponse.m_normals)
             {
                 MaterialAuditList_left.Add(new MaterialAuditConstruct()
                 {
                     Number = normal.Number,
                     ApplicantID = normal.UserID,
                     Time = normal.Time,
-                    State = normal.State,
+                    State = normal.State == AdminState.FINISH ? "已处理" : "未处理",
+                    Type = normal.Type == ReviewType.APPLY ? "申请" : "捐赠",
                     ReviewerID = normal.ReviewerID,
                     Result = normal.Result,
                     Content = normal.Content,
@@ -87,29 +79,21 @@ namespace MDS.Client.AdminPages
 
         private async Task UpdateWaitingList()
         {
-            await Task.Delay(100);
-            MaterialAuditListResponse materialAuditList = new MaterialAuditListResponse();
-            materialAuditList.m_normals = new List<Normal>();
-            materialAuditList.m_normals.Add(new Normal()
+            MaterialAuditListResponse materialAuditListResponse = await NetworkHelper.GetAsync(new MaterialAuditListRequest()
             {
-                Number = "0011",
-                UserID = 6,
-                Time = DateTime.Now,
-                State = AdminState.FINISH,
-                ReviewerID = 2,
-                Result = AdminResult.FAIL,
-                Content = "sssss",
-                Remarks = "zzzzz"
+                AdminID = UserInfo.Id,
+                state = AdminState.WAIT
             });
 
-            foreach (Normal normal in materialAuditList.m_normals)
+            foreach (Normal normal in materialAuditListResponse.m_normals)
             {
                 MaterialAuditList_right.Add(new MaterialAuditConstruct()
                 {
                     Number = normal.Number,
                     ApplicantID = normal.UserID,
                     Time = normal.Time,
-                    State = normal.State,
+                    State = normal.State == AdminState.FINISH ? "已处理" : "未处理",
+                    Type = normal.Type == ReviewType.APPLY ? "申请" : "捐赠",
                     ReviewerID = normal.ReviewerID,
                     Result = normal.Result,
                     Content = normal.Content,

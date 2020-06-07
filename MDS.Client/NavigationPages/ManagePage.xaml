@@ -11,9 +11,6 @@
     <Grid>
         <TabControl x:Name="MainTabControl" BorderThickness="0"
                     Style="{StaticResource MaterialDesignAppBarTabControl}">
-            <TabItem Header="管理记录" x:Name="ManageAllPageTab">
-                <Frame x:Name="ManageAllPageFrame" Margin="0,0"/>
-            </TabItem>
             <TabItem Header="物资审核" x:Name="MaterialAuditPageTab">
                 <Frame x:Name="MaterialAuditPageFrame" Margin="0,0"/>
             </TabItem>

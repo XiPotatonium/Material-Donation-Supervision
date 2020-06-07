@@ -18,49 +18,45 @@ using System.Windows.Shapes;
 namespace MDS.Client.DeliveryPages
 {
     /// <summary>
-    /// ProcessingPage.xaml 的交互逻辑
+    /// ApplyPage.xaml 的交互逻辑
     /// </summary>
-    public partial class ProcessingPage : Page
+    public partial class ApplyPage : Page
     {
-        private ObservableCollection<DeliveryListViewModel> processingList { set; get; }
-        public ProcessingPage()
+        private ObservableCollection<DeliveryListViewModel> applyList { set; get; }
+        public ApplyPage()
         {
             InitializeComponent();
-            processingList = new ObservableCollection<DeliveryListViewModel>();
-            userProcessingList.DataContext = processingList;
+            applyList = new ObservableCollection<DeliveryListViewModel>();
+            userApplyList.DataContext = applyList;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await UpdateProcessingList();
+            await UpdateApplyList();
         }
-        private async Task UpdateProcessingList()
+        private async Task UpdateApplyList()
         {
             DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryListRequest()
             {
                 DelivererId = UserInfo.Id,
-                State = DeliveryState.Processing
+                State = DeliveryState.Alone
             });
             foreach (Item item in deliveryListResponse.Items)
             {
-                processingList.Add(new DeliveryListViewModel()
+                applyList.Add(new DeliveryListViewModel()
                 {
                     GUID = item.GUID.ToString(),
                     Name = item.Name,
                     Quantity = item.Quantity,
-                    StartID = item.StartID,
-                    FinishID = item.FinishID,
                     Departure = item.Departure,
-                    Destination = item.Destination,
-                    StartTime = item.StartTime,
-                    FinishTime = item.FinishTime
+                    Destination = item.Destination
                 });
             }
         }
         public void ButtonMove_Clicked(object sender, RoutedEventArgs e)
         {
-            DeliveryListViewModel cur = (DeliveryListViewModel)userProcessingList.SelectedItem;
-            InputDialog dialog = new InputDialog(cur.GUID, DeliveryState.Processing);
+            DeliveryListViewModel cur = (DeliveryListViewModel)userApplyList.SelectedItem;
+            InputDialog dialog = new InputDialog(cur.GUID, DeliveryState.Alone);
             dialog.ShowDialog();
         }
     }

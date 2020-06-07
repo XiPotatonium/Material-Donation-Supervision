@@ -39,33 +39,26 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="6*"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="5"/>
-                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <ListBox x:Name="MaterialSelectListBox"
-                                 Grid.Column="0" Margin="0,0,15,0"
-                                 SelectionMode="Single"
-                                 SelectionChanged="MaterialSelectListBox_SelectionChanged">
+                                     Grid.Column="0" Margin="0,0,15,0"
+                                     SelectionMode="Single"
+                                     SelectionChanged="MaterialSelectListBox_SelectionChanged"
+                                     HorizontalContentAlignment="Stretch">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate DataType="{x:Type local:DonationMaterialListViewModel}">
                                         <Grid HorizontalAlignment="Stretch">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel Margin="0,0,16,0"
-                                                    Grid.Column="0"
-                                                    HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                <TextBlock FontWeight="Bold"
-                                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                                       Text="{Binding Name}">
+                                            <materialDesign:PackIcon Kind="GoogleFit" HorizontalAlignment="Left"
+                                                                     Width="40" Height="40" Margin="10,5"/>
+                                            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                <TextBlock FontWeight="Bold" HorizontalAlignment="Right"
+                                                        Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                                        Text="{Binding Name}">
                                                 </TextBlock>
                                             </StackPanel>
-                                            <TextBlock Grid.Column="1" 
-                                                   VerticalAlignment="Center"
-                                                   Text="{Binding Description}" Opacity="0.75"
-                                                   Style="{StaticResource fileSystemEntryInfoDetailStyle}"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -76,33 +69,37 @@
                               Margin="15,0,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="50"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock x:Name="UserNameTextBlock"
-                                       Grid.Row="0"
+                                <TextBlock x:Name="UserPhoneNumberTextBlock"
+                                       Grid.Row="0" Margin="20,10,0,0"
                                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                                        Text="你滴名字"/>
-                                <TextBlock x:Name="UserPhoneTextBlock" 
-                                       Grid.Row="1" Margin="0,10,0,0"
-                                       HorizontalAlignment="Left"
-                                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                                       Text="电话号码"/>
-                                <TextBlock x:Name="UserAddressTextBlock" Grid.Row="2"
-                                        Margin="0,10,0,4"
+                                <TextBlock x:Name="UserAddressTextBlock" Grid.Row="1"
+                                        Margin="20,20,0,4"
                                         Text="饿我去的话丢弃维达力的解耦2金额哦哦i建瓯的无穷的气味都i就·哦"
                                         TextWrapping="Wrap"
                                         VerticalAlignment="Center" HorizontalAlignment="Left"
                                         Style="{StaticResource MaterialDesignBody2TextBlock}"/>
-                                <Separator Grid.Row="3"
+                                <materialDesign:PackIcon Kind="AccountCircle" 
+                                         Grid.Row="0" Grid.RowSpan="2"
+                                         VerticalAlignment="Center" HorizontalAlignment="Right"
+                                         Width="100" Height="100"
+                                         Margin="5,5,20,5"/>
+                                <Separator Grid.Row="2"
                                         Style="{StaticResource MaterialDesignDarkSeparator}" />
                                 <TextBlock x:Name="MaterialNameTextBlock"
-                                       Grid.Row="4" Margin="0,10,0,0"
-                                       Text="请选择想要捐赠的物资"
+                                       Grid.Row="3" Margin="20,10,0,0"
+                                       Text="请选择想要申请的物资"
                                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"/>
+                                <TextBlock x:Name="MaterialDetailTextBlock"
+                                       Grid.Row="4" Margin="20,20,0,0" Height="200"
+                                       Text="物资详情" TextWrapping="Wrap"
+                                       Style="{StaticResource MaterialDesignTextBlock}"/>
                                 <mdscontrols:NumberInputBox x:Name="QuantityInputBox" Grid.Row="5" 
                                                             Margin="0,10,30,0"
                                                             QuantityConstraintHint=""/>

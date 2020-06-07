@@ -40,6 +40,15 @@
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center">
         </TextBlock>
+        <Button Content="修改二级密码"
+                Grid.Column="3"
+                Grid.Row="1"
+                Margin="250,0,0,0"
+                Height="30"
+                Width="100"
+                FontSize="10"
+                Background="Gray"
+                Click="Goto_Change"/>
         <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto"  Grid.Row="3" Grid.Column="1">
             <DataGrid x:Name="history" 
                       Style="{StaticResource MaterialDesignDataGrid}" 
@@ -63,9 +72,10 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="编号" Width="75" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="用户" Width="75" Binding="{Binding User}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="时间" Width="140" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="编号" Width="60" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="用户" Width="60" Binding="{Binding UserID}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="时间" Width="90" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="类型" Width="80" Binding="{Binding Type}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
                     <DataGridTemplateColumn Header=" " Width="60">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -101,9 +111,10 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="编号" Width="75" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="用户" Width="75" Binding="{Binding User}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="时间" Width="140" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="编号" Width="60" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="用户" Width="60" Binding="{Binding UserID}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="时间" Width="90" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="类型" Width="80" Binding="{Binding Type}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
                     <DataGridTemplateColumn Header=" " Width="60">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

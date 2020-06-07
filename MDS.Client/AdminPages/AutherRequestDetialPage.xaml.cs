@@ -22,20 +22,37 @@ namespace MDS.Client.AdminPages
     public partial class AutherRequestDetialPage : Window
     {
         private AutherRequestConstruct Info_List = new AutherRequestConstruct();
+        private string Add_Result;
 
         public AutherRequestDetialPage(AutherRequestConstruct List, int flag)
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             this.Info_List = List;
+            switch (Info_List.Result)
+            {
+                case AdminResult.FAIL:
+                    Add_Result = "未通过";
+                    break;
+                case AdminResult.NONE:
+                    Add_Result = "未处理";
+                    break;
+                case AdminResult.PASS:
+                    Add_Result = "通过";
+                    break;
+                default:
+                    break;
+            }
             NumberTextBlock.Text = "编号: " + Info_List.Number;
             UserTextBlock.Text = "认证人: " + Info_List.UserID;
             TimeTextBlock.Text = "认证时间: " + Info_List.Time;
             StateTextBlock.Text = "认证状态: " + Info_List.State;
+            ReviewTypeTextBlock.Text = "认证类型: " + Info_List.Type;
             ReviewerTextBlock.Text = "审核人: " + Info_List.ReviewerID;
-            ResultTextBlock.Text = "认证结果: " + Info_List.Result;
+            ResultTextBlock.Text = "认证结果: " + Add_Result;
             ContentTextBlock.Text = "认证内容: " + Info_List.Content;
             RemarksTextBlock.Text = "备注: " + Info_List.Remarks;
+            
             if (flag == 1)
             {
                 Thread thread = new Thread(new ThreadStart(close_window));

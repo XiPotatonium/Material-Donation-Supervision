@@ -21,7 +21,7 @@
                   CanUserReorderColumns="True" 
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="接单" Width="80" MinWidth="10">
+                <DataGridTemplateColumn Header="取货" Width="80" MinWidth="10">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Style="{StaticResource MaterialDesignFlatButton}"

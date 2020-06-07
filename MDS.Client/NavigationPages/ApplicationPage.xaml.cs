@@ -124,7 +124,7 @@ namespace MDS.Client.NavigationPages
 
         private void RefreshAddressInfo()
         {
-            UserNameTextBlock.Text = UserInfo.PhoneNumber;
+            UserPhoneNumberTextBlock.Text = UserInfo.PhoneNumber;
             UserAddressTextBlock.Text = UserInfo.HomeAddress;
         }
 
@@ -198,6 +198,7 @@ namespace MDS.Client.NavigationPages
             {
                 MaterialNameTextBlock.Text = selected.Name;
                 QuantityInputBox.QuantityConstraintHint = $"限量{selected.Constraint}";
+                MaterialDetailTextBlock.Text = selected.Description;
             }
             else
             {

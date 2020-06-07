@@ -20,33 +20,51 @@ namespace MDS.Client.DeliveryPages
     public partial class InputDialog : Window
     {
         private int GUID;
-        private int type;
+        private DeliveryState type;
         private MutualString info = new MutualString();
-        public InputDialog(string guid, int t)
+        public InputDialog(string guid, DeliveryState t)
         {
             this.GUID = int.Parse(guid);
             this.type = t;
-            if (this.type == 0)
+            if (this.type == DeliveryState.Waiting)
             {
                 this.info.output = "请输入发货用户ID以接受订单：";
             }
-            else if (this.type == 1)
+            else if (this.type == DeliveryState.Processing)
             {
                 this.info.output = "请输入收货用户ID以完成订单：";
+            }
+            else if (this.type == DeliveryState.Alone)
+            {
+                this.info.output = "请输入ID以确认申请：";
+            }
+            else
+            {
+
             }
             InitializeComponent();
             userOutput.DataContext = info;
         }
         private async void ButtonConfirm_Clicked(object sender, RoutedEventArgs e)
         {
-            DeliveryMoveResponse deliveryMoveResponse = await NetworkHelper.GetAsync(new DeliveryMoveRequest()
+            DeliveryMoveResponse deliveryMoveResponse;
+            if (this.type == DeliveryState.Alone)
             {
-                DelivererId = UserInfo.Id,
-                GUID = this.GUID,
-                SecureId = int.Parse(userInput.Password)   // todo string这里可能有问题
-            });
-
-            deliveryMoveResponse = new DeliveryMoveResponse() { Check = 0 };    // todo 假数据
+                deliveryMoveResponse = await NetworkHelper.GetAsync(new DeliveryApplyRequest()
+                {
+                    TransactionId = this.GUID,
+                    DelivermanId = UserInfo.Id,
+                });
+            }
+            else
+            {
+                deliveryMoveResponse = await NetworkHelper.GetAsync(new DeliveryMoveRequest()
+                {
+                    DelivererId = UserInfo.Id,
+                    GUID = this.GUID,
+                    SecureId = int.Parse(userInput.Password)
+                });
+            }
 
             if (deliveryMoveResponse.Check == 0)
             {

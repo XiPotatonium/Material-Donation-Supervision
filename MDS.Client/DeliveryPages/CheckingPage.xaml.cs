@@ -1,5 +1,4 @@
 ﻿using DTO;
-using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,36 +13,34 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 namespace MDS.Client.DeliveryPages
 {
     /// <summary>
-    /// ProcessingPage.xaml 的交互逻辑
+    /// CheckingPage.xaml 的交互逻辑
     /// </summary>
-    public partial class ProcessingPage : Page
+    public partial class CheckingPage : Page
     {
-        private ObservableCollection<DeliveryListViewModel> processingList { set; get; }
-        public ProcessingPage()
+        private ObservableCollection<DeliveryListViewModel> checkingList { set; get; }
+        public CheckingPage()
         {
             InitializeComponent();
-            processingList = new ObservableCollection<DeliveryListViewModel>();
-            userProcessingList.DataContext = processingList;
+            checkingList = new ObservableCollection<DeliveryListViewModel>();
+            userCheckingList.DataContext = checkingList;
         }
-
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await UpdateProcessingList();
+            await UpdateCheckingList();
         }
-        private async Task UpdateProcessingList()
+        private async Task UpdateCheckingList()
         {
             DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryListRequest()
             {
                 DelivererId = UserInfo.Id,
-                State = DeliveryState.Processing
+                State = DeliveryState.Checking
             });
             foreach (Item item in deliveryListResponse.Items)
             {
-                processingList.Add(new DeliveryListViewModel()
+                checkingList.Add(new DeliveryListViewModel()
                 {
                     GUID = item.GUID.ToString(),
                     Name = item.Name,
@@ -56,12 +53,6 @@ namespace MDS.Client.DeliveryPages
                     FinishTime = item.FinishTime
                 });
             }
-        }
-        public void ButtonMove_Clicked(object sender, RoutedEventArgs e)
-        {
-            DeliveryListViewModel cur = (DeliveryListViewModel)userProcessingList.SelectedItem;
-            InputDialog dialog = new InputDialog(cur.GUID, DeliveryState.Processing);
-            dialog.ShowDialog();
         }
     }
 }

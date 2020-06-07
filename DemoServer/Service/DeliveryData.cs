@@ -82,58 +82,112 @@ namespace MDS.Server.Service
 					Check = 3 //表示其它错误
 				};
 			}
+			int secureId;
+			int quantity = (int)ds.Tables[0].Rows[0]["MateriaQuantity"];
+			int materialId = (int)ds.Tables[0].Rows[0]["MaterialId"];
+			if ((DeliveryState)ds.Tables[0].Rows[0]["DeliveryState"] == DeliveryState.Waiting)
+			{
+				if ((TransactionType)ds.Tables[0].Rows[0]["TransactionType"] == TransactionType.DONATION)
+				{
+					secureId = (int)ds.Tables[0].Rows[0]["UserId"];
+					if (request.SecureId == secureId)
+					{
+						return new DeliveryMoveResponse()
+						{
+							Check = 0 //表示成功
+						};
+					}
+				}
+				else
+				{
+					secureId = (int)ds.Tables[0].Rows[0]["DeliveryAdminId"];
+					if (request.SecureId == secureId)
+					{
+						SqlCommand cmd = new SqlCommand(
+							$"update Materials " +
+							$"set MaterialQuantity = MaterialQuantity - {quantity}" +
+							$"where MaterialId = {materialId}",
+							Connect.Connection);
+						cmd.ExecuteNonQuery();
+						return new DeliveryMoveResponse()
+						{
+							Check = 0 //表示成功
+						};
+					}
+				}
+			}
+			else if ((DeliveryState)ds.Tables[0].Rows[0]["DeliveryState"] == DeliveryState.Processing)
+			{
+				if ((TransactionType)ds.Tables[0].Rows[0]["TransactionType"] == TransactionType.DONATION)
+				{
+					secureId = (int)ds.Tables[0].Rows[0]["DeliveryAdminId"];
+					if (request.SecureId == secureId)
+					{
+						SqlCommand cmd = new SqlCommand(
+							$"update Materials " +
+							$"set MaterialQuantity = MaterialQuantity + {quantity}" +
+							$"where MaterialId = {materialId}",
+							Connect.Connection);
+						cmd.ExecuteNonQuery();
+						return new DeliveryMoveResponse()
+						{
+							Check = 0 //表示成功
+						};
+					}
+				}
+				else
+				{
+					secureId = (int)ds.Tables[0].Rows[0]["UserId"];
+					if (request.SecureId == secureId)
+					{
+						return new DeliveryMoveResponse()
+						{
+							Check = 0 //表示成功
+						};
+					}
+				}
+			}
 			else
 			{
-				int secureId;
-				if ((DeliveryState)ds.Tables[0].Rows[0]["DeliveryState"] == DeliveryState.Waiting)
+				return new DeliveryMoveResponse()
 				{
-					if ((TransactionType)ds.Tables[0].Rows[0]["TransactionType"] == TransactionType.DONATION)
-					{
-						secureId = (int)ds.Tables[0].Rows[0]["UserId"];
-					}
-					else
-					{
-						secureId = (int)ds.Tables[0].Rows[0]["DeliveryAdminId"];
-					}
-				}
-				else if ((DeliveryState)ds.Tables[0].Rows[0]["DeliveryState"] == DeliveryState.Processing)
-				{
-					if ((TransactionType)ds.Tables[0].Rows[0]["TransactionType"] == TransactionType.DONATION)
-					{
-						secureId = (int)ds.Tables[0].Rows[0]["DeliveryAdminId"];
-					}
-					else
-					{
-						secureId = (int)ds.Tables[0].Rows[0]["UserId"];
-					}
-				}
-				else
-				{
-					return new DeliveryMoveResponse()
-					{
-						Check = 2 //表示订单状态非Waiting或Processing
-					};
-				}
-				if (request.SecureId == secureId)
-				{
-					return new DeliveryMoveResponse()
-					{
-						Check = 0 //表示成功
-					};
-				}
-				else
-				{
-					return new DeliveryMoveResponse()
-					{
-						Check = 1 //表示验证ID错误
-					};
-				}
-
+					Check = 2 //表示订单状态非Waiting或Processing
+				};
 			}
-
-            
-            
+			return new DeliveryMoveResponse()
+			{
+				Check = 1 //表示验证ID错误
+			};
+		           
         }
+		public DeliveryMoveResponse HandleDeliveryApplyRequest(DeliveryApplyRequest request)
+		{
+			
+			SqlCommand com = new SqlCommand
+				($"select * from Delivery where TransactionId={(int)request.TransactionId} and DeliveryState={DeliveryState.Alone}"
+				, Connect.Connection);
+			SqlDataAdapter da = new SqlDataAdapter(com);
+			DataSet ds = new DataSet();
+			da.Fill(ds, "DeliveryApply");
+			if (ds.Tables[0].Rows.Count == 0)
+			{
+				return new DeliveryMoveResponse()
+				{
+					Check = 3 //表示其它错误
+				};
+			}
+			SqlCommand cmd = new SqlCommand(
+							$"update Delivery " +
+							$"set DelivermanId = {request.DelivermanId}" +
+							$", DeliveryState = {DeliveryState.Checking}" +
+							$"where TransactionId = {request.TransactionId}",
+							Connect.Connection);
+			cmd.ExecuteNonQuery();
+			return new DeliveryMoveResponse()
+			{
+				Check = 0
+			};
+		}
 
 	}
 }

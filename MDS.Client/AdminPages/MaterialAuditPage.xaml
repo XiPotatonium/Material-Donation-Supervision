@@ -63,9 +63,10 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="编号" Width="75" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="用户" Width="75" Binding="{Binding Applicant}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="时间" Width="140" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="编号" Width="60" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="用户" Width="60" Binding="{Binding ApplicantID}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="时间" Width="100" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="类型" Width="70" Binding="{Binding Type}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
                     <DataGridTemplateColumn Header=" " Width="60">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -101,9 +102,10 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="编号" Width="75" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="用户" Width="75" Binding="{Binding Applicant}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
-                    <DataGridTextColumn Header="时间" Width="140" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="编号" Width="60" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="用户" Width="60" Binding="{Binding ApplicantID}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="时间" Width="100" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                    <DataGridTextColumn Header="类型" Width="70" Binding="{Binding Type}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
                     <DataGridTemplateColumn Header=" " Width="60">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

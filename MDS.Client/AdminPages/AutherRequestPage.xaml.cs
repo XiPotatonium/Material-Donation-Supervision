@@ -56,6 +56,12 @@ namespace MDS.Client.AdminPages
 
         private async Task UpdateHistoryList()
         {
+            /*AutherRequestListResponse autherRequestListResponse = await NetworkHelper.GetAsync(new AutherRequestListRequest()
+            {
+                AdminID = UserInfo.Id,
+                state = AdminState.FINISH
+            });*/
+            //测试假数据
             await Task.Delay(100);
             AutherRequestListResponse autherRequestList = new AutherRequestListResponse();
             autherRequestList.a_normals = new List<Normal>();
@@ -65,6 +71,7 @@ namespace MDS.Client.AdminPages
                 UserID = 6,
                 Time = DateTime.Now,
                 State = AdminState.FINISH,
+                Type = ReviewType.ADMINAUTHENTICANTION,
                 ReviewerID = 1,
                 Result = AdminResult.FAIL,
                 Content = "sssss",
@@ -78,7 +85,8 @@ namespace MDS.Client.AdminPages
                     Number = normal.Number,
                     UserID = normal.UserID,
                     Time = normal.Time,
-                    State = normal.State,
+                    State = normal.State == AdminState.FINISH ? "已处理" : "未处理",
+                    Type = normal.Type == ReviewType.ADMINAUTHENTICANTION ? "管理员认证" : "配送员认证",
                     ReviewerID = normal.ReviewerID,
                     Result = normal.Result,
                     Content = normal.Content,
@@ -89,6 +97,12 @@ namespace MDS.Client.AdminPages
 
         private async Task UpdateWaitingList()
         {
+            /*AutherRequestListResponse autherRequestListResponse = await NetworkHelper.GetAsync(new AutherRequestListRequest()
+            {
+                AdminID = UserInfo.Id,
+                state = AdminState.WAIT
+            });*/
+            //测试假数据
             await Task.Delay(100);
             AutherRequestListResponse autherRequestList = new AutherRequestListResponse();
             autherRequestList.a_normals = new List<Normal>();
@@ -98,6 +112,7 @@ namespace MDS.Client.AdminPages
                 UserID = 6,
                 Time = DateTime.Now,
                 State = AdminState.FINISH,
+                Type = ReviewType.DELIVERAUTHENTICANTION,
                 ReviewerID = 1,
                 Result = AdminResult.FAIL,
                 Content = "sssss",
@@ -111,13 +126,20 @@ namespace MDS.Client.AdminPages
                     Number = normal.Number,
                     UserID = normal.UserID,
                     Time = normal.Time,
-                    State = normal.State,
+                    State = normal.State == AdminState.FINISH ? "已处理" : "未处理",
+                    Type = normal.Type == ReviewType.ADMINAUTHENTICANTION ? "管理员认证" : "配送员认证",
                     ReviewerID = normal.ReviewerID,
                     Result = normal.Result,
                     Content = normal.Content,
                     Remarks = normal.Remarks
                 });
             }
+        }
+
+        private void Goto_Change(object sender, RoutedEventArgs e)
+        {
+            Change_Passward change_Passward = new Change_Passward();
+            change_Passward.ShowDialog();
         }
     }
 }
