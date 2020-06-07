@@ -197,7 +197,7 @@ namespace MDS.Client.NavigationPages
         {
             OriginalItem = item;
 
-            ApplicationState = OriginalItem.State;
+            OriginState = OriginalItem.State;
             Id = item.ID.ToString();
             Name = item.Name;
             Quantity = item.Quantity;
