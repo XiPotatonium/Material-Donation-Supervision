@@ -24,9 +24,8 @@ namespace MDS.Client.AdminPages
         private string Add_Result;
         public MaterialAuditDetialPage(MaterialAuditConstruct List, int flag)
         {
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
-            this.Info_List = List;
+            Info_List = List;
             switch (Info_List.Result)
             {
                 case AdminResult.FAIL:
@@ -42,7 +41,7 @@ namespace MDS.Client.AdminPages
                     break;
             }
             AdminInfo.Event_Result = false;
-            NumberTextBlock.Text = "编号: " + Info_List.Number;
+            NumberTextBlock.Text = "申请编号: " + Info_List.Number;
             ApplicantTextBlock.Text = "申请人: " + Info_List.ApplicantID;
             TimeTextBlock.Text = "申请时间: " + Info_List.Time;
             StateTextBlock.Text = "申请状态: " + Info_List.State;
@@ -50,7 +49,6 @@ namespace MDS.Client.AdminPages
             ReviewerTextBlock.Text = "审核人: " + Info_List.ReviewerID;
             ResultTextBlock.Text = "申请结果: " + Add_Result;
             ContentTextBlock.Text = "申请内容: " + Info_List.Content;
-            RemarksTextBlock.Text = "备注: " + Info_List.Remarks;
             if(flag == 1)
             {
                 Thread thread = new Thread(new ThreadStart(close_window));
