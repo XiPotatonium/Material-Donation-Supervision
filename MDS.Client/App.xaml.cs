@@ -15,17 +15,25 @@ namespace MDS.Client
     /// </summary>
     public partial class App : Application
     {
-        //public App()
-        //{
-        //    AppDomain.CurrentDomain.UnhandledException += (s, e) =>
-        //    {
-        //        UnhandledException(e.ExceptionObject.ToString());
-        //    };
-        //}
+        public App()
+        {
+            //AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            //{
+            //    UnhandledException(e.ExceptionObject.ToString());
+            //};
+        }
 
-        //private void UnhandledException(string msg)
-        //{
-        //    MessageBox.Show(msg, "意料之外的错误");
-        //}
+        private void UnhandledException(string msg)
+        {
+            if (Client.MainWindow.Snackbar != null)
+            {
+                Client.MainWindow.SnackbarMessage.Content = msg;
+                Client.MainWindow.Snackbar.IsActive = true;
+            }
+            else
+            {
+                MessageBox.Show(msg, "意料之外的错误");
+            }
+        }
     }
 }

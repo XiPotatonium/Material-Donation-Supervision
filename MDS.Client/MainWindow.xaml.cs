@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DTO;
+using MaterialDesignThemes.Wpf;
 using MDS.Client.Extension;
 using MDS.Client.NavigationPages;
 
@@ -23,6 +24,10 @@ namespace MDS.Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        // 这两个是给全局异常处理用的，Pages不要使用这个
+        public static Snackbar Snackbar { private set; get; } = null;
+        public static SnackbarMessage SnackbarMessage { private set; get; } = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -30,6 +35,8 @@ namespace MDS.Client
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Snackbar = PART_SnackBar;
+            SnackbarMessage = SnackBarContent;
             PART_Frame.Content = new MyMainPage(this);
 
             UserInfoResponse response = await NetworkHelper.GetAsync(new UserInfoRequest()
@@ -95,6 +102,10 @@ namespace MDS.Client
             PART_Frame.Content = new DonationPage(this, userDonationViewModel);
         }
 
+        /// <summary>
+        /// 用这个来显示异常
+        /// </summary>
+        /// <param name="message"></param>
         public void SetSnackBarContentAndPopup(string message)
         {
             SnackBarContent.Content = message;
