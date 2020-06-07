@@ -17,9 +17,6 @@
             <TabItem Header="申请订单" x:Name="ApplyPageTab">
                 <Frame x:Name="ApplyPageFrame" Margin="0,0"/>
             </TabItem>
-            <TabItem Header="审核中" x:Name="CheckingPageTab">
-                <Frame x:Name="CheckingPageFrame" Margin="0,0"/>
-            </TabItem>
             <TabItem Header="待取货" x:Name="WaitingPageTab">
                 <Frame x:Name="WaitingPageFrame" Margin="0,0"/>
             </TabItem>

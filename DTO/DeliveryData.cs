@@ -23,8 +23,8 @@ namespace DTO
         public string Departure { set; get; }
         public string Destination { set; get; }
         public DeliveryState State { set; get; }
-        public DateTime StartTime { set; get; }
-        public DateTime FinishTime { set; get; }
+        public string StartTime { set; get; }
+        public string FinishTime { set; get; }
     }
 
     [Serializable]

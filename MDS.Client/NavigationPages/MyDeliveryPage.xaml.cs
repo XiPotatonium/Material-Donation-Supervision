@@ -23,7 +23,7 @@ namespace MDS.Client.NavigationPages
         private MainWindow parentWindow { get; } = null;
         private OverviewPage myOverviewPage { set; get; } = new OverviewPage();
         private ApplyPage myApplyPage { set; get; } = new ApplyPage();
-        private CheckingPage myCheckingPage { set; get; } = new CheckingPage();
+        //private CheckingPage myCheckingPage { set; get; } = new CheckingPage();
         private ProcessingPage myProcessingPage { set; get; } = new ProcessingPage();
         private WaitingPage myWaitingPage { set; get; } = new WaitingPage();
         private HistoryPage myHistoryPage { set; get; } = new HistoryPage();
@@ -32,7 +32,7 @@ namespace MDS.Client.NavigationPages
             InitializeComponent();
             OverviewPageFrame.Content = myOverviewPage;
             ApplyPageFrame.Content = myApplyPage;
-            CheckingPageFrame.Content = myCheckingPage;
+            //CheckingPageFrame.Content = myCheckingPage;
             ProcessingPageFrame.Content = myProcessingPage;
             WaitingPageFrame.Content = myWaitingPage;
             HistoryPageFrame.Content = myHistoryPage;
@@ -43,7 +43,7 @@ namespace MDS.Client.NavigationPages
             parentWindow = parent;
             OverviewPageFrame.Content = myOverviewPage;
             ApplyPageFrame.Content = myApplyPage;
-            CheckingPageFrame.Content = myCheckingPage;
+            //CheckingPageFrame.Content = myCheckingPage;
             ProcessingPageFrame.Content = myProcessingPage;
             WaitingPageFrame.Content = myWaitingPage;
             HistoryPageFrame.Content = myHistoryPage;

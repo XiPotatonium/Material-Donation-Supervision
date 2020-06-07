@@ -58,7 +58,7 @@
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="编号" Width="Auto" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
+                <DataGridTextColumn Header="数量" Width="Auto" Binding="{Binding Number}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
                 <DataGridTextColumn Header="用户ID" Width="Auto" Binding="{Binding ApplicantID}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
                 <DataGridTextColumn Header="时间" Width="Auto" Binding="{Binding Time}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>
                 <DataGridTextColumn Header="类型" Width="Auto" Binding="{Binding Type}" ElementStyle="{StaticResource CenterAlignmentStycle}"/>

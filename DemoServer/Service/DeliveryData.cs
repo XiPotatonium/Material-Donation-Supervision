@@ -71,6 +71,14 @@ namespace MDS.Server.Service
 					it.Departure = ds.Tables[0].Rows[j]["HomeAddress"].ToString();
 					it.Destination = ds.Tables[0].Rows[j]["Address"].ToString();
 				}
+				if (ds.Tables[0].Rows[j]["DeliveryBeginDate"] != System.DBNull.Value)
+				{
+					it.StartTime = (string)ds.Tables[0].Rows[j]["DeliveryBeginDate"];
+				}
+				if (ds.Tables[0].Rows[j]["DeliveryEndDate"] != System.DBNull.Value)
+				{
+					it.FinishTime = (string)ds.Tables[0].Rows[j]["DeliveryEndDate"];
+				}
 				items.Add(it);
 			}
 			ds.Dispose();
@@ -79,7 +87,7 @@ namespace MDS.Server.Service
         public DeliveryMoveResponse HandleDeliveryMoveRequest(DeliveryMoveRequest request)
 		{
 			SqlCommand com = new SqlCommand
-				($"select * from Delivery inner join Tranc on Delivery.TransactionId = Tranc.TransactionId where DeliverymanId={(int)request.DelivererId} and TransactionId={(int)request.GUID}"
+				($"select * from Delivery inner join Tranc on Delivery.TransactionId = Tranc.TransactionId where DeliverymanId={(int)request.DelivererId} and Delivery.TransactionId={(int)request.GUID}"
 				, Connect.Connection);
 			SqlDataAdapter da = new SqlDataAdapter(com);
 			DataSet ds = new DataSet();
@@ -93,7 +101,7 @@ namespace MDS.Server.Service
 				};
 			}
 			int secureId;
-			int quantity = (int)ds.Tables[0].Rows[0]["MateriaQuantity"];
+			int quantity = (int)ds.Tables[0].Rows[0]["MaterialQuantity"];
 			int materialId = (int)ds.Tables[0].Rows[0]["MaterialId"];
 			if ((DeliveryState)ds.Tables[0].Rows[0]["DeliveryState"] == DeliveryState.Waiting)
 			{
@@ -104,15 +112,15 @@ namespace MDS.Server.Service
 					{
 						SqlCommand cmd2 = new SqlCommand(
 							$"update Delivery " +
-							$"set DeliveryState = {DeliveryState.Processing}" +
-							$", DeliveryBeginDate = {DateTime.Now.ToString()}" +
-							$"where TransacyionId = {(int)request.GUID}",
+							$"set DeliveryState = {(int)DeliveryState.Processing}" +
+							$", DeliveryBeginDate = '{DateTime.Now}'" +
+							$"where TransactionId = {request.GUID}",
 							Connect.Connection);
 						cmd2.ExecuteNonQuery();
 						SqlCommand cmd3 = new SqlCommand(
 							$"update Tranc " +
-							$"set TransactionState = {ApplicationState.Delivering}" +
-							$"where TransacyionId = {(int)request.GUID}",
+							$"set TransactionState = {(int)ApplicationState.Delivering}" +
+							$"where TransactionId = {request.GUID}",
 							Connect.Connection);
 						cmd3.ExecuteNonQuery();
 						return new DeliveryMoveResponse()
@@ -134,15 +142,15 @@ namespace MDS.Server.Service
 						cmd.ExecuteNonQuery();
 						SqlCommand cmd2 = new SqlCommand(
 							$"update Delivery " +
-							$"set DeliveryState = {DeliveryState.Processing}" +
-							$", DeliveryBeginDate = {DateTime.Now.ToString()}" +
-							$"where TransacyionId = {(int)request.GUID}",
+							$"set DeliveryState = {(int)DeliveryState.Processing}" +
+							$", DeliveryBeginDate = '{DateTime.Now}'" +
+							$"where TransactionId = {request.GUID}",
 							Connect.Connection);
 						cmd2.ExecuteNonQuery();
 						SqlCommand cmd3 = new SqlCommand(
 							$"update Tranc " +
-							$"set TransactionState = {ApplicationState.Delivering}" +
-							$"where TransacyionId = {(int)request.GUID}",
+							$"set TransactionState = {(int)ApplicationState.Delivering}" +
+							$"where TransactionId = {request.GUID}",
 							Connect.Connection);
 						cmd3.ExecuteNonQuery();
 						return new DeliveryMoveResponse()
@@ -167,15 +175,15 @@ namespace MDS.Server.Service
 						cmd.ExecuteNonQuery();
 						SqlCommand cmd2 = new SqlCommand(
 							$"update Delivery " +
-							$"set DeliveryState = {DeliveryState.Finished}" +
-							$", DeliveryEndDate = {DateTime.Now.ToString()}" +
-							$"where TransacyionId = {(int)request.GUID}",
+							$"set DeliveryState = {(int)DeliveryState.Finished}" +
+							$", DeliveryEndDate = '{DateTime.Now}'" +
+							$"where TransactionId = {request.GUID}",
 							Connect.Connection);
 						cmd2.ExecuteNonQuery();
 						SqlCommand cmd3 = new SqlCommand(
 							$"update Tranc " +
-							$"set TransactionState = {ApplicationState.Received}" +
-							$"where TransacyionId = {(int)request.GUID}",
+							$"set TransactionState = {(int)ApplicationState.Received}" +
+							$"where TransactionId = {request.GUID}",
 							Connect.Connection);
 						cmd3.ExecuteNonQuery();
 						return new DeliveryMoveResponse()
@@ -189,15 +197,15 @@ namespace MDS.Server.Service
 					secureId = (int)ds.Tables[0].Rows[0]["UserId"];
 					SqlCommand cmd2 = new SqlCommand(
 						$"update Delivery " +
-						$"set DeliveryState = {DeliveryState.Finished}" +
-						$", DeliveryEndDate = {DateTime.Now.ToString()}" +
-						$"where TransacyionId = {(int)request.GUID}",
+						$"set DeliveryState = {(int)DeliveryState.Finished}" +
+						$", DeliveryEndDate = '{DateTime.Now}'" +
+						$"where TransactionId = {request.GUID}",
 						Connect.Connection);
 					cmd2.ExecuteNonQuery();
 					SqlCommand cmd3 = new SqlCommand(
 						$"update Tranc " +
-						$"set TransactionState = {ApplicationState.Received}" +
-						$"where TransacyionId = {(int)request.GUID}",
+						$"set TransactionState = {(int)ApplicationState.Received}" +
+						$"where TransactionId = {request.GUID}",
 						Connect.Connection);
 					cmd3.ExecuteNonQuery();
 					if (request.SecureId == secureId)
@@ -241,7 +249,7 @@ namespace MDS.Server.Service
 			SqlCommand cmd = new SqlCommand(
 							$"update Delivery " +
 							$"set DeliverymanId = {request.DelivermanId}" +
-							$", DeliveryState = {(int)DeliveryState.Checking}" +
+							$", DeliveryState = {(int)DeliveryState.Waiting}" +
 							$"where TransactionId = {request.TransactionId}",
 							Connect.Connection);
 			cmd.ExecuteNonQuery();

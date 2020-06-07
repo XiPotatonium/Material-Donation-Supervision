@@ -92,7 +92,7 @@
                     Click="SwitchButton_Click"/>
             <Button x:Name="PrimaryButton" Grid.Row="1"
                     Margin="10"
-                    Content="登陆"
+                    Content="登录"
                     Click="PrimaryButton_Click"/>
         </Grid>
 

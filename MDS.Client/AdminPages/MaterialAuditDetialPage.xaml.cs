@@ -86,6 +86,7 @@ namespace MDS.Client.AdminPages
 
                     if (materialAuditMoveResponse_agree.flag == 0)
                     {
+                        MainWindow.SetSnackBarContentAndPopup("操作成功");
                         Close();
                     }
                     else
@@ -105,6 +106,7 @@ namespace MDS.Client.AdminPages
 
                     if (materialAuditMoveResponse_refuse.flag == 0)
                     {
+                        MainWindow.SetSnackBarContentAndPopup("操作成功");
                         Close();
                     }
                     else

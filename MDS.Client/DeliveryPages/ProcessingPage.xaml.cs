@@ -51,7 +51,6 @@ namespace MDS.Client.DeliveryPages
                     Name = item.Name,
                     Quantity = item.Quantity,
                     StartID = item.StartID,
-                    FinishID = item.FinishID,
                     Departure = item.Departure,
                     Destination = item.Destination,
                     StartTime = item.StartTime

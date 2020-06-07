@@ -58,11 +58,17 @@ namespace MDS.Client.DeliveryPages
             }
             else
             {
+                int sid = 0;
+                if (!int.TryParse(userInput.Password, out sid))
+                {
+                    MainWindow.SetSnackBarContentAndPopup("输入格式有误");
+                }
                 deliveryMoveResponse = await NetworkHelper.GetAsync(new DeliveryMoveRequest()
                 {
                     DelivererId = UserInfo.Id,
                     GUID = this.GUID,
-                    SecureId = int.Parse(userInput.Password)
+
+                    SecureId = sid
                 });
             }
 
