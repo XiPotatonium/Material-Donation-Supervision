@@ -33,8 +33,9 @@ namespace MDS.Server
                     {
                         list.Add(new Normal()
                         {
-                            Content = Material.MaterialMap[int.Parse(ds.Tables[0].Rows[i]["MaterialId"].ToString())],
-                            Number = ds.Tables[0].Rows[i]["MaterialQuantity"].ToString(),
+                            Content = Material.MaterialMap[int.Parse(ds.Tables[0].Rows[i]["MaterialId"].ToString())] +
+                            ": " + ds.Tables[0].Rows[i]["MaterialQuantity"].ToString() + "¼þ",
+                            Number = ds.Tables[0].Rows[i]["TransactionId"].ToString(),
                             State = AdminState.WAIT,
                             Result = AdminResult.NONE,
                             ReviewerID = -1,
