@@ -79,15 +79,15 @@ namespace MDS.Client.DeliveryPages
             {
                 MainWindow.SetSnackBarContentAndPopup("任务状态有误");
             }
-            else
+            else if (deliveryMoveResponse.Check == 3)
             {
-                MainWindow.SetSnackBarContentAndPopup("验证ID错误");
+                MainWindow.SetSnackBarContentAndPopup("未知的错误");
             }
             userInput.Password = "";
         }
         private void ButtonCancel_Clicked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("操作取消");
+            MainWindow.SetSnackBarContentAndPopup("操作取消");
             this.DialogResult = false;
         }
     }

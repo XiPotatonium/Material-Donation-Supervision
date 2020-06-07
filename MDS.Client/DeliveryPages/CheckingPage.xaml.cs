@@ -33,6 +33,8 @@ namespace MDS.Client.DeliveryPages
         }
         private async Task UpdateCheckingList()
         {
+            checkingList = new ObservableCollection<DeliveryListViewModel>();
+            userCheckingList.DataContext = checkingList;
             DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryListRequest()
             {
                 DelivererId = UserInfo.Id,

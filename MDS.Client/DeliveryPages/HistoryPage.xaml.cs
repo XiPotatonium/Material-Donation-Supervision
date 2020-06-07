@@ -34,6 +34,8 @@ namespace MDS.Client.DeliveryPages
         }
         private async Task UpdateHistoryList()
         {
+            historyList = new ObservableCollection<DeliveryListViewModel>();
+            userHistoryList.DataContext = historyList;
             DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryListRequest()
             {
                 DelivererId = UserInfo.Id,

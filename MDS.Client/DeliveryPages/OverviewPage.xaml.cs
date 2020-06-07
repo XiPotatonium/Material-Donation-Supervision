@@ -38,6 +38,8 @@ namespace MDS.Client.DeliveryPages
         }
         private async Task UpdateProcessingList()
         {
+            processingList = new ObservableCollection<DeliveryListViewModel>();
+            userProcessingList.ItemsSource = processingList;
             DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryListRequest()
             {
                 DelivererId = UserInfo.Id,
@@ -59,6 +61,8 @@ namespace MDS.Client.DeliveryPages
         }
         private async Task UpdateWaitingList()
         {
+            waitingList = new ObservableCollection<DeliveryListViewModel>();
+            userWaitingList.ItemsSource = waitingList;
             DeliveryListResponse deliveryListResponse = await NetworkHelper.GetAsync(new DeliveryListRequest()
             {
                 DelivererId = UserInfo.Id,
