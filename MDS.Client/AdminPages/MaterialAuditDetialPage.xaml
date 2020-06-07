@@ -6,97 +6,67 @@
       xmlns:local="clr-namespace:MDS.Client.AdminPages"
       mc:Ignorable="d" 
       Title="Detail" 
-      Height="450" Width="600">
+      Height="300" Width="500">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="500"/>
-            <ColumnDefinition Width="50"/>
-        </Grid.ColumnDefinitions>
+    <Grid Margin="30" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="120"/>
-            <RowDefinition Height="80"/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <TextBlock Text="{Binding Number}"
                    x:Name="NumberTextBlock"
-                   Margin="0,0,0,0"
-                   Grid.Column="1"
-                   Grid.Row="1"
+                   Grid.Row="0" Grid.Column="0"
                    FontSize="15"/>
         <TextBlock Text="{Binding Applicant}"
                    x:Name="ApplicantTextBlock"
-                   Margin="250,0,0,0"
-                   Grid.Column="1"
-                   Grid.Row="1"
+                   Grid.Row="0" Grid.Column="1"
                    FontSize="15"/>
         <TextBlock Text="{Binding Time}"
                    x:Name="TimeTextBlock"
-                   Margin="0,0,0,0"
-                   Grid.Column="1"
-                   Grid.Row="2"
+                   Grid.Row="1" Grid.Column="0"
                    FontSize="15"/>
         <TextBlock Text="{Binding State}"
                    x:Name="StateTextBlock"
-                   Margin="250,0,0,0"
-                   Grid.Column="1"
-                   Grid.Row="2"
+                   Grid.Row="1" Grid.Column="1"
                    FontSize="15"/>
         <TextBlock Text="{Binding Type}"
                    x:Name="ReviewTypeTextBlock"
-                   Margin="0,0,0,0"
-                   Grid.Column="1"
-                   Grid.Row="3"
-                   FontSize="15"/>
-        <TextBlock Text="{Binding Reviewer}"
-                   x:Name="ReviewerTextBlock"
-                   Margin="250,0,0,0"
-                   Grid.Column="1"
-                   Grid.Row="3"
+                   Grid.Row="2" Grid.Column="0"
                    FontSize="15"/>
         <TextBlock Text="{Binding Result}"
                    x:Name="ResultTextBlock"
-                   Margin="250,0,0,0"
-                   Grid.Column="1"
-                   Grid.Row="3"
+                   Grid.Row="2" Grid.Column="1"
                    FontSize="15"/>
         <TextBlock Text="{Binding Content}"
                    x:Name="ContentTextBlock"
-                   Margin="0,0,0,0"
-                   Grid.Column="1"
-                   Grid.Row="4"
+                   Grid.Row="3" Grid.Column="0"
                    FontSize="15"/>
-        <TextBlock Text="{Binding Remarks}"
-                   x:Name="RemarksTextBlock"
-                   Margin="0,0,0,0"
-                   Grid.Column="1"
-                   Grid.Row="5"
+        <TextBlock Text="{Binding Reviewer}"
+                   x:Name="ReviewerTextBlock"
+                   Grid.Row="3" Grid.Column="1"
                    FontSize="15"/>
-        <Button Content="同意"
-                Click="Agree_Click"
-                Grid.Column="1"
-                Grid.Row="6"
-                Margin="100,0,0,0"
-                Height="40"
-                Width="80"
-                FontSize="20"
-                Background="Green"
-                x:Name="agree_button"/>
-        <Button Content="拒绝"
-                Click="Refuse_Click"
-                Grid.Column="1"
-                Grid.Row="6"
-                Margin="350,0,0,0"
-                Height="40"
-                Width="80"
-                FontSize="20"
-                Background="Red"
-                x:Name="refuse_button"/>
-        
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Content="同意"
+                    Click="Agree_Click"
+                    Margin="0,0,10,0"
+                    Height="40" Width="80" FontSize="20"
+                    x:Name="agree_button"/>
+            <Button Content="拒绝"
+                    Click="Refuse_Click"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    Margin="10,0,0,0"
+                    Background="{StaticResource ValidationErrorBrush}"
+                    Height="40" Width="80" FontSize="20"
+                    x:Name="refuse_button"/>
+        </StackPanel>
     </Grid>
 </Window>
