@@ -74,7 +74,7 @@ namespace MDS.Server.Service
         public AvailableApplicationMaterialResponse HandleAvailableApplicationMaterialRequest(AvailableApplicationMaterialRequest request)
         {
             // 指定SQL语句
-            SqlCommand com = new SqlCommand("Select MaterialID, MaterialName, MaterialDescription, MaterialConstraint from Materials "
+            SqlCommand com = new SqlCommand("Select MaterialID, MaterialName, MaterialDescription, MaterialConstraint, MaterialQuantity from Materials "
                     , Connect.Connection);
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataSet ds = new DataSet();
@@ -84,12 +84,14 @@ namespace MDS.Server.Service
 
             for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
             {
+                int constraint = (int)ds.Tables[0].Rows[j]["MaterialConstraint"];
+                int quantity = (int)ds.Tables[0].Rows[j]["MaterialQuantity"];
                 items.Add(new AvailableApplicationMaterialResponse.Item()
                 {
                     Id = (int)ds.Tables[0].Rows[j]["MaterialID"],
                     Name = ds.Tables[0].Rows[j]["MaterialName"].ToString(),
                     Description = ds.Tables[0].Rows[j]["MaterialDescription"].ToString(),
-                    Constraint = (int)ds.Tables[0].Rows[j]["MaterialConstraint"]
+                    Constraint = constraint < quantity ? constraint : quantity      // 取较小值
                 });
 
             }

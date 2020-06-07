@@ -69,18 +69,18 @@
                               Margin="15,0,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="50"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock x:Name="UserPhoneNumberTextBlock"
-                                       Grid.Row="0" Margin="20,0,0,0"
+                                       Grid.Row="0" Margin="20,10,0,0"
                                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                                        Text="你滴名字"/>
                                 <TextBlock x:Name="UserAddressTextBlock" Grid.Row="1"
-                                        Margin="20,20,0,4" Height="50"
+                                        Margin="20,20,0,4"
                                         Text="饿我去的话丢弃维达力的解耦2金额哦哦i建瓯的无穷的气味都i就·哦"
                                         TextWrapping="Wrap"
                                         VerticalAlignment="Center" HorizontalAlignment="Left"
