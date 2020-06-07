@@ -20,27 +20,28 @@ using System.Windows.Shapes;
 
 namespace MDS.Client.NavigationPages
 {
-    //public class ApplicationStateIconConverter : IValueConverter
-    //{
-    //    public object Convert(object value, Type targetType, object parameters, CultureInfo culture)
-    //    {
-    //        ApplicationState state = (ApplicationState)value;
-    //        PackIconKind icon = state switch
-    //        {
-    //            ApplicationState.Aborted => 
-    //            ApplicationState.Applying => PackIconKind.ApplicationImport,
-    //            ApplicationState.Delivering => PackIconKind.TruckDelivery,
-    //            ApplicationState.Received =>
-    //            ApplicationState.Done =>
-    //            _ =>
-    //        };
-    //    }
+    public class ApplicationStateIconConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameters, CultureInfo culture)
+        {
+            ApplicationState state = (ApplicationState)value;
+            PackIconKind icon = state switch
+            {
+                ApplicationState.Aborted => PackIconKind.Delete,
+                ApplicationState.Applying => PackIconKind.ApplicationImport,
+                ApplicationState.Delivering => PackIconKind.TruckDelivery,
+                ApplicationState.Received => PackIconKind.CallReceived,
+                ApplicationState.Done => PackIconKind.Check,
+                _ => PackIconKind.Help
+            };
+            return icon;
+        }
 
-    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     public class DonationStateIconConverter : IValueConverter
     {
