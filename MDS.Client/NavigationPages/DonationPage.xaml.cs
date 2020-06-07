@@ -126,13 +126,13 @@ namespace MDS.Client.NavigationPages
             DonationMaterialListViewModel selected = (DonationMaterialListViewModel)MaterialSelectListBox.SelectedItem;
             if (selected == null)
             {
-                ParentWindow.SetSnackBarContentAndPopup("请选择要捐赠的物资");
+                MainWindow.SetSnackBarContentAndPopup("请选择要捐赠的物资");
                 args.Cancel = true;
                 return;
             }
             else if (QuantityInputBox.Value == null || QuantityInputBox.Value <= 0)
             {
-                ParentWindow.SetSnackBarContentAndPopup("不合法的数目");
+                MainWindow.SetSnackBarContentAndPopup("不合法的数目");
                 args.Cancel = true;
                 return;
             }

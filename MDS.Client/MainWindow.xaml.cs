@@ -28,6 +28,16 @@ namespace MDS.Client
         public static Snackbar Snackbar { private set; get; } = null;
         public static SnackbarMessage SnackbarMessage { private set; get; } = null;
 
+        /// <summary>
+        /// 用这个来显示异常
+        /// </summary>
+        /// <param name="message"></param>
+        public static void SetSnackBarContentAndPopup(string message)
+        {
+            SnackbarMessage.Content = message;
+            Snackbar.IsActive = true;
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -100,16 +110,6 @@ namespace MDS.Client
         {
             MainTabControl.SelectedItem = DonationPageTab;
             PART_Frame.Content = new DonationPage(this, userDonationViewModel);
-        }
-
-        /// <summary>
-        /// 用这个来显示异常
-        /// </summary>
-        /// <param name="message"></param>
-        public void SetSnackBarContentAndPopup(string message)
-        {
-            SnackBarContent.Content = message;
-            PART_SnackBar.IsActive = true;
         }
 
         private void SnackBarContent_ActionClick(object sender, RoutedEventArgs e)
