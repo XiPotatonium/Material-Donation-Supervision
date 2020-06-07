@@ -77,11 +77,28 @@ namespace MDS.Server
         public static void MaterialAuditListRequestTest()
         {
             var service = new AdminDataService();
-            var response = service.HandleMaterialAuditListRequest(new MaterialAuditListRequest() { state=AdminState.WAIT, AdminID = -1});
+            /*var response = service.HandleMaterialAuditListRequest(new MaterialAuditListRequest() { state=AdminState.WAIT, AdminID = -1});
             if (response.m_normals.Count > 0)
             {
                 Console.WriteLine("Pass MaterialAuditListRequestTest");
-            }
+            }*/
+            var response = service.HandleMaterialAuditListRequest(new MaterialAuditListRequest() { state = AdminState.FINISH, AdminID = 1 });
+            if (response.m_normals.Count > 0)
+            {
+                Console.WriteLine("Pass MaterialAuditListRequestTest");
+            }           
+        }
+
+        public static void MaterialAuditAgreeRequestTest()
+        {
+            var service = new AdminDataService();
+            var response = service.HandleMaterialAuditAgreeRequest(new MaterialAuditAgreeRequest() { Secondary_passward = "123456", AdminID = 13, Number="22"});
+        }
+
+        public static void MaterialAuditRefuseRequestTest()
+        {
+            var service = new AdminDataService();
+            var response = service.HandleMaterialAuditRefuseRequest(new MaterialAuditRefuseRequest() { Secondary_passward = "123456", AdminID = 13, Number = "18" });
         }
     }
 }

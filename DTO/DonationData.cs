@@ -9,7 +9,8 @@ namespace DTO
         Refused,
         Aborted,
         Applying, 
-        WaitingDelivery, 
+        WaitingDelivery,
+        Delivering,
         Done
     }
 

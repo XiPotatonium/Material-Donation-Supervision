@@ -142,6 +142,7 @@ namespace DTO
         public string New_password { set; get; }  //新密码
     }
 
+    [Serializable]
     public class SecondaryPasswordChangeResponse
     {
         public int flag { set; get; }  //0:成功 1:密码相同 2:密码为空 3:密码错误

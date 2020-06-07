@@ -192,6 +192,8 @@ namespace DemoServer
             //Test.ModifyRequestTest();
             //Test.RegisterRequestTest();
             //Test.MaterialAuditListRequestTest();
+            //Test.MaterialAuditAgreeRequestTest();
+            Test.MaterialAuditRefuseRequestTest();
         }       
         static void Main(string[] args)
         {

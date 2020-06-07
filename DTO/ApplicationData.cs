@@ -9,7 +9,8 @@ namespace DTO
         Refused,
         Aborted,        // 撤销的申请
         Applying,       // 已提交但未审核的申请
-        Delivering,     // 已审核但未送达的申请
+        WaitingDelivery, //已审核但未接取的请求
+        Delivering,     // 已接取但未送达的申请
         Received,       // 配送员已送达但用户未确认的申请
         Done            // 用户确认的申请
     }
