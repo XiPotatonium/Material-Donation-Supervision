@@ -66,6 +66,7 @@ namespace MDS.Client.NavigationPages
                         PART_Stepper.Controller.GotoStep(1);
                         break;
                     case DonationState.WaitingDelivery:
+                    case DonationState.Delivering:
                         PART_Stepper.Controller.GotoStep(2);
                         break;
                     case DonationState.Done:

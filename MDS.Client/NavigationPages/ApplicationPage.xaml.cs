@@ -65,7 +65,8 @@ namespace MDS.Client.NavigationPages
                     case ApplicationState.Applying:
                         PART_Stepper.Controller.GotoStep(1);
                         break;
-                    case ApplicationState.Delivering:
+                    case ApplicationState.WaitingDelivery:
+                    case ApplicationState.Delivering:           // 客户端不区分等待配送和配送中
                         PART_Stepper.Controller.GotoStep(2);
                         break;
                     case ApplicationState.Received:

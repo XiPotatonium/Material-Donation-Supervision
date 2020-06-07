@@ -209,6 +209,7 @@ namespace MDS.Client.NavigationPages
                 ApplicationState.Refused => "被拒绝",
                 ApplicationState.Aborted => "已撤销",
                 ApplicationState.Applying => "待审核",
+                ApplicationState.WaitingDelivery => "待配送",
                 ApplicationState.Delivering => "配送中",
                 ApplicationState.Received => "已送达",
                 ApplicationState.Done => "已完成",
@@ -243,6 +244,7 @@ namespace MDS.Client.NavigationPages
                 DonationState.Aborted => "已撤销",
                 DonationState.Applying => "待审批",
                 DonationState.WaitingDelivery => "待配送",
+                DonationState.Delivering => "配送中",
                 DonationState.Done => "已完成",
                 _ => "UNK",
             };
