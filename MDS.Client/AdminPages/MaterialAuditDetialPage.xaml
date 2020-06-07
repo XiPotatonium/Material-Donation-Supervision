@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MDS.Client.AdminPages"
       mc:Ignorable="d" 
-      Title="Detail" 
+      Title="Detail" WindowStartupLocation="CenterScreen"
       Height="300" Width="500">
 
     <Grid Margin="30" HorizontalAlignment="Stretch">

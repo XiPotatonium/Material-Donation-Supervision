@@ -24,9 +24,8 @@ namespace MDS.Client.AdminPages
         private string Add_Result;
         public MaterialAuditDetialPage(MaterialAuditConstruct List, int flag)
         {
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
-            this.Info_List = List;
+            Info_List = List;
             switch (Info_List.Result)
             {
                 case AdminResult.FAIL:
