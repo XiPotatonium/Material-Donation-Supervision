@@ -40,7 +40,6 @@
                 <DataGridTextColumn Header="始发地" Width="100" Binding="{Binding Departure}" MinWidth="10"/>
                 <DataGridTextColumn Header="目的地" Width="100" Binding="{Binding Destination}" MinWidth="10"/>
                 <DataGridTextColumn Header="接单时间" Width="120" Binding="{Binding StartTime}" MinWidth="10"/>
-                <DataGridTextColumn Header="完成时间" Width="120" Binding="{Binding FinishTime}" MinWidth="10"/>
             </DataGrid.Columns>
         </DataGrid>
     </ScrollViewer>

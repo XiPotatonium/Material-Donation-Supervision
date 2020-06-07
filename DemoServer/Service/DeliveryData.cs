@@ -105,6 +105,7 @@ namespace MDS.Server.Service
 						SqlCommand cmd2 = new SqlCommand(
 							$"update Delivery " +
 							$"set DeliveryState = {DeliveryState.Processing}" +
+							$", DeliveryBeginDate = {DateTime.Now.ToString()}" +
 							$"where TransacyionId = {(int)request.GUID}",
 							Connect.Connection);
 						cmd2.ExecuteNonQuery();
@@ -134,6 +135,7 @@ namespace MDS.Server.Service
 						SqlCommand cmd2 = new SqlCommand(
 							$"update Delivery " +
 							$"set DeliveryState = {DeliveryState.Processing}" +
+							$", DeliveryBeginDate = {DateTime.Now.ToString()}" +
 							$"where TransacyionId = {(int)request.GUID}",
 							Connect.Connection);
 						cmd2.ExecuteNonQuery();
@@ -166,6 +168,7 @@ namespace MDS.Server.Service
 						SqlCommand cmd2 = new SqlCommand(
 							$"update Delivery " +
 							$"set DeliveryState = {DeliveryState.Finished}" +
+							$", DeliveryEndDate = {DateTime.Now.ToString()}" +
 							$"where TransacyionId = {(int)request.GUID}",
 							Connect.Connection);
 						cmd2.ExecuteNonQuery();
@@ -187,6 +190,7 @@ namespace MDS.Server.Service
 					SqlCommand cmd2 = new SqlCommand(
 						$"update Delivery " +
 						$"set DeliveryState = {DeliveryState.Finished}" +
+						$", DeliveryEndDate = {DateTime.Now.ToString()}" +
 						$"where TransacyionId = {(int)request.GUID}",
 						Connect.Connection);
 					cmd2.ExecuteNonQuery();

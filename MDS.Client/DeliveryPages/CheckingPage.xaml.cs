@@ -50,9 +50,7 @@ namespace MDS.Client.DeliveryPages
                     StartID = item.StartID,
                     FinishID = item.FinishID,
                     Departure = item.Departure,
-                    Destination = item.Destination,
-                    StartTime = item.StartTime,
-                    FinishTime = item.FinishTime
+                    Destination = item.Destination
                 });
             }
         }

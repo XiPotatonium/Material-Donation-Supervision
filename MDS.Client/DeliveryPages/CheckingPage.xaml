@@ -27,8 +27,6 @@
                 <DataGridTextColumn Header="接收人ID" Width="100" Binding="{Binding FinishID}"/>
                 <DataGridTextColumn Header="始发地" Width="100" Binding="{Binding Departure}"/>
                 <DataGridTextColumn Header="目的地" Width="100" Binding="{Binding Destination}"/>
-                <DataGridTextColumn Header="接单时间" Width="120" Binding="{Binding StartTime}"/>
-                <DataGridTextColumn Header="完成时间" Width="120" Binding="{Binding FinishTime}"/>
             </DataGrid.Columns>
         </DataGrid>
     </ScrollViewer>
