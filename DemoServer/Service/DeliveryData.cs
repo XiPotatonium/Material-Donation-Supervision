@@ -52,7 +52,7 @@ namespace MDS.Server.Service
 			{
 				Item it = new Item()
 				{
-					GUID = (int)ds.Tables[0].Rows[j]["DeliveryId"],
+					GUID = (int)ds.Tables[0].Rows[j]["TransactionId"],
 					Name = ds.Tables[0].Rows[j]["MaterialName"].ToString(),
 					Quantity = (int)ds.Tables[0].Rows[j]["MaterialQuantity"],
 					State = (DeliveryState)ds.Tables[0].Rows[j]["TransactionState"]
@@ -236,8 +236,8 @@ namespace MDS.Server.Service
 			}
 			SqlCommand cmd = new SqlCommand(
 							$"update Delivery " +
-							$"set DelivermanId = {request.DelivermanId}" +
-							$", DeliveryState = {DeliveryState.Checking}" +
+							$"set DeliverymanId = {request.DelivermanId}" +
+							$", DeliveryState = {(int)DeliveryState.Checking}" +
 							$"where TransactionId = {request.TransactionId}",
 							Connect.Connection);
 			cmd.ExecuteNonQuery();
