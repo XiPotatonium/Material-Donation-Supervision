@@ -12,7 +12,8 @@
 * 使用WPF框架(基于.net Core3.1，注意VS2017并不支持开发.NetCore3，请先下载VS2019)
 * UI设计语言为谷歌的MaterialDesign，使用[MaterialDesignInXamlToolkit](https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit)和[MaterialDesignExtensions](https://github.com/spiegelp/MaterialDesignExtensions)这两个工具包来实现
     * 注意MaterialDesignExtensions的TabStepper疑似存在一些问题，在Tab中使用某些MD控件会导致渲染的时候有很多莫名其妙的格线，应该是它的BUG，请小心使用
-* 客户端的报错尽量不要使用```MessageBox.Show```，UI很难看，MainWindow有一个SnackBar，用那个。
+* 客户端的报错尽量不要使用```MessageBox.Show```，UI很难看，MainWindow有一个SnackBar，用那个。注意每一个Page需要使用所在的Window的SnackBar，如果所在的Window没有SnackBar，仿照MainWindow的格式创建一个。
+* 不鼓励多级Window，尽量使用Page、Tab、以及MaterialDesign库的Dialog
 * 最终提交前请在Application那里catch所有未被catch的异常，防止客户端遇到异常直接崩溃。并且在MainPage中开启根据用户类型显示Tab。测试阶段可以关闭这些代码方便测试。
 
 ### 关于风格统一
@@ -21,10 +22,10 @@
 
 ## 网络模块
 
-1. 异常处理问题，404，连不上服务器时客户端需要TryCatch来防止程序崩溃（可能可以统一处理？我没研究过）
+1. 关于异常处理问题，404，连不上服务器时客户端需要在```App.xaml.cs```中处理未被捕获的异常，来防止程序崩溃
 2. 边际问题，网络请求过程中可能需要Disable部分UI控件，防止意料之外的用户操作。目前已支持```Task.DisableElements(...)```操作，在Task执行过程中Disable控件，结束后自动Enable这些控件，具体使用方法参考```MDS.Client.LoginDialog.Login()```
 3. 加载动画。网络请求时可以有加载动画的。目前已支持```Task.Progress(bar)```，参数是一个```ProgressBar```（定义在```MainWindow```中），具体使用方法参考```MDS.Client.MainWindow.Window_Loaded()```。NavidationPages里面每个Page都可以通过```ParentWindow```访问```MainWindow```的成员。
-4. 请使用GetAsync而不是Get，异步方法可以防止网络比较慢时UI线程卡死。异步方法需要```await```，带```await```的方法需要是```async```，具体参考微软的文档。
+4. 请使用GetAsync而不是Get，异步方法可以防止网络比较慢时UI线程卡死。异步方法需要```await```，函数中有```await```关键词的方法需要是```async```，具体参考微软的文档。
 
 ## 服务器
 
@@ -115,6 +116,13 @@ Done            // 配送完成的捐赠
 ```
 
 捐赠逻辑和申请相同。只是用户不再需要确认捐赠流程结束。
+
+### 管理员DTO(AdminData.cs)
+
+存在三种请求：
+1. ```MaterialAuditListRequest```和```MaterialAuditListRequest```对应获取当前的物资请求/捐赠申请列表
+2. ```MaterialAuditAgreeRequest```和```MaterialAuditAgreeResponse```对应管理员请求服务器同意某一条申请/捐赠
+3. ```MaterialAuditRefuseRequest```和```MaterialAuditRefuseResponse```对应管理员请求服务器拒绝某一条申请/捐赠
 
 ### 一个物资的数据包的全部信息如下：
 
