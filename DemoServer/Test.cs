@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using DTO;
+using MDS.Server.Service;
 
 namespace MDS.Server
 {
@@ -13,6 +14,35 @@ namespace MDS.Server
             var response = service.HandleLoginRequest(new LoginRequest() { PhoneNumber = "18867934185", Password = "123456" });
             //System.Diagnostics.Debug.Assert(response.UserId == 1);
             Console.WriteLine("Pass UserLoginTest");
+        }
+
+        public static void HandleGetApplicationListRequestTest()
+        {
+            var service = new ApplicationDataService() { UserId = 1024 };
+            var response = service.HandleGetApplicationListRequest(new GetApplicationListRequest() { });
+        }
+
+        public static void HandleGetApplicationDetailRequestTest()
+        {
+            var service = new ApplicationDataService() { UserId = 1024 };
+            var response = service.HandleGetApplicationDetailRequest(new GetApplicationDetailRequest() { ApplicationId = 1 });
+        }
+
+        public static void HandleAvailableApplicationMaterialRequestTest()
+        {
+            var service = new ApplicationDataService() { UserId = 1024 };
+            var response = service.HandleAvailableApplicationMaterialRequest(new AvailableApplicationMaterialRequest() { });
+        }
+
+        public static void HandleNewApplicationRequestTest()
+        {
+            var service = new ApplicationDataService() { UserId = 1024 };
+            var response = service.HandleNewApplicationRequest(new NewApplicationRequest() 
+            { 
+                Address = "测试地址1", 
+                MaterialId = 1, 
+                Quantity = 1
+            });
         }
 
         public static void UserInfoTest()

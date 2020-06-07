@@ -91,8 +91,7 @@ namespace DemoServer
                 {
                     responseBody = objecttostring(UserInfoService.HandleModifyRequest(userInfoModifyRequest));
                 }
-                // DonationDataService
-                /*else if (recv is GetDonationListRequest getDonationListRequest)
+                else if (recv is GetDonationListRequest getDonationListRequest)
                 {
                     responseBody = objecttostring(DonationDataService.HandleGetDonationListRequest(getDonationListRequest));
                 }
@@ -112,6 +111,7 @@ namespace DemoServer
                 {
                     responseBody = objecttostring(DonationDataService.HandleCancelDonationRequest(cancelDonationRequest));
                 }
+                /*
                 // DeliveryDataService
                 else if (recv is DeliveryListNumRequest deliveryListNumRequest)
                 {
@@ -125,7 +125,7 @@ namespace DemoServer
                 {
                     responseBody = objecttostring(DeliveryDataService.HandleDeliveryMoveRequest(deliveryMoveRequest));
                 }
-                // ApplicationDataService部分
+                */
                 else if (recv is AvailableApplicationMaterialRequest availableApplicationMaterialRequest)
                 {
                     responseBody = objecttostring(ApplicationDataService.HandleAvailableApplicationMaterialRequest(availableApplicationMaterialRequest));
@@ -153,7 +153,7 @@ namespace DemoServer
                 else
                 {
                     System.Diagnostics.Debug.Assert(false);
-                }*/
+                }
 
                 response.ContentLength64 = responseBody.Length;
                 response.ContentType = "text/html";
@@ -175,6 +175,10 @@ namespace DemoServer
         }
         static void test()
         {
+            // Test.HandleNewApplicationRequestTest();
+            Test.HandleAvailableApplicationMaterialRequestTest();
+            Test.HandleGetApplicationDetailRequestTest();
+            Test.HandleGetApplicationListRequestTest();
             Test.UserLoginTest();
             Test.UserInfoTest();
             Test.ModifyRequestTest();

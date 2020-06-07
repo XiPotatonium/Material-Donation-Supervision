@@ -51,25 +51,6 @@ namespace MDS.Client.NavigationPages
             GetApplicationListResponse response = await NetworkHelper.GetAsync(new GetApplicationListRequest(){ })
                 .Progress(ParentWindow.PART_ProgressBar);
 
-            // TODO 删掉假数据
-            response = new GetApplicationListResponse() { Items = new List<GetApplicationListResponse.Item>() };
-            response.Items.Add(new GetApplicationListResponse.Item()
-            {
-                ID = 0,
-                Name = "消毒水(500ml)",
-                Quantity = 5,
-                State = ApplicationState.Received,
-                StartTime = DateTime.Now
-            });
-            response.Items.Add(new GetApplicationListResponse.Item()
-            {
-                ID = 1,
-                Name = "医用酒精(500ml)",
-                Quantity = 100,
-                State = ApplicationState.Delivering,
-                StartTime = DateTime.Now
-            });
-
             UserApplications = new ObservableCollection<ApplicationListViewModel>(
                 response.Items.Select(i => new ApplicationListViewModel(i)));
             UserApplicationList.ItemsSource = UserApplications;
@@ -79,17 +60,6 @@ namespace MDS.Client.NavigationPages
         {
             GetDonationListResponse response = await NetworkHelper.GetAsync(new GetDonationListRequest() { })
                 .Progress(ParentWindow.PART_ProgressBar);
-
-            // TODO 删除假数据
-            response = new GetDonationListResponse() { Items = new List<GetDonationListResponse.Item>() };
-            response.Items.Add(new GetDonationListResponse.Item()
-            {
-                ID = 1,
-                Name = "医用酒精(500ml)",
-                Quantity = 100,
-                State = DonationState.Done,
-                StartTime = DateTime.Now
-            });
 
             UserDonations = new ObservableCollection<DonationListViewModel>(
                 response.Items.Select(i => new DonationListViewModel(i)));
@@ -107,7 +77,7 @@ namespace MDS.Client.NavigationPages
                 UserType.DELIVERER => "配送员",
                 _ => "NT用户",
             };
-            HomeAddressTextBlock.Text = UserInfo.HomeAddress;
+            HomeAddressTextBlock.Text = string.IsNullOrEmpty(UserInfo.HomeAddress) ? "请设置地址" : UserInfo.HomeAddress;
         }
 
         private void UserApplicationList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -146,6 +116,15 @@ namespace MDS.Client.NavigationPages
                 PhoneNumber = NewPhoneTextBox.Text,
                 HomeAddress = NewAddressTextBox.Text
             }).Progress(ParentWindow.PART_ProgressBar);
+
+            UserInfoResponse response = await NetworkHelper.GetAsync(new UserInfoRequest()
+            {
+                UserId = UserInfo.Id
+            }).Progress(ParentWindow.PART_ProgressBar);
+
+            UserInfo.PhoneNumber = response.PhoneNumber;
+            UserInfo.HomeAddress = response.HomeAddress;
+            UserInfo.UserType = response.UserType;
 
             RefreshUserInfoDisplay();
         }

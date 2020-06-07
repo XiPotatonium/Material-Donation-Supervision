@@ -58,14 +58,13 @@ namespace MDS.Client
 
         private async Task Login()
         {
-            // TODO: 这段代码开发的时候注释掉，上线的时候要用
-            //if (string.IsNullOrEmpty(LoginUserNameTextBox.Text) || string.IsNullOrEmpty(LoginPasswordBox.Password))
-            //{
-            //    // 本地用户名密码有效检测
-            //    PART_SnackBar.IsActive = true;
-            //    SnackBarContent.Content = "用户名或密码不能为空";
-            //    return;
-            //}
+            if (string.IsNullOrEmpty(LoginUserPhoneNumberTextBox.Text) || string.IsNullOrEmpty(LoginPasswordBox.Password))
+            {
+                // 本地用户名密码有效检测
+                PART_SnackBar.IsActive = true;
+                SnackBarContent.Content = "用户名或密码不能为空";
+                return;
+            }
 
             LoginResponse response = await NetworkHelper.GetAsync(new LoginRequest()
             {
@@ -73,8 +72,6 @@ namespace MDS.Client
                 Password = Hash(LoginPasswordBox.Password)
             }).DisableElements(PrimaryButton, SwitchButton, LoginUserPhoneNumberTextBox, LoginPasswordBox)
             .Progress(PART_ProgressBar);
-
-            response = new LoginResponse() { UserId = 0 };    // TODO 假数据
 
             if (response.UserId < 0)
             {
@@ -108,11 +105,9 @@ namespace MDS.Client
             RegisterResponse response = await NetworkHelper.GetAsync(new RegisterRequest()
             {
                 PhoneNumber = RegisterUserPhoneNumberTextBox.Text,
-                Password = RegisterPasswordBox.Text
+                Password = Hash(RegisterPasswordBox.Text)
             }).DisableElements(PrimaryButton, SwitchButton, RegisterUserPhoneNumberTextBox, RegisterPasswordBox)
             .Progress(PART_ProgressBar);
-
-            response = new RegisterResponse() { UserId = 0 };    // TODO 假数据
 
             if (response.UserId < 0)
             {

@@ -82,20 +82,6 @@ namespace MDS.Client.NavigationPages
                 // 1. 请求所有可选的物资
                 AvailableDonationMaterialResponse response = await NetworkHelper.GetAsync(new AvailableDonationMaterialRequest() { })
                     .Progress(ParentWindow.PART_ProgressBar);
-                // TODO 删除假数据
-                response = new AvailableDonationMaterialResponse() { Items = new List<AvailableDonationMaterialResponse.Item>() };
-                response.Items.Add(new AvailableDonationMaterialResponse.Item()
-                {
-                    Id = 1,
-                    Name = "物资1",
-                    Description = "物资一的介绍"      // TODO UI设计
-                });
-                response.Items.Add(new AvailableDonationMaterialResponse.Item()
-                {
-                    Id = 2,
-                    Name = "物资2",
-                    Description = "物资er的介绍"
-                });
 
                 MaterialListViewModels = new ObservableCollection<DonationMaterialListViewModel>(response.Items.Select(i => new DonationMaterialListViewModel(i)));
                 MaterialSelectListBox.ItemsSource = MaterialListViewModels;
@@ -129,7 +115,7 @@ namespace MDS.Client.NavigationPages
 
         private void RefreshAddressInfo()
         {
-            UserNameTextBlock.Text = UserInfo.PhoneNumber;
+            UserPhoneNumberTextBlock.Text = UserInfo.PhoneNumber;
             UserAddressTextBlock.Text = UserInfo.HomeAddress;
         }
 
@@ -178,6 +164,7 @@ namespace MDS.Client.NavigationPages
             if (selected != null)
             {
                 MaterialNameTextBlock.Text = selected.Name;
+                MaterialDetailTextBlock.Text = selected.Description;
             }
             else
             {

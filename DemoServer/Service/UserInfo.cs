@@ -75,7 +75,7 @@ namespace MDS.Server
 
         public RegisterResponse HandleRegisterRequest(RegisterRequest request)
 		{
-            SqlCommand com = new SqlCommand($"insert into Users(PhoneNumber,Passwords,HomeAddress) values('{request.PhoneNumber}','{request.Password}','暂无')"
+            SqlCommand com = new SqlCommand($"insert into Users(PhoneNumber,Passwords,HomeAddress,UserType) values('{request.PhoneNumber}','{request.Password}','暂无','{(int)UserType.NORMAL}')"
                 ,Connect.Connection);
             com.ExecuteNonQuery();
             SqlCommand ncom = new SqlCommand($"select UserID from Users where PhoneNumber = '{request.PhoneNumber}' and Passwords = '{request.Password}'"

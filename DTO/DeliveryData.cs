@@ -12,6 +12,7 @@ namespace DTO
         Processing, // 配送中（物资在配送员手中）
         Finished    // 已完成
     }
+    [Serializable]
     public class Item
     {
         public int GUID { set; get; }

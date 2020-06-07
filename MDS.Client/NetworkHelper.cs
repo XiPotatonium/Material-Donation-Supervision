@@ -33,6 +33,7 @@ namespace MDS.Client
             request.ContentType = "text/html";
             request.ContentLength = requestData.Length;// 2 *requestData.Length+4; //有没有比+8更好的办法？
             request.Headers["UserId"] = UserInfo.Id.ToString();         // 这里加了UserId
+            request.Timeout = 10000;        // 超时10s钟
 
             // 发送请求数据
             Stream requestStream = request.GetRequestStream();
