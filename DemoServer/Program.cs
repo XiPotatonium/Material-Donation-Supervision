@@ -111,7 +111,7 @@ namespace DemoServer
                 {
                     responseBody = objecttostring(DonationDataService.HandleCancelDonationRequest(cancelDonationRequest));
                 }
-                /*
+                
                 // DeliveryDataService
                 else if (recv is DeliveryListNumRequest deliveryListNumRequest)
                 {
@@ -125,7 +125,11 @@ namespace DemoServer
                 {
                     responseBody = objecttostring(DeliveryDataService.HandleDeliveryMoveRequest(deliveryMoveRequest));
                 }
-                */
+                else if (recv is DeliveryApplyRequest deliveryApplyRequest)
+                {
+                    responseBody = objecttostring(DeliveryDataService.HandleDeliveryApplyRequest(deliveryApplyRequest));
+                }
+
                 else if (recv is AvailableApplicationMaterialRequest availableApplicationMaterialRequest)
                 {
                     responseBody = objecttostring(ApplicationDataService.HandleAvailableApplicationMaterialRequest(availableApplicationMaterialRequest));

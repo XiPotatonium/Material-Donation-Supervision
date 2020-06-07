@@ -82,7 +82,7 @@
             <TextBlock FontWeight="Bold"
                        Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
                        Grid.Row="0">
-                <Run Text="配送中"></Run>
+                <Run Text="待取货"></Run>
                 <Run Name="userWaitingCount" Text="{Binding Path=WaitingCount}"></Run>
             </TextBlock>
             <ListBox x:Name="userWaitingList"
