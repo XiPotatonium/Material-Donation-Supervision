@@ -55,11 +55,12 @@ namespace MDS.Client.DeliveryPages
                 });
             }
         }
-        public void ButtonMove_Clicked(object sender, RoutedEventArgs e)
+        public async void ButtonMove_Clicked(object sender, RoutedEventArgs e)
         {
             DeliveryListViewModel cur = (DeliveryListViewModel)userApplyList.SelectedItem;
             InputDialog dialog = new InputDialog(cur.GUID, DeliveryState.Alone);
             dialog.ShowDialog();
+            await UpdateApplyList();
         }
     }
 }
